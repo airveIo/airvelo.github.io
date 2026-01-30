@@ -63,14 +63,25 @@
 
     .footer-container {
       width: 100%;
-      text-align: center;
-      padding: 16px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 40px;
       border-top: 1px solid var(--border);
       color: var(--muted);
       font-size: 13px;
       background: rgba(18, 18, 18, 0.85);
       position: sticky;
       bottom: 0;
+    }
+
+    @media (max-width: 600px) {
+      .footer-container {
+        flex-direction: column;
+        gap: 8px;
+        padding: 16px 20px;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -81,7 +92,10 @@
     <p>Our servers are currently undergoing scheduled maintenance to improve performance and system reliability. We apologize for the inconvenience and will be back online shortly.</p>
   </div>
 
-  <div class="footer-container">&copy; 2026 Apple Client. All rights reserved.</div>
+  <div class="footer-container">
+    <div>&copy; 2026 Apple Client. All rights reserved.</div>
+    <div>Developed by X / Alex & Ethan</div>
+  </div>
 
   <script>
     "use strict";
