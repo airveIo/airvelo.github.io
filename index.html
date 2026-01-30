@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -21,7 +22,7 @@
 
     * {
       box-sizing: border-box;
-      font-family: Inter, system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
     }
 
     body {
@@ -32,33 +33,61 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      overflow: hidden;
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    h1 {
-      margin: 0 0 6px;
-      font-size: 22px;
-      font-weight: 550;
-    }
-
-    p {
-      margin: 0 0 24px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    #maintenance {
-      max-width: 1500px;
+    .hero {
+      max-width: 800px;
+      padding: 24px;
       text-align: center;
-      color: var(--muted);
-      flex: 1;
       display: flex;
       flex-direction: column;
+      align-items: center;
       justify-content: center;
+      flex: 1;
+    }
+
+    .brand-text {
+      font-size: clamp(48px, 10vw, 80px);
+      color: var(--accent);
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -3px;
+    }
+
+    .hero p {
+      margin: 0 auto 32px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 480px;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
     }
 
     .footer-container {
@@ -70,9 +99,13 @@
       border-top: 1px solid var(--border);
       color: var(--muted);
       font-size: 13px;
-      background: rgba(18, 18, 18, 0.85);
+      background: var(--surface);
       position: sticky;
       bottom: 0;
+    }
+
+    .credits {
+      font-size: 13px;
     }
 
     @media (max-width: 600px) {
@@ -82,35 +115,31 @@
         padding: 16px 20px;
         text-align: center;
       }
+      
+      .brand-text {
+        font-size: 48px;
+        letter-spacing: -2px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div id="maintenance">
-    <h1>We'll be right back</h1>
-    <p>Our servers are currently undergoing scheduled maintenance to improve performance and system reliability. We apologize for the inconvenience and will be back online shortly.</p>
-  </div>
+
+  <section class="hero">
+    <h1 class="brand-text">Apple Client</h1>
+    <p>Apple is a client that meets all your needs, both visually and functionally.</p>
+    
+    <div class="cta-group">
+      <a href="https://extra.sellauth.com" target="_blank" class="btn btn-primary">Purchase</a>
+      <a href="https://discord.gg/5eX3cRNP" target="_blank" class="btn btn-secondary">Discord</a>
+    </div>
+  </section>
 
   <div class="footer-container">
     <div>&copy; 2026 Apple Client. All rights reserved.</div>
-    <div>Developed by X / Alex & Ethan</div>
+    <div class="credits">Developed by X / Alex & Ethan</div>
   </div>
 
-  <script>
-    "use strict";
-
-    const $ = id => document.getElementById(id);
-
-    const views = {
-      maintenance: $("maintenance")
-    };
-
-    function showView(view) {
-      if (!views[view]) return;
-      Object.values(views).forEach(v => v.classList.add("hidden"));
-      views[view].classList.remove("hidden");
-    }
-  </script>
 </body>
 </html>
