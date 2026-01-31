@@ -1,145 +1,476 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Apple Client</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Client</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ffffff;
+            --accent: #3b82f6;
+            --bg: #0a0a0a;
+            --glass: rgba(255, 255, 255, 0.08);
+            --text-dim: #9a9a9a;
+            --transit: cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-md: 0 10px 30px -10px rgba(0,0,0,0.5);
+            --shadow-lg: 0 20px 50px -15px rgba(0,0,0,0.7);
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: default;
+            font-size: 15.5px;
+        }
 
-  <style>
-    :root {
-      --accent: #ffffff;
-      --bg: #0a0a0a;
-      --surface: rgba(18, 18, 18, 0.85);
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #e6e6e6;
-      --muted: #9a9a9a;
-    }
+        body {
+            background-color: var(--bg);
+            color: var(--primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    * {
-      box-sizing: border-box;
-      font-family: 'Inter', system-ui, sans-serif;
-    }
+        nav {
+            position: fixed;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            padding: 6px;
+            border-radius: 18px;
+            display: flex;
+            gap: 6px;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.02);
+        }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: radial-gradient(circle at top, #141414, var(--bg));
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow: hidden;
-    }
+        nav button {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            padding: 10px 22px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s var(--transit);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .hero {
-      max-width: 800px;
-      padding: 24px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-    }
+        nav button.active {
+            background: var(--glass);
+            color: #fff;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+        }
 
-    .brand-text {
-      font-size: clamp(48px, 10vw, 80px);
-      color: var(--accent);
-      font-weight: 800;
-      margin-bottom: 16px;
-      letter-spacing: -3px;
-    }
+        main {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 0 24px;
+            flex: 1;
+            width: 100%;
+        }
 
-    .hero p {
-      margin: 0 auto 32px;
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--muted);
-      max-width: 480px;
-    }
+        .tab-content {
+            display: none;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.5s var(--transit);
+        }
 
-    .cta-group {
-      display: flex;
-      gap: 12px;
-    }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    .btn {
-      padding: 12px 32px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 14px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      cursor: pointer;
-    }
+        #home.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 85vh;
+        }
 
-    .btn-primary {
-      background: var(--accent);
-      color: #000;
-    }
+        .tab-content.active:not(#home) {
+            padding-top: 130px;
+            padding-bottom: 40px;
+        }
 
-    .btn-secondary {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
+        h1 {
+            font-size: clamp(3.2rem, 7vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            text-align: center;
+            margin-bottom: 35px;
+        }
 
-    .footer-container {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 40px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 13px;
-      background: var(--surface);
-      position: sticky;
-      bottom: 0;
-    }
+        .subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            margin-top: -25px;
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-    .credits {
-      font-size: 13px;
-    }
+        .btn-fill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 40px;
+            border-radius: 16px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: all 0.3s var(--transit);
+            cursor: pointer;
+            border: none;
+            background: #fff;
+            color: #000;
+            box-shadow: var(--shadow-md);
+        }
 
-    @media (max-width: 600px) {
-      .footer-container {
-        flex-direction: column;
-        gap: 8px;
-        padding: 16px 20px;
-        text-align: center;
-      }
-      
-      .brand-text {
-        font-size: 48px;
-        letter-spacing: -2px;
-      }
-    }
-  </style>
+        .btn-fill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px -5px rgba(0,0,0,0.8);
+        }
+
+        .category-group {
+            margin-bottom: 60px;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .category-title i {
+            color: var(--accent);
+        }
+
+        .category-desc {
+            color: var(--text-dim);
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 22px;
+        }
+
+        .bento-box {
+            background: var(--glass);
+            border-radius: 24px;
+            padding: 32px;
+            transition: all 0.3s var(--transit);
+            box-shadow: var(--shadow-md);
+        }
+
+        .bento-box:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .bento-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .bento-box p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .pricing-card {
+            background: var(--glass);
+            border-radius: 32px;
+            padding: 40px 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s var(--transit);
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .most-popular {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: #fff;
+            padding: 6px 18px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .price-row {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 12px 0;
+        }
+
+        .price-row span {
+            font-size: 1rem;
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+
+        .feature-list {
+            list-style: none;
+            text-align: left;
+            margin: 25px 0;
+            flex-grow: 1;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #ccc;
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+        }
+
+        .feature-list li i {
+            color: var(--accent);
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 18px;
+            box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.02);
+            padding: 12px 25px;
+            margin: 15px auto 25px auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: fit-content;
+        }
+
+        footer p,
+        footer span {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        footer span {
+            color: #fff;
+        }
+
+        footer .separator {
+            opacity: 0.2;
+        }
+
+        @media (max-width: 900px) {
+            .pricing-container {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                flex-direction: column;
+                text-align: center;
+                gap: 5px;
+            }
+
+            .separator {
+                display: none;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-  <section class="hero">
-    <h1 class="brand-text">Apple Client</h1>
-    <p>Apple is a client that meets all your needs, both visually and functionally.</p>
-    
-    <div class="cta-group">
-      <a href="https://extra.mysellauth.com/product/apple-client" target="_blank" class="btn btn-primary">Purchase</a>
-      <a href="https://discord.gg/5eX3cRNP" target="_blank" class="btn btn-secondary">Discord</a>
-    </div>
-  </section>
+<nav>
+    <button id="nav-home" class="active" onclick="showTab('home')"><i data-lucide="home" size="16"></i> Home</button>
+    <button id="nav-features" onclick="showTab('features')"><i data-lucide="layers" size="16"></i> Features</button>
+    <button id="nav-pricing" onclick="showTab('pricing')"><i data-lucide="tag" size="16"></i> Pricing</button>
+</nav>
 
-  <div class="footer-container">
-    <div>&copy; 2026 Apple Client. All rights reserved.</div>
-    <div class="credits">Developed by X / Alex & Ethan</div>
-  </div>
+<main>
+    <section id="home" class="tab-content active">
+        <h1>Apple Client</h1>
+        <p class="subtitle">
+            Apple Client is designed to give you an advantage with high-quality features and a seamless, user-friendly experience.
+        </p>
+        <button onclick="showTab('pricing')" class="btn-fill">
+            View Pricing <i data-lucide="arrow-right" size="18"></i>
+        </button>
+    </section>
+
+    <section id="features" class="tab-content">
+        <h1>Features</h1>
+        <p class="subtitle">Optimized for peak performance and an exceptional experience.</p>
+
+        <div class="category-group">
+            <div class="category-title"><i data-lucide="swords"></i> Combat</div>
+            <p class="category-desc">Dominate PvP with precision-engineered tools.</p>
+            <div class="tech-grid">
+                <div class="bento-box"><h3>Auto Clicker</h3><p>Implements humanized clicking patterns to maintain high CPS while bypassing detection.</p></div>
+                <div class="bento-box"><h3>Aim Assist</h3><p>Provides smooth, natural assistance to keep your crosshair locked on targets.</p></div>
+                <div class="bento-box"><h3>Velocity</h3><p>Adjusts knockback received during combat for a tactical advantage.</p></div>
+                <div class="bento-box"><h3>Reach</h3><p>Slightly extends attack range to help you land the first hit in every engagement.</p></div>
+            </div>
+        </div>
+
+        <div class="category-group">
+            <div class="category-title"><i data-lucide="zap"></i> Movement</div>
+            <p class="category-desc">Enhance your agility and maneuverability across all environments.</p>
+            <div class="tech-grid">
+                <div class="bento-box"><h3>No Jump Delay</h3><p>Eliminates the exhaustion delay between jumps for smoother movement.</p></div>
+                <div class="bento-box"><h3>Bridge Assist</h3><p>Automatically engages sneak at block edges to prevent falling while bridging.</p></div>
+            </div>
+        </div>
+
+        <div class="category-group">
+            <div class="category-title"><i data-lucide="eye"></i> Visual</div>
+            <p class="category-desc">Gain superior environmental awareness and improved player perspective.</p>
+            <div class="tech-grid">
+                <div class="bento-box"><h3>ESP</h3><p>Displays detailed player information, including 2D/3D boxes and health status.</p></div>
+            </div>
+        </div>
+
+        <div class="category-group">
+            <div class="category-title"><i data-lucide="settings"></i> Utility</div>
+            <p class="category-desc">Comprehensive tools to customize and enhance your experience.</p>
+            <div class="tech-grid">
+                <div class="bento-box"><h3>Right Clicker</h3><p>Automates right-click actions with fully adjustable speed settings.</p></div>
+                <div class="bento-box"><h3>No Hit Delay</h3><p>Optimizes attack timing by removing standard cooldown delays.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="tab-content">
+        <h1>Choose Your Plan</h1>
+        <p class="subtitle">Select the perfect plan for your needs. All options include full access to Apple Client.</p>
+
+        <div class="pricing-container">
+            <div class="pricing-card">
+                <div style="font-weight:800;font-size:1.3rem;">Monthly</div>
+                <div class="price-row">$5.99 <span>/ 30 days</span></div>
+                <ul class="feature-list">
+                    <li><i data-lucide="shield-check"></i> Anti-Screenshare</li>
+                    <li><i data-lucide="cpu"></i> High-Quality Features</li>
+                    <li><i data-lucide="refresh-cw"></i> Regular Updates</li>
+                    <li><i data-lucide="message-circle"></i> 24/7 Support</li>
+                </ul>
+                <button onclick="openDiscord()" class="btn-fill">Purchase <i data-lucide="arrow-right" size="18"></i></button>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="most-popular">Most Popular</div>
+                <div style="font-weight:800;font-size:1.3rem;">Quarterly</div>
+                <div class="price-row">$14.99 <span>/ 90 days</span></div>
+                <ul class="feature-list">
+                    <li><i data-lucide="shield-check"></i> Anti-Screenshare</li>
+                    <li><i data-lucide="cpu"></i> High-Quality Features</li>
+                    <li><i data-lucide="refresh-cw"></i> Regular Updates</li>
+                    <li><i data-lucide="message-circle"></i> 24/7 Support</li>
+                </ul>
+                <button onclick="openDiscord()" class="btn-fill">Purchase <i data-lucide="arrow-right" size="18"></i></button>
+            </div>
+
+            <div class="pricing-card">
+                <div style="font-weight:800;font-size:1.3rem;">Yearly</div>
+                <div class="price-row">$39.99 <span>/ 365 days</span></div>
+                <ul class="feature-list">
+                    <li><i data-lucide="shield-check"></i> Anti-Screenshare</li>
+                    <li><i data-lucide="cpu"></i> High-Quality Features</li>
+                    <li><i data-lucide="refresh-cw"></i> Regular Updates</li>
+                    <li><i data-lucide="message-circle"></i> 24/7 Support</li>
+                </ul>
+                <button onclick="openDiscord()" class="btn-fill">Purchase <i data-lucide="arrow-right" size="18"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 <span>Apple Client</span>. All rights reserved.</p>
+        <span class="separator">|</span>
+        <p>Developed by <span>X</span> / <span>Alex</span> &amp; <span>Ethan</span></p>
+    </footer>
+</main>
+
+<script>
+    lucide.createIcons();
+
+    function showTab(tabId) {
+        const contents = document.querySelectorAll('.tab-content');
+        const buttons = document.querySelectorAll('nav button');
+
+        contents.forEach(c => {
+            c.style.display = 'none';
+            c.classList.remove('active');
+        });
+
+        buttons.forEach(b => b.classList.remove('active'));
+
+        const target = document.getElementById(tabId);
+        target.style.display = tabId === 'home' ? 'flex' : 'block';
+
+        setTimeout(() => target.classList.add('active'), 50);
+
+        const activeBtn = document.getElementById(`nav-${tabId}`);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openDiscord() {
+        window.open("https://discord.gg/j4ydFf2h", "AppleDiscord", "width=500,height=750,scrollbars=yes");
+    }
+</script>
 
 </body>
 </html>
