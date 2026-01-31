@@ -39,19 +39,31 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        nav {
+        nav, footer {
             position: fixed;
-            top: 25px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
-            padding: 6px;
             border-radius: 16px;
-            display: flex;
-            gap: 6px;
             z-index: 1000;
             box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+        }
+
+        nav {
+            top: 25px;
+            padding: 6px;
+            gap: 6px;
+        }
+
+        footer {
+            bottom: 25px;
+            padding: 12px 25px;
+            gap: 12px;
+            width: fit-content;
+            white-space: nowrap;
         }
 
         nav button {
@@ -101,12 +113,12 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            min-height: 85vh;
+            min-height: 100vh;
         }
 
         .tab-content.active:not(#home) {
             padding-top: 130px;
-            padding-bottom: 40px;
+            padding-bottom: 130px;
         }
 
         h1 {
@@ -136,7 +148,7 @@
             align-items: center;
         }
 
-        .btn-fill {
+        .btn-fill, .btn-ghost {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -149,24 +161,15 @@
             font-size: 0.85rem;
             transition: transform 0.3s var(--transit);
             cursor: pointer;
+        }
+
+        .btn-fill {
             background: #008cff;
             color: #fff;
             box-shadow: var(--shadow-md);
         }
 
         .btn-ghost {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 16px 40px;
-            border-radius: 16px;
-            font-weight: 800;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            transition: transform 0.3s var(--transit);
-            cursor: pointer;
             background: var(--glass);
             color: #fff;
         }
@@ -175,10 +178,7 @@
             transform: translateY(-3px);
         }
 
-        .category-group {
-            margin-bottom: 60px;
-        }
-
+        .category-group { margin-bottom: 60px; }
         .category-title {
             font-size: 1.8rem;
             font-weight: 800;
@@ -186,10 +186,6 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            color: #fff;
-        }
-
-        .category-title i {
             color: #fff;
         }
 
@@ -213,22 +209,9 @@
             box-shadow: var(--shadow-md);
         }
 
-        .bento-box:hover {
-            transform: translateY(-4px);
-        }
-
-        .bento-box h3 {
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-            font-weight: 800;
-            color: #fff;
-        }
-
-        .bento-box p {
-            color: var(--text-dim);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
+        .bento-box:hover { transform: translateY(-4px); }
+        .bento-box h3 { font-size: 1.3rem; margin-bottom: 12px; font-weight: 800; color: #fff; }
+        .bento-box p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
 
         .pricing-container {
             display: grid;
@@ -249,16 +232,13 @@
         }
 
         .plan-label {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-dim);
-            margin-bottom: 5px;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-8px);
+            letter-spacing: 0.2em;
+            color: #008cff;
+            margin-bottom: 8px;
+            display: block;
         }
 
         .pricing-card.featured {
@@ -268,21 +248,8 @@
             box-shadow: var(--shadow-lg);
         }
 
-        .pricing-card.featured:hover {
-            transform: scale(1.02) translateY(-8px);
-        }
-
-        .price-row {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin: 12px 0;
-        }
-
-        .price-row span {
-            font-size: 1rem;
-            color: var(--text-dim);
-            font-weight: 400;
-        }
+        .price-row { font-size: 2.8rem; font-weight: 800; margin: 12px 0; }
+        .price-row span { font-size: 1rem; color: var(--text-dim); font-weight: 400; }
 
         .feature-list {
             list-style: none;
@@ -296,65 +263,29 @@
             align-items: center;
             gap: 12px;
             color: #ccc;
-            font-size: 0.95rem;
             margin-bottom: 14px;
         }
 
-        .feature-list li i {
-            color: #fff;
-        }
-
-        footer {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            box-shadow: var(--shadow-lg);
-            padding: 12px 25px;
-            margin: 15px auto 25px auto;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: fit-content;
-        }
-
-        footer p,
-        footer span {
+        footer p, footer span {
             font-size: 0.85rem;
             color: var(--text-dim);
             font-weight: 600;
         }
 
-        footer span {
-            color: #fff;
-        }
-
-        footer .separator {
-            opacity: 0.2;
-        }
+        footer span { color: #fff; }
+        footer .separator { opacity: 0.2; }
 
         @media (max-width: 900px) {
-            .pricing-container {
-                grid-template-columns: 1fr;
-            }
-            .pricing-card.featured {
-                grid-column: 1;
-                transform: scale(1);
-            }
-            .pricing-card.featured:hover {
-                transform: translateY(-8px);
-            }
-            .cta-group {
-                flex-direction: column;
-                width: 100%;
-            }
+            .pricing-container { grid-template-columns: 1fr; }
+            .pricing-card.featured { grid-column: 1; transform: scale(1); }
             footer {
                 flex-direction: column;
                 text-align: center;
                 gap: 5px;
+                white-space: normal;
+                bottom: 15px;
             }
-            .separator {
-                display: none;
-            }
+            .separator { display: none; }
         }
     </style>
 </head>
@@ -373,12 +304,8 @@
             Apple Client is designed to provide a distinct advantage through high-quality features and a seamless, user-friendly experience.
         </p>
         <div class="cta-group">
-            <button onclick="showTab('pricing')" class="btn-fill">
-                View Pricing <i data-lucide="arrow-right" size="18"></i>
-            </button>
-            <button onclick="showTab('features')" class="btn-ghost">
-                View Features <i data-lucide="arrow-down" size="18"></i>
-            </button>
+            <button onclick="showTab('pricing')" class="btn-fill">View Pricing <i data-lucide="arrow-right" size="18"></i></button>
+            <button onclick="showTab('features')" class="btn-ghost">View Features <i data-lucide="arrow-down" size="18"></i></button>
         </div>
     </section>
 
@@ -413,7 +340,7 @@
             <div class="tech-grid">
                 <div class="bento-box"><h3>Inventory Manager</h3><p>Automatically cleans and organizes your inventory, retaining only the best equipment.</p></div>
                 <div class="bento-box"><h3>Scaffold</h3><p>Automatically places blocks beneath you as you walk, allowing for rapid bridging.</p></div>
-                <div class="bento-box"><h3>Breaker</h3><p>Automatically destroys beds, eggs, or cores through walls and obstacles within range.</p></div>
+                <div class="bento-box"><h3>Breaker</h3><p>Automatically destroys beds, eggs, or cores through walls within range.</p></div>
                 <div class="bento-box"><h3>Auto Tool</h3><p>Automatically selects the most efficient tool for the block you are currently breaking.</p></div>
                 <div class="bento-box"><h3>Chest Stealer</h3><p>Instantly transfers all items from a chest into your own inventory.</p></div>
             </div>
@@ -423,7 +350,7 @@
             <div class="category-title"><i data-lucide="eye"></i> Visual</div>
             <p class="category-desc">Gain superior environmental awareness and enhanced player perspectives.</p>
             <div class="tech-grid">
-                <div class="bento-box"><h3>HUD</h3><p>Displays a highly customizable on-screen interface for client information and active modules.</p></div>
+                <div class="bento-box"><h3>HUD</h3><p>Displays a highly customizable on-screen interface for client information.</p></div>
                 <div class="bento-box"><h3>Target HUD</h3><p>Displays a dedicated visual overlay of your current target's health and status.</p></div>
                 <div class="bento-box"><h3>ESP</h3><p>Displays detailed player information, location, and health through walls.</p></div>
                 <div class="bento-box"><h3>Animations</h3><p>Customizes block-hitting and item animations for a unique visual experience.</p></div>
@@ -432,21 +359,19 @@
 
         <div class="category-group">
             <div class="category-title"><i data-lucide="ghost"></i> Ghost</div>
-            <p class="category-desc">Subtle enhancements designed to remain undetectable to other players and anti-cheats.</p>
+            <p class="category-desc">Subtle enhancements designed to remain undetectable to other players.</p>
             <div class="tech-grid">
-                <div class="bento-box"><h3>Auto Clicker</h3><p>Implements humanized clicking patterns to maintain a high CPS while appearing legitimate.</p></div>
+                <div class="bento-box"><h3>Auto Clicker</h3><p>Implements humanized clicking patterns to maintain high CPS.</p></div>
                 <div class="bento-box"><h3>Aim Assist</h3><p>Provides smooth, natural assistance to keep your crosshair locked onto targets.</p></div>
                 <div class="bento-box"><h3>Reach</h3><p>Slightly extends your attack range to provide a subtle competitive edge.</p></div>
-                <div class="bento-box"><h3>Back Track</h3><p>Delays opponent position packets, allowing you to hit targets where they were previously located.</p></div>
-                <div class="bento-box"><h3>Lag Range</h3><p>Optimizes your reach and hit registration during network latency spikes.</p></div>
+                <div class="bento-box"><h3>Back Track</h3><p>Delays opponent position packets, allowing you to hit where they were previously.</p></div>
                 <div class="bento-box"><h3>No Hit Delay</h3><p>Optimizes attack timing by removing standard combat cooldown delays.</p></div>
-                <div class="bento-box"><h3>Fast Place</h3><p>Significantly reduces the delay between placing blocks for faster building.</p></div>
             </div>
         </div>
 
         <div class="category-group">
             <div class="category-title"><i data-lucide="skull"></i> Exploit</div>
-            <p class="category-desc">Powerful modifications that manipulate server-side logic and game mechanics.</p>
+            <p class="category-desc">Powerful modifications that manipulate server-side logic.</p>
             <div class="tech-grid">
                 <div class="bento-box"><h3>Disabler</h3><p>Attempts to disable or bypass specific anti-cheat checks across various servers.</p></div>
             </div>
@@ -456,11 +381,10 @@
     <section id="pricing" class="tab-content">
         <h1>Pricing</h1>
         <p class="subtitle">Experience the best of what we offer with full Apple Client access included.</p>
-
         <div class="pricing-container">
             <div></div>
             <div class="pricing-card featured">
-                <div class="plan-label">Apple Client</div>
+                <span class="plan-label">Apple Client Premium</span>
                 <div class="price-row">$14.99 <span>/ lifetime</span></div>
                 <ul class="feature-list">
                     <li><i data-lucide="circle-check" size="18"></i> One-time purchase</li>
@@ -473,13 +397,13 @@
             <div></div>
         </div>
     </section>
-
-    <footer>
-        <p>&copy; 2026 <span>Apple Client</span>. All rights reserved.</p>
-        <span class="separator">|</span>
-        <p>Developed by <span>X</span> / <span>Alex</span> &amp; <span>Ethan</span></p>
-    </footer>
 </main>
+
+<footer>
+    <p>&copy; 2026 <span>Apple Client</span>. All rights reserved.</p>
+    <span class="separator">|</span>
+    <p>Developed by <span>X</span> / <span>Alex</span> &amp; <span>Ethan</span></p>
+</footer>
 
 <script>
     lucide.createIcons();
