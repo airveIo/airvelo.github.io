@@ -31,9 +31,9 @@
             --glass: rgba(255, 255, 255, 0.08);
             --text-dim: #9a9a9a;
             --transit: cubic-bezier(0.4, 0, 0.2, 1);
-            --shadow-sm: 0 4px 12px rgba(0,0,0,0.1);
-            --shadow-md: 0 10px 30px -10px rgba(0,0,0,0.5);
-            --shadow-lg: 0 20px 50px -15px rgba(0,0,0,0.7);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 20px 50px -15px rgba(0, 0, 0, 0.7);
         }
 
         * {
@@ -196,7 +196,10 @@
             transform: translateY(-3px);
         }
 
-        .category-group { margin-bottom: 60px; }
+        .category-group { 
+            margin-bottom: 60px; 
+        }
+
         .category-title {
             font-size: 1.8rem;
             font-weight: 800;
@@ -227,9 +230,22 @@
             box-shadow: var(--shadow-md);
         }
 
-        .bento-box:hover { transform: translateY(-4px); }
-        .bento-box h3 { font-size: 1.3rem; margin-bottom: 12px; font-weight: 800; color: #fff; }
-        .bento-box p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
+        .bento-box:hover { 
+            transform: translateY(-4px); 
+        }
+
+        .bento-box h3 { 
+            font-size: 1.3rem; 
+            margin-bottom: 12px; 
+            font-weight: 800; 
+            color: #fff; 
+        }
+
+        .bento-box p { 
+            color: var(--text-dim); 
+            font-size: 0.95rem; 
+            line-height: 1.6; 
+        }
 
         .pricing-container {
             display: grid;
@@ -266,8 +282,17 @@
             box-shadow: var(--shadow-lg);
         }
 
-        .price-row { font-size: 2.8rem; font-weight: 800; margin: 12px 0; }
-        .price-row span { font-size: 1rem; color: var(--text-dim); font-weight: 400; }
+        .price-row { 
+            font-size: 2.8rem; 
+            font-weight: 800; 
+            margin: 12px 0; 
+        }
+
+        .price-row span { 
+            font-size: 1rem; 
+            color: var(--text-dim); 
+            font-weight: 400; 
+        }
 
         .feature-list {
             list-style: none;
@@ -290,12 +315,22 @@
             font-weight: 600;
         }
 
-        footer span { color: #fff; }
-        footer .separator { opacity: 0.2; }
+        footer span { 
+            color: #fff; 
+        }
+
+        footer .separator { 
+            opacity: 0.2; 
+        }
 
         @media (max-width: 900px) {
-            .pricing-container { grid-template-columns: 1fr; }
-            .pricing-card.featured { grid-column: 1; transform: scale(1); }
+            .pricing-container { 
+                grid-template-columns: 1fr; 
+            }
+            .pricing-card.featured { 
+                grid-column: 1; 
+                transform: scale(1); 
+            }
             footer {
                 flex-direction: column;
                 text-align: center;
@@ -303,16 +338,18 @@
                 white-space: normal;
                 bottom: 15px;
             }
-            .separator { display: none; }
+            .separator { 
+                display: none; 
+            }
         }
     </style>
 </head>
 <body>
 
 <nav>
-    <button id="nav-home" class="active" onclick="showTab('home')"><i data-lucide="home" size="16"></i> Home</button>
-    <button id="nav-features" onclick="showTab('features')"><i data-lucide="list" size="16"></i> Features</button>
-    <button id="nav-pricing" onclick="showTab('pricing')"><i data-lucide="wallet" size="16"></i> Pricing</button>
+    <button id="nav-home" class="active" onclick="showTab('home')"><i data-lucide="home"></i> Home</button>
+    <button id="nav-features" onclick="showTab('features')"><i data-lucide="list"></i> Features</button>
+    <button id="nav-pricing" onclick="showTab('pricing')"><i data-lucide="wallet"></i> Pricing</button>
 </nav>
 
 <main>
@@ -320,14 +357,15 @@
         <h1>Apple Client</h1>
         <p class="subtitle">Apple Client is designed to provide a distinct advantage through high-quality features and a seamless, user-friendly experience.</p>
         <div class="cta-group">
-            <button onclick="showTab('pricing')" class="btn-fill">View Pricing <i data-lucide="arrow-right" size="18"></i></button>
-            <button onclick="showTab('features')" class="btn-ghost">View Features <i data-lucide="arrow-down" size="18"></i></button>
+            <button onclick="showTab('pricing')" class="btn-fill">View Pricing <i data-lucide="arrow-right"></i></button>
+            <button onclick="showTab('features')" class="btn-ghost">View Features <i data-lucide="arrow-down"></i></button>
         </div>
     </section>
 
     <section id="features" class="tab-content">
         <h1>Features</h1>
         <p class="subtitle">Explore the complete collection of modules designed to give you a distinct advantage.</p>
+        
         <div class="category-group">
             <div class="category-title"><i data-lucide="swords"></i> Combat</div>
             <p class="category-desc">Dominate PvP with precision-engineered combat tools.</p>
@@ -406,12 +444,12 @@
                 <span class="plan-label">Apple Client</span>
                 <div class="price-row">$14.99 <span>/ lifetime</span></div>
                 <ul class="feature-list">
-                    <li><i data-lucide="circle-check" size="18"></i> One-time purchase</li>
-                    <li><i data-lucide="circle-check" size="18"></i> No additional charges</li>
-                    <li><i data-lucide="circle-check" size="18"></i> Frequent updates</li>
-                    <li><i data-lucide="circle-check" size="18"></i> Active support</li>
+                    <li><i data-lucide="circle-check"></i> One-time purchase</li>
+                    <li><i data-lucide="circle-check"></i> No additional charges</li>
+                    <li><i data-lucide="circle-check"></i> Frequent updates</li>
+                    <li><i data-lucide="circle-check"></i> Active support</li>
                 </ul>
-                <button onclick="openDiscord()" class="btn-fill">Purchase <i data-lucide="arrow-right" size="18"></i></button>
+                <button onclick="openDiscord()" class="btn-fill">Purchase <i data-lucide="arrow-right"></i></button>
             </div>
             <div></div>
         </div>
