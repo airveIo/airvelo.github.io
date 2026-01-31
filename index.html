@@ -9,7 +9,6 @@
     <style>
         :root {
             --primary: #ffffff;
-            --accent: #3b82f6;
             --bg: #0a0a0a;
             --glass: rgba(255, 255, 255, 0.08);
             --text-dim: #9a9a9a;
@@ -26,6 +25,8 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             cursor: default;
             font-size: 15.5px;
+            border: none !important;
+            outline: none !important;
         }
 
         body {
@@ -50,18 +51,17 @@
             display: flex;
             gap: 6px;
             z-index: 1000;
-            box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.02);
+            box-shadow: var(--shadow-lg);
         }
 
         nav button {
             background: transparent;
-            border: none;
             color: var(--text-dim);
             padding: 10px 22px;
             border-radius: 14px;
             font-size: 0.85rem;
             font-weight: 600;
-            transition: all 0.3s var(--transit);
+            transition: transform 0.3s var(--transit);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -71,7 +71,6 @@
         nav button.active {
             background: var(--glass);
             color: #fff;
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
         }
 
         main {
@@ -130,6 +129,13 @@
             margin-right: auto;
         }
 
+        .cta-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+
         .btn-fill {
             display: inline-flex;
             align-items: center;
@@ -141,17 +147,32 @@
             text-decoration: none;
             text-transform: uppercase;
             font-size: 0.85rem;
-            transition: all 0.3s var(--transit);
+            transition: transform 0.3s var(--transit);
             cursor: pointer;
-            border: none;
             background: #fff;
             color: #000;
             box-shadow: var(--shadow-md);
         }
 
-        .btn-fill:hover {
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 40px;
+            border-radius: 16px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: transform 0.3s var(--transit);
+            cursor: pointer;
+            background: var(--glass);
+            color: #fff;
+        }
+
+        .btn-fill:hover, .btn-ghost:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px -5px rgba(0,0,0,0.8);
         }
 
         .category-group {
@@ -165,10 +186,11 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            color: #fff;
         }
 
         .category-title i {
-            color: var(--accent);
+            color: #fff;
         }
 
         .category-desc {
@@ -187,13 +209,12 @@
             background: var(--glass);
             border-radius: 24px;
             padding: 32px;
-            transition: all 0.3s var(--transit);
+            transition: transform 0.3s var(--transit);
             box-shadow: var(--shadow-md);
         }
 
         .bento-box:hover {
             transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
         }
 
         .bento-box h3 {
@@ -222,20 +243,24 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            transition: all 0.4s var(--transit);
+            transition: transform 0.4s var(--transit);
             box-shadow: var(--shadow-md);
             position: relative;
         }
 
         .pricing-card:hover {
             transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
         }
 
         .pricing-card.featured {
+            grid-column: 2;
             transform: scale(1.02);
             background: rgba(255, 255, 255, 0.05);
             box-shadow: var(--shadow-lg);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.02) translateY(-8px);
         }
 
         .most-popular {
@@ -243,8 +268,8 @@
             top: -14px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--accent);
-            color: #fff;
+            background: #fff;
+            color: #000;
             padding: 6px 18px;
             border-radius: 100px;
             font-size: 0.7rem;
@@ -282,14 +307,14 @@
         }
 
         .feature-list li i {
-            color: var(--accent);
+            color: #fff;
         }
 
         footer {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
             border-radius: 18px;
-            box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.02);
+            box-shadow: var(--shadow-lg);
             padding: 12px 25px;
             margin: 15px auto 25px auto;
             display: flex;
@@ -317,13 +342,22 @@
             .pricing-container {
                 grid-template-columns: 1fr;
             }
-
+            .pricing-card.featured {
+                grid-column: 1;
+                transform: scale(1);
+            }
+            .pricing-card.featured:hover {
+                transform: translateY(-8px);
+            }
+            .cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
             footer {
                 flex-direction: column;
                 text-align: center;
                 gap: 5px;
             }
-
             .separator {
                 display: none;
             }
@@ -342,27 +376,30 @@
     <section id="home" class="tab-content active">
         <h1>Apple Client</h1>
         <p class="subtitle">
-            Apple Client is designed to give you an advantage with high-quality features and a seamless, user-friendly experience.
+            Apple Client is designed to provide a distinct competitive advantage through high-quality features and a seamless, user-friendly experience.
         </p>
-        <button onclick="showTab('pricing')" class="btn-fill">
-            View Pricing <i data-lucide="arrow-right" size="18"></i>
-        </button>
+        <div class="cta-group">
+            <button onclick="showTab('pricing')" class="btn-fill">
+                View Pricing <i data-lucide="arrow-right" size="18"></i>
+            </button>
+            <button onclick="showTab('features')" class="btn-ghost">
+                View Features <i data-lucide="layers" size="18"></i>
+            </button>
+        </div>
     </section>
 
     <section id="features" class="tab-content">
         <h1>Features</h1>
-        <p class="subtitle">Optimized for peak performance and an exceptional experience.</p>
+        <p class="subtitle">Optimized for peak performance and an exceptional user experience.</p>
 
         <div class="category-group">
             <div class="category-title"><i data-lucide="swords"></i> Combat</div>
-            <p class="category-desc">Dominate PvP with precision-engineered tools.</p>
+            <p class="category-desc">Dominate PvP with precision-engineered combat tools.</p>
             <div class="tech-grid">
-                <div class="bento-box"><h3>Auto Clicker</h3><p>Implements humanized clicking patterns to maintain high CPS while bypassing detection.</p></div>
-                <div class="bento-box"><h3>Aim Assist</h3><p>Provides smooth, natural assistance to keep your crosshair locked on targets.</p></div>
-                <div class="bento-box"><h3>Velocity</h3><p>Adjusts knockback received during combat for a tactical advantage.</p></div>
-                <div class="bento-box"><h3>Reach</h3><p>Slightly extends attack range to help you land the first hit in every engagement.</p></div>
-                <div class="bento-box"><h3>Lag Range</h3><p>Optimizes your reach and hit registration during network latency spikes.</p></div>
-                <div class="bento-box"><h3>Back Track</h3><p>Delays opponent position packets to hit targets where they were previously located.</p></div>
+                <div class="bento-box"><h3>Kill Aura</h3><p>Automatically attacks entities within a specified range with maximum efficiency.</p></div>
+                <div class="bento-box"><h3>Anti Bot</h3><p>Identifies and ignores server-side combat bots to prevent bans and distractions.</p></div>
+                <div class="bento-box"><h3>Criticals</h3><p>Ensures every hit landed is a critical strike, significantly increasing your damage output.</p></div>
+                <div class="bento-box"><h3>Velocity</h3><p>Adjusts the knockback received during combat to provide a tactical advantage.</p></div>
             </div>
         </div>
 
@@ -370,71 +407,79 @@
             <div class="category-title"><i data-lucide="zap"></i> Movement</div>
             <p class="category-desc">Enhance your agility and maneuverability across all environments.</p>
             <div class="tech-grid">
+                <div class="bento-box"><h3>Speed</h3><p>Modifies movement speed to traverse the map significantly faster.</p></div>
+                <div class="bento-box"><h3>Flight</h3><p>Grants the ability to fly through the air, bypassing terrain and obstacles.</p></div>
+                <div class="bento-box"><h3>Target Strafe</h3><p>Automatically circles around your combat target, making you difficult to hit.</p></div>
                 <div class="bento-box"><h3>No Jump Delay</h3><p>Eliminates the exhaustion delay between jumps for smoother movement.</p></div>
-                <div class="bento-box"><h3>Bridge Assist</h3><p>Automatically engages sneak at block edges to prevent falling while bridging.</p></div>
+                <div class="bento-box"><h3>No Slowdown</h3><p>Prevents speed reduction while using items, eating, or walking through obstacles.</p></div>
+                <div class="bento-box"><h3>Inventory Move</h3><p>Allows you to walk and sprint while your inventory or chests are open.</p></div>
+            </div>
+        </div>
+
+        <div class="category-group">
+            <div class="category-title"><i data-lucide="user"></i> Player</div>
+            <p class="category-desc">Manage your inventory and character state with automated precision.</p>
+            <div class="tech-grid">
+                <div class="bento-box"><h3>Inventory Manager</h3><p>Automatically cleans and organizes your inventory, retaining only the best equipment.</p></div>
+                <div class="bento-box"><h3>Scaffold</h3><p>Automatically places blocks beneath you as you walk, allowing for rapid bridging.</p></div>
+                <div class="bento-box"><h3>Auto Tool</h3><p>Automatically selects the most efficient tool for the block you are currently breaking.</p></div>
+                <div class="bento-box"><h3>Chest Stealer</h3><p>Instantly transfers all items from a chest into your own inventory.</p></div>
+            </div>
+        </div>
+
+        <div class="category-group">
+            <div class="category-title"><i data-lucide="ghost"></i> Ghost</div>
+            <p class="category-desc">Subtle enhancements designed to remain undetectable to other players and anti-cheats.</p>
+            <div class="tech-grid">
+                <div class="bento-box"><h3>Auto Clicker</h3><p>Implements humanized clicking patterns to maintain a high CPS while appearing legitimate.</p></div>
+                <div class="bento-box"><h3>Aim Assist</h3><p>Provides smooth, natural assistance to keep your crosshair locked onto targets.</p></div>
+                <div class="bento-box"><h3>Reach</h3><p>Slightly extends your attack range to provide a subtle competitive edge.</p></div>
+                <div class="bento-box"><h3>Back Track</h3><p>Delays opponent position packets, allowing you to hit targets where they were previously located.</p></div>
+                <div class="bento-box"><h3>Lag Range</h3><p>Optimizes your reach and hit registration during network latency spikes.</p></div>
+                <div class="bento-box"><h3>No Hit Delay</h3><p>Optimizes attack timing by removing standard combat cooldown delays.</p></div>
+                <div class="bento-box"><h3>Fast Place</h3><p>Significantly reduces the delay between placing blocks for faster building.</p></div>
             </div>
         </div>
 
         <div class="category-group">
             <div class="category-title"><i data-lucide="eye"></i> Visual</div>
-            <p class="category-desc">Gain superior environmental awareness and improved player perspective.</p>
+            <p class="category-desc">Gain superior environmental awareness and enhanced player perspectives.</p>
             <div class="tech-grid">
-                <div class="bento-box"><h3>ESP</h3><p>Displays detailed player information, including 2D/3D boxes and health status.</p></div>
+                <div class="bento-box"><h3>HUD</h3><p>Displays a highly customizable on-screen interface for client information and active modules.</p></div>
+                <div class="bento-box"><h3>Target HUD</h3><p>Displays a dedicated visual overlay of your current target's health and status.</p></div>
+                <div class="bento-box"><h3>ESP</h3><p>Displays detailed player information, location, and health through walls.</p></div>
+                <div class="bento-box"><h3>Animations</h3><p>Customizes block-hitting and item animations for a unique visual experience.</p></div>
             </div>
         </div>
 
         <div class="category-group">
-            <div class="category-title"><i data-lucide="settings"></i> Utility</div>
-            <p class="category-desc">Comprehensive tools to customize and enhance your experience.</p>
+            <div class="category-title"><i data-lucide="skull"></i> Exploit</div>
+            <p class="category-desc">Powerful modifications that manipulate server-side logic and game mechanics.</p>
             <div class="tech-grid">
-                <div class="bento-box"><h3>No Hit Delay</h3><p>Optimizes attack timing by removing standard cooldown delays.</p></div>
-                <div class="bento-box"><h3>Auto Tool</h3><p>Automatically selects the most efficient tool for the block you are breaking.</p></div>
-                <div class="bento-box"><h3>Fast Place</h3><p>Significantly reduces the delay between placing blocks for rapid building.</p></div>
+                <div class="bento-box"><h3>Disabler</h3><p>Attempts to disable or bypass specific anti-cheat checks across various servers.</p></div>
             </div>
         </div>
     </section>
 
     <section id="pricing" class="tab-content">
-        <h1>Choose Your Plan</h1>
-        <p class="subtitle">Select the perfect plan for your needs. All options include full access to Apple Client.</p>
+        <h1>Lifetime</h1>
+        <p class="subtitle">Join Apple Client with permanent access. No recurring fees.</p>
 
         <div class="pricing-container">
-            <div class="pricing-card">
-                <div style="font-weight:800;font-size:1.3rem;">Monthly</div>
-                <div class="price-row">$5.99 <span>/ 30 days</span></div>
-                <ul class="feature-list">
-                    <li><i data-lucide="shield-check"></i> Anti-Screenshare</li>
-                    <li><i data-lucide="cpu"></i> High-Quality Features</li>
-                    <li><i data-lucide="refresh-cw"></i> Regular Updates</li>
-                    <li><i data-lucide="message-circle"></i> 24/7 Support</li>
-                </ul>
-                <button onclick="openDiscord()" class="btn-fill">Purchase <i data-lucide="arrow-right" size="18"></i></button>
-            </div>
-
+            <div></div>
             <div class="pricing-card featured">
-                <div class="most-popular">Most Popular</div>
-                <div style="font-weight:800;font-size:1.3rem;">Quarterly</div>
-                <div class="price-row">$14.99 <span>/ 90 days</span></div>
+                <div class="most-popular">One-time purchase</div>
+                <div style="font-weight:800;font-size:1.3rem;">Lifetime</div>
+                <div class="price-row">$19.99 <span>/ permanent</span></div>
                 <ul class="feature-list">
-                    <li><i data-lucide="shield-check"></i> Anti-Screenshare</li>
-                    <li><i data-lucide="cpu"></i> High-Quality Features</li>
-                    <li><i data-lucide="refresh-cw"></i> Regular Updates</li>
-                    <li><i data-lucide="message-circle"></i> 24/7 Support</li>
+                    <li><i data-lucide="check" size="18"></i> No additional charges</li>
+                    <li><i data-lucide="check" size="18"></i> Lifetime updates</li>
+                    <li><i data-lucide="check" size="18"></i> Lifetime support</li>
+                    <li><i data-lucide="check" size="18"></i> Full module access</li>
                 </ul>
                 <button onclick="openDiscord()" class="btn-fill">Purchase <i data-lucide="arrow-right" size="18"></i></button>
             </div>
-
-            <div class="pricing-card">
-                <div style="font-weight:800;font-size:1.3rem;">Yearly</div>
-                <div class="price-row">$39.99 <span>/ 365 days</span></div>
-                <ul class="feature-list">
-                    <li><i data-lucide="shield-check"></i> Anti-Screenshare</li>
-                    <li><i data-lucide="cpu"></i> High-Quality Features</li>
-                    <li><i data-lucide="refresh-cw"></i> Regular Updates</li>
-                    <li><i data-lucide="message-circle"></i> 24/7 Support</li>
-                </ul>
-                <button onclick="openDiscord()" class="btn-fill">Purchase <i data-lucide="arrow-right" size="18"></i></button>
-            </div>
+            <div></div>
         </div>
     </section>
 
