@@ -1,1 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slurp Client</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+            scrollbar-gutter: stable;
+        }
 
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a2a;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #333;
+        }
+
+        :root {
+            --primary: #ffffff;
+            --bg: #0a0a0a;
+            --glass: rgba(255, 255, 255, 0.08);
+            --text-dim: #9a9a9a;
+            --transit: cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 20px 50px -15px rgba(0, 0, 0, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: default;
+            font-size: 15.5px;
+            border: none !important;
+            outline: none !important;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        nav, footer {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+        }
+
+        nav {
+            top: 25px;
+            padding: 6px;
+            gap: 6px;
+        }
+
+        footer {
+            bottom: 25px;
+            padding: 12px 25px;
+            gap: 12px;
+            width: fit-content;
+            white-space: nowrap;
+        }
+
+        nav button {
+            background: transparent;
+            color: var(--text-dim);
+            padding: 10px 22px;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s var(--transit);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav button.active {
+            background: var(--glass);
+            color: #fff;
+        }
+
+        main {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 0 24px;
+            flex: 1;
+            width: 100%;
+        }
+
+        .tab-content {
+            display: none;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.5s var(--transit);
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #home.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .tab-content.active:not(#home) {
+            padding-top: 130px;
+            padding-bottom: 150px;
+        }
+
+        h1 {
+            font-size: clamp(3.2rem, 7vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            margin-top: -25px;
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-fill, .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 40px;
+            border-radius: 16px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: transform 0.3s var(--transit);
+            cursor: pointer;
+        }
+
+        .btn-fill {
+            background: #008cff;
+            color: #fff;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-ghost {
+            background: var(--glass);
+            color: #fff;
+        }
+
+        .btn-fill:hover, .btn-ghost:hover {
+            transform: translateY(-3px);
+        }
+
+        .category-group { 
+            margin-bottom: 80px; 
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+        }
+
+        .category-desc {
+            color: var(--text-dim);
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 22px;
+        }
+
+        .bento-box {
+            background: var(--glass);
+            border-radius: 24px;
+            padding: 32px;
+            transition: transform 0.3s var(--transit);
+            box-shadow: var(--shadow-md);
+        }
+
+        .bento-box:hover { 
+            transform: translateY(-4px); 
+        }
+
+        .bento-box h3 { 
+            font-size: 1.3rem; 
+            margin-bottom: 12px; 
+            font-weight: 800; 
+            color: #fff; 
+        }
+
+        .bento-box p { 
+            color: var(--text-dim); 
+            font-size: 0.95rem; 
+            line-height: 1.6; 
+        }
+
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .pricing-card {
+            background: var(--glass);
+            border-radius: 32px;
+            padding: 40px 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s var(--transit);
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .plan-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #9a9a9a;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .pricing-card.featured {
+            grid-column: 2;
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .price-row { 
+            font-size: 2.8rem; 
+            font-weight: 800; 
+            margin: 12px 0; 
+        }
+
+        .price-row span { 
+            font-size: 1rem; 
+            color: var(--text-dim); 
+            font-weight: 400; 
+        }
+
+        .feature-list {
+            list-style: none;
+            text-align: left;
+            margin: 25px 0;
+            flex-grow: 1;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #ccc;
+            margin-bottom: 14px;
+        }
+
+        footer p, footer span {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        footer span { 
+            color: #fff; 
+        }
+
+        footer .separator { 
+            opacity: 0.2; 
+        }
+
+        @media (max-width: 900px) {
+            .pricing-container { 
+                grid-template-columns: 1fr; 
+            }
+            .pricing-card.featured { 
+                grid-column: 1; 
+                transform: scale(1); 
+            }
+            footer {
+                flex-direction: column;
+                text-align: center;
+                gap: 5px;
+                white-space: normal;
+                bottom: 15px;
+            }
+            .separator { 
+                display: none; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <button id="nav-home" class="active" onclick="showTab('home')"><i data-lucide="home"></i> Home</button>
+    <button id="nav-features" onclick="showTab('features')"><i data-lucide="list"></i> Features</button>
+    <button id="nav-pricing" onclick="showTab('pricing')"><i data-lucide="wallet"></i> Pricing</button>
+</nav>
+
+<main>
+    <section id="home" class="tab-content active">
+        <h1>Slurp Client</h1>
+        <p class="subtitle">Slurp Client provides a distinct advantage through high-quality features and a seamless, user-friendly experience.</p>
+        <div class="cta-group">
+            <button onclick="showTab('pricing')" class="btn-fill">View Pricing <i data-lucide="arrow-right"></i></button>
+            <button onclick="showTab('features')" class="btn-ghost">View Features <i data-lucide="arrow-down"></i></button>
+        </div>
+    </section>
+
+    <section id="features" class="tab-content">
+        <h1>Features</h1>
+        <p class="subtitle">Explore our complete collection of modules designed to provide a competitive edge.</p>
+        
+        <div class="category-group">
+            <div class="category-title"><i data-lucide="swords"></i> Combat</div>
+            <p class="category-desc">Dominate PvP with precision-engineered combat tools.</p>
+            <div class="tech-grid">
+                <div class="bento-box"><h3>Kill Aura</h3><p>Automatically attacks entities within a specified range with maximum efficiency.</p></div>
+                <div class="bento-box"><h3>Anti Bot</h3><p>Identifies and ignores server-side combat bots to prevent bans and distractions.</p></div>
+                <div class="bento-box"><h3>Criticals</h3><p>Ensures every strike is a critical hit, significantly increasing your damage output.</p></div>
+                <div class="bento-box"><h3>Velocity</h3><p>Adjusts the knockback received during combat to provide a tactical advantage.</p></div>
+                <div class="bento-box"><h3>Auto Block</h3><p>Automatically interacts with your shield or sword to mitigate damage during combat.</p></div>
+            </div>
+        </div>
+
+        <div class="category-group">
+            <div class="category-title"><i data-lucide="zap"></i> Movement</div>
+            <p class="category-desc">Enhance your agility and maneuverability across all environments.</p>
+            <div class="tech-grid">
+                <div class="bento-box"><h3>Sprint</h3><p>Automatically maintains a sprinting state to maximize movement speed without manual input.</p></div>
+                <div class="bento-box"><h3>Speed</h3><p>Modifies movement speed to traverse the map significantly faster.</p></div>
+                <div class="bento-box"><h3>Flight</h3><p>Grants the ability to fly through the air, bypassing terrain and obstacles.</p></div>
+                <div class="bento-box"><h3>Target Strafe</h3><p>Automatically circles around your combat target, making you difficult to hit.</p></div>
+                <div class="bento-box"><h3>No Jump Delay</h3><p>Eliminates the exhaustion delay between jumps for smoother movement.</p></div>
+                <div class="bento-box"><h3>No Slowdown</h3><p>Prevents speed reduction while using items, eating, or walking through obstacles.</p></div>
+                <div class="bento-box"><h3>Inventory Move</h3><p>Allows you to walk and sprint while your inventory or chests are open.</p></div>
+            </div>
+        </div>
+
+        <div class="category-group">
+            <div class="category-title"><i data-lucide="user-round"></i> Player</div>
+            <p class="category-desc">Manage your inventory and character state with automated precision.</p>
+            <div class="tech-grid">
+                <div class="bento-box"><h3>Inventory Manager</h3><p>Automatically cleans and organizes your inventory, retaining only the best equipment.</p></div>
+                <div class="bento-box"><h3>Scaffold</h3><p>Automatically places blocks beneath you as you walk, allowing for rapid bridging.</p></div>
+                <div class="bento-box"><h3>Breaker</h3><p>Automatically destroys beds, eggs, or cores through walls within range.</p></div>
+                <div class="bento-box"><h3>Auto Tool</h3><p>Automatically selects the most efficient tool for the block you are currently breaking.</p></div>
+                <div class="bento-box"><h3>Chest Stealer</h3><p>Instantly transfers all items from a chest into your own inventory.</p></div>
+            </div>
+        </div>
+
+        <div class="category-group">
+            <div class="category-title"><i data-lucide="eye"></i> Visual</div>
+            <p class="category-desc">Gain superior environmental awareness and enhanced player perspectives.</p>
+            <div class="tech-grid">
+                <div class="bento-box"><h3>HUD</h3><p>Displays a highly customizable on-screen interface for client information.</p></div>
+                <div class="bento-box"><h3>Target HUD</h3><p>Displays a dedicated visual overlay of your current target's health and status.</p></div>
+                <div class="bento-box"><h3>ESP</h3><p>Displays detailed player information, location, and health through walls.</p></div>
+                <div class="bento-box"><h3>Animations</h3><p>Customizes block-hitting and item animations for a unique visual experience.</p></div>
+            </div>
+        </div>
+
+        <div class="category-group">
+            <div class="category-title"><i data-lucide="ghost"></i> Ghost</div>
+            <p class="category-desc">Subtle enhancements designed to remain undetectable to other players.</p>
+            <div class="tech-grid">
+                <div class="bento-box"><h3>Keep Sprint</h3><p>Prevents the sprint state from being canceled upon hitting an entity, maintaining momentum during combos.</p></div>
+                <div class="bento-box"><h3>Auto Clicker</h3><p>Implements humanized clicking patterns to maintain high CPS.</p></div>
+                <div class="bento-box"><h3>Aim Assist</h3><p>Provides smooth, natural assistance to keep your crosshair locked onto targets.</p></div>
+                <div class="bento-box"><h3>Reach</h3><p>Slightly extends your attack range to provide a subtle competitive edge.</p></div>
+                <div class="bento-box"><h3>Back Track</h3><p>Delays opponent position packets, allowing you to hit where they were previously.</p></div>
+                <div class="bento-box"><h3>No Hit Delay</h3><p>Optimizes attack timing by removing standard combat cooldown delays.</p></div>
+            </div>
+        </div>
+
+        <div class="category-group">
+            <div class="category-title"><i data-lucide="skull"></i> Exploit</div>
+            <p class="category-desc">Powerful modifications that manipulate server-side logic.</p>
+            <div class="tech-grid">
+                <div class="bento-box"><h3>Disabler</h3><p>Attempts to disable or bypass specific anti-cheat checks across various servers.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="tab-content">
+        <h1>Pricing</h1>
+        <p class="subtitle">Experience the full power of Slurp Client with lifetime access.</p>
+        <div class="pricing-container">
+            <div></div>
+            <div class="pricing-card featured">
+                <span class="plan-label">Slurp Client</span>
+                <div class="price-row">$14.99 <span>/ lifetime</span></div>
+                <ul class="feature-list">
+                    <li><i data-lucide="circle-check"></i> One-time purchase</li>
+                    <li><i data-lucide="circle-check"></i> No additional charges</li>
+                    <li><i data-lucide="circle-check"></i> Frequent updates</li>
+                    <li><i data-lucide="circle-check"></i> Active support</li>
+                </ul>
+                <button onclick="openDiscord()" class="btn-fill">Purchase <i data-lucide="arrow-right"></i></button>
+            </div>
+            <div></div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 <span>Slurp Client</span>. All rights reserved.</p>
+    <span class="separator">|</span>
+    <p>Developed by <span>X</span> / <span>Alex</span> &amp; <span>Ethan</span></p>
+</footer>
+
+<script>
+    lucide.createIcons();
+
+    function showTab(tabId) {
+        const contents = document.querySelectorAll('.tab-content');
+        const buttons = document.querySelectorAll('nav button');
+
+        contents.forEach(c => {
+            c.style.display = 'none';
+            c.classList.remove('active');
+        });
+
+        buttons.forEach(b => b.classList.remove('active'));
+
+        const target = document.getElementById(tabId);
+        target.style.display = tabId === 'home' ? 'flex' : 'block';
+
+        setTimeout(() => target.classList.add('active'), 50);
+
+        const activeBtn = document.getElementById(`nav-${tabId}`);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openDiscord() {
+        window.open("https://discord.gg/QCPzTp9e3m", "SlurpDiscord", "width=500,height=750,scrollbars=yes");
+    }
+</script>
+
+</body>
+</html>
