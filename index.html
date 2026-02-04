@@ -58,7 +58,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        nav, footer {
+        nav {
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
@@ -75,14 +75,6 @@
             top: 25px;
             padding: 6px;
             gap: 6px;
-        }
-
-        footer {
-            bottom: 25px;
-            padding: 12px 25px;
-            gap: 12px;
-            width: fit-content;
-            white-space: nowrap;
         }
 
         nav button {
@@ -142,7 +134,7 @@
 
         h1 {
             font-size: clamp(3.2rem, 7vw, 5rem);
-            font-weight: 800;
+            font-weight: 700;
             letter-spacing: -0.05em;
             text-align: center;
             margin-bottom: 35px;
@@ -174,7 +166,7 @@
             gap: 10px;
             padding: 16px 40px;
             border-radius: 16px;
-            font-weight: 800;
+            font-weight: 700;
             text-decoration: none;
             text-transform: uppercase;
             font-size: 0.85rem;
@@ -203,7 +195,7 @@
 
         .category-title {
             font-size: 1.8rem;
-            font-weight: 800;
+            font-weight: 700;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -238,7 +230,7 @@
         .bento-box h3 { 
             font-size: 1.3rem; 
             margin-bottom: 12px; 
-            font-weight: 800; 
+            font-weight: 700; 
             color: #fff; 
         }
 
@@ -269,7 +261,7 @@
 
         .plan-label {
             font-size: 0.75rem;
-            font-weight: 800;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.2em;
             color: #9a9a9a;
@@ -286,7 +278,7 @@
 
         .price-row { 
             font-size: 2.8rem; 
-            font-weight: 800; 
+            font-weight: 700; 
             margin: 12px 0; 
         }
 
@@ -311,20 +303,6 @@
             margin-bottom: 14px;
         }
 
-        footer p, footer span {
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            font-weight: 600;
-        }
-
-        footer span { 
-            color: #fff; 
-        }
-
-        footer .separator { 
-            opacity: 0.2; 
-        }
-
         @media (max-width: 900px) {
             .pricing-container { 
                 grid-template-columns: 1fr; 
@@ -332,16 +310,6 @@
             .pricing-card.featured { 
                 grid-column: 1; 
                 transform: scale(1); 
-            }
-            footer {
-                flex-direction: column;
-                text-align: center;
-                gap: 5px;
-                white-space: normal;
-                bottom: 15px;
-            }
-            .separator { 
-                display: none; 
             }
         }
     </style>
@@ -459,12 +427,6 @@
         </div>
     </section>
 </main>
-
-<footer>
-    <p>&copy; 2026 <span>Slurp Client</span>. All rights reserved.</p>
-    <span class="separator">|</span>
-    <p>Developed by <span>X</span> / <span>Alex</span> &amp; <span>Ethan</span></p>
-</footer>
 
 <script>
     lucide.createIcons();
