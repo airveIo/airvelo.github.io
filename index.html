@@ -4,23 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Slurp</title>
-    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             --bg: #1a1d21;
             --panel: #24292e;
             --panel-border: #30363d;
-            --input-bg: #0d1117;
             --text-main: #e6edf3;
             --text-muted: #8b949e;
             --warning-bg: #3b3215;
             --warning-border: #6a571c;
             --warning-text: #ffda6a;
-            --disabled-bg: #484f58;
         }
 
         * {
             box-sizing: border-box;
+            border-radius: 0 !important;
         }
 
         body {
@@ -28,27 +26,24 @@
             height: 100vh;
             background-color: var(--bg);
             color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                         Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
             user-select: none;
             -webkit-user-select: none;
-            -ms-user-select: none;
             overflow: hidden;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        .login-container {
+        .maintenance-container {
             width: 100%;
             max-width: 440px;
             background: var(--panel);
             border: 1px solid var(--panel-border);
             padding: 36px;
             box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-            pointer-events: none;
+            text-align: center;
         }
 
         .maintenance-notice {
@@ -56,7 +51,6 @@
             padding: 12px 14px;
             font-size: 13px;
             line-height: 1.45;
-            text-align: center;
             background-color: var(--warning-bg);
             color: var(--warning-text);
             border: 1px solid var(--warning-border);
@@ -66,7 +60,6 @@
             margin: 0 0 6px 0;
             font-size: 24px;
             font-weight: 500;
-            text-align: center;
             letter-spacing: 0.2px;
         }
 
@@ -75,94 +68,28 @@
             margin-bottom: 20px;
             font-size: 14px;
             color: var(--text-muted);
-            text-align: center;
         }
 
         .separator {
             height: 1px;
             background-color: var(--panel-border);
-            margin-bottom: 28px;
             border: none;
             width: 100%;
-        }
-
-        .form-row {
-            margin-bottom: 22px;
-        }
-
-        .label-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        .label-icon {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-            opacity: 0.85;
-        }
-
-        input {
-            width: 100%;
-            height: 44px;
-            padding: 0 12px;
-            background-color: var(--input-bg);
-            border: 1px solid var(--panel-border);
-            color: var(--text-main);
-            font-size: 14px;
-            opacity: 0.55;
-            outline: none;
-        }
-
-        input:disabled {
-            cursor: not-allowed;
-        }
-
-        button {
-            width: 100%;
-            height: 44px;
-            margin-top: 8px;
-            background-color: var(--disabled-bg);
-            color: var(--text-muted);
-            border: none;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 0.6px;
-            text-transform: uppercase;
-            cursor: not-allowed;
         }
     </style>
 </head>
 <body oncontextmenu="return false;">
-    <div class="login-container">
+
+    <div class="maintenance-container">
         <div class="maintenance-notice">
             Maintenance is in progress. We will be back soon.
         </div>
-        <h2>Login</h2>
-        <span class="description">Access your Slurp account</span>
+        <h2>Slurp</h2>
+        <span class="description">Access is currently unavailable</span>
         <div class="separator"></div>
-        <div class="form-row">
-            <div class="label-wrapper">
-                <i data-lucide="user" class="label-icon"></i>
-                <label>Username</label>
-            </div>
-            <input type="text" disabled value="Enter your username">
-        </div>
-        <div class="form-row">
-            <div class="label-wrapper">
-                <i data-lucide="lock" class="label-icon"></i>
-                <label>Password</label>
-            </div>
-            <input type="password" disabled value="••••••••">
-        </div>
-        <button disabled>Login</button>
     </div>
+
     <script>
-        lucide.createIcons();
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => {
             if (
@@ -174,6 +101,7 @@
                 return false;
             }
         });
+
         (function () {
             const devtools = /./;
             devtools.toString = function () {
@@ -186,7 +114,6 @@
                 if (end - start > 100) {
                     window.location.reload();
                 }
-                console.clear();
             }, 500);
         })();
     </script>
