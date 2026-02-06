@@ -31,31 +31,33 @@
 
         .login-container {
             background: var(--bg-card); 
-            padding: 60px 50px; /* Spacious internal padding */
+            padding: 48px;
             border: 1px solid var(--border-color);
             width: 100%;
-            max-width: 500px; /* Increased width to fix the "squished" feel */
+            max-width: 420px;
             box-sizing: border-box;
-            border-radius: 12px; 
+            border-radius: 12px; /* Smoother, modern corners */
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             pointer-events: none; 
+            transition: transform 0.3s ease;
         }
 
         .maintenance-notice {
-            background-color: rgba(187, 128, 9, 0.05);
-            border: 1px solid rgba(187, 128, 9, 0.3);
+            background-color: rgba(187, 128, 9, 0.1);
+            border: 1px solid rgba(187, 128, 9, 0.4);
             color: var(--accent-warning);
-            padding: 24px;
-            font-size: 14px;
-            margin-bottom: 50px; /* Dramatic gap after notice */
+            padding: 14px;
+            font-size: 13px;
+            margin-bottom: 32px;
             border-radius: 8px; 
-            line-height: 1.6;
+            line-height: 1.5;
             text-align: center;
+            letter-spacing: 0.02em;
         }
 
         h2 {
-            font-size: 32px;
-            margin-bottom: 12px;
+            font-size: 28px;
+            margin-bottom: 4px;
             font-weight: 600;
             color: #ffffff;
             text-align: center;
@@ -63,62 +65,66 @@
         }
 
         .description {
-            font-size: 15px;
+            font-size: 14px;
             color: var(--text-secondary);
-            margin-bottom: 45px; /* Spacing before the form starts */
+            margin-bottom: 32px;
             display: block;
             text-align: center;
         }
 
         .form-row {
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .label-wrapper {
             display: flex;
             align-items: center;
             gap: 10px; 
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: var(--text-secondary);
         }
 
         .label-icon {
-            width: 16px;
-            height: 16px;
+            width: 15px;
+            height: 15px;
             opacity: 0.6;
         }
 
         label {
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.05em;
         }
 
         input {
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             border: 1px solid var(--border-color);
             box-sizing: border-box;
-            background-color: #0d1117;
-            color: #484f58;
+            background-color: #090c10;
+            color: var(--text-secondary);
+            opacity: 0.6;
+            text-align: left; /* Switched to left for a more professional form feel */
             border-radius: 8px; 
-            font-size: 16px;
+            font-size: 15px;
+            transition: all 0.2s ease;
         }
 
         button {
             background-color: #21262d;
-            color: #484f58;
+            color: #484f58; /* Muted color to show it's disabled */
             border: 1px solid var(--border-color);
-            padding: 18px;
+            padding: 16px;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.1em;
             width: 100%;
-            margin-top: 15px;
+            margin-top: 12px;
             cursor: not-allowed;
             border-radius: 8px; 
+            transition: all 0.2s ease;
         }
     </style>
 </head>
@@ -126,7 +132,7 @@
 
     <div class="login-container">
         <div class="maintenance-notice">
-            <strong style="display: block; margin-bottom: 6px; letter-spacing: 0.05em;">SYSTEM MAINTENANCE</strong>
+            <strong style="display: block; margin-bottom: 4px;">SYSTEM MAINTENANCE</strong>
             We're fine-tuning the experience. We'll be back online shortly.
         </div>
 
@@ -155,6 +161,7 @@
     <script>
         lucide.createIcons();
 
+        // Standard anti-inspect protection (preserved from your original)
         document.addEventListener('contextmenu', (e) => e.preventDefault());
         document.addEventListener('keydown', (e) => {
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) || (e.ctrlKey && e.key.toUpperCase() === 'U')) {
