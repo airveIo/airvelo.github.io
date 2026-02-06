@@ -1,173 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slurp</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
   <style>
     :root {
       --bg: #0b0d12;
       --panel: #11141b;
       --border: #1c2030;
+      --input-bg: #0c0f1a;
+
       --text: #e8e9ee;
       --muted: #9aa0b4;
-      --beta: #a78bfa;
-      --stable: #4ade80;
-      --discord: #5865f2;
+
+      --warning-bg: rgba(167,139,250,0.08);
+      --warning-border: rgba(167,139,250,0.35);
+      --warning-text: #a78bfa;
+
+      --disabled-bg: #1a1f35;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html, body { height: 100%; }
+    html, body {
+      height: 100%;
+    }
 
     body {
       margin: 0;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       background:
         radial-gradient(1200px 800px at 50% -200px, #15183a 0%, transparent 60%),
         linear-gradient(180deg, #0c0f1a 0%, var(--bg) 60%);
       background-color: var(--bg);
       color: var(--text);
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      padding: 40px 20px;
+      user-select: none;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .container {
+    .login-container {
       width: 100%;
-      max-width: 720px;
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-    }
-
-    .entry {
+      max-width: 440px;
       background: linear-gradient(180deg, #13172a, var(--panel));
       border: 1px solid var(--border);
-      padding: 20px 22px;
+      padding: 36px;
       box-shadow:
         0 0 0 1px rgba(255,255,255,0.01),
         0 20px 40px rgba(0,0,0,0.45);
+      pointer-events: none;
     }
 
-    .header {
+    .maintenance-notice {
+      margin-bottom: 28px;
+      padding: 12px 14px;
+      font-size: 13px;
+      text-align: center;
+      background: var(--warning-bg);
+      color: var(--warning-text);
+      border: 1px solid var(--warning-border);
+      letter-spacing: 0.2px;
+    }
+
+    h2 {
+      margin: 0 0 6px 0;
+      font-size: 24px;
+      font-weight: 500;
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+
+    .description {
+      display: block;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .separator {
+      height: 1px;
+      background-color: var(--border);
+      margin-bottom: 28px;
+      border: none;
+      width: 100%;
+    }
+
+    .form-row {
+      margin-bottom: 22px;
+    }
+
+    .label-wrapper {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      font-size: 13px;
-      letter-spacing: 0.4px;
-      text-transform: lowercase;
-    }
-
-    .tag {
-      padding: 3px 8px;
-      font-size: 11px;
-      font-weight: 600;
-      border: 1px solid;
-    }
-
-    .beta {
-      color: var(--beta);
-      border-color: rgba(167,139,250,0.35);
-      background: rgba(167,139,250,0.08);
-    }
-
-    .stable {
-      color: var(--stable);
-      border-color: rgba(74,222,128,0.35);
-      background: rgba(74,222,128,0.08);
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
       gap: 8px;
-    }
-
-    li {
-      font-size: 14px;
+      margin-bottom: 8px;
       color: var(--muted);
-      padding-left: 14px;
-      position: relative;
-    }
-
-    li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      color: #6366f1;
-    }
-
-    .discord {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .discord span {
       font-size: 14px;
-      color: var(--muted);
     }
 
-    .discord a {
-      text-decoration: none;
+    .label-icon {
+      width: 16px;
+      height: 16px;
+      opacity: 0.85;
+    }
+
+    input {
+      width: 100%;
+      height: 44px;
+      padding: 0 12px;
+      background-color: var(--input-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 14px;
+      opacity: 0.55;
+      outline: none;
+    }
+
+    input:disabled {
+      cursor: not-allowed;
+    }
+
+    button {
+      width: 100%;
+      height: 44px;
+      margin-top: 8px;
+      background-color: var(--disabled-bg);
+      color: var(--muted);
+      border: 1px solid var(--border);
       font-size: 13px;
       font-weight: 600;
-      padding: 8px 14px;
-      border: 1px solid rgba(88,101,242,0.4);
-      color: var(--discord);
-      background: rgba(88,101,242,0.08);
-      transition: background 0.2s ease, transform 0.15s ease;
-    }
-
-    .discord a:hover {
-      background: rgba(88,101,242,0.16);
-      transform: translateY(-1px);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      cursor: not-allowed;
     }
   </style>
 </head>
-<body>
-  <div class="container">
 
-    <div class="entry discord">
-      <span>apply for access to slurp client here</span>
-      <a href="https://discord.gg/QCPzTp9e3m" target="_blank">
-        join discord
-      </a>
+<body oncontextmenu="return false;">
+  <div class="login-container">
+    <div class="maintenance-notice">
+      Access is currently unavailable.
     </div>
 
-    <div class="entry">
-      <div class="header">
-        <span>02/05/26</span>
-        <span class="tag beta">beta</span>
+    <h2>Login</h2>
+    <span class="description">Private forums</span>
+
+    <div class="separator"></div>
+
+    <div class="form-row">
+      <div class="label-wrapper">
+        <i data-lucide="user" class="label-icon"></i>
+        <label>Username</label>
       </div>
-      <ul>
-        <li>added inventory move</li>
-        <li>added anti fireball</li>
-        <li>added tick base</li>
-        <li>added no rotate</li>
-        <li>added auto pot</li>
-        <li>fixed crashing when switching resource packs</li>
-      </ul>
+      <input type="text" disabled value="Enter your username">
     </div>
 
-    <div class="entry">
-      <div class="header">
-        <span>02/02/26</span>
-        <span class="tag stable">stable</span>
+    <div class="form-row">
+      <div class="label-wrapper">
+        <i data-lucide="lock" class="label-icon"></i>
+        <label>Password</label>
       </div>
-      <ul>
-        <li>added target strafe</li>
-        <li>added safe walk</li>
-        <li>fixed and improved some stuff</li>
-      </ul>
+      <input type="password" disabled value="••••••••">
     </div>
 
+    <button disabled>Login</button>
   </div>
+
+  <script>
+    lucide.createIcons();
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) ||
+        (e.ctrlKey && e.key.toUpperCase() === 'U')
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    });
+  </script>
 </body>
 </html>
