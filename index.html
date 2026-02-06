@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Slurp | Changelog</title>
+    <title>Slurp</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
@@ -25,45 +25,54 @@
 
         body {
             margin: 0;
-            min-height: 100vh;
+            height: 100vh;
             background-color: var(--bg);
             color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
             user-select: none;
-            overflow-x: hidden;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            overflow: hidden;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        .main-container {
+        .login-container {
             width: 100%;
-            max-width: 500px;
+            max-width: 440px;
             background: var(--panel);
             border: 1px solid var(--panel-border);
-            padding: 40px;
+            padding: 36px;
             box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-            margin: 20px;
-            animation: fadeIn 0.4s ease;
+            pointer-events: none;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .maintenance-notice {
+            margin-bottom: 28px;
+            padding: 12px 14px;
+            font-size: 13px;
+            line-height: 1.45;
+            text-align: center;
+            background-color: var(--warning-bg);
+            color: var(--warning-text);
+            border: 1px solid var(--warning-border);
         }
 
         h2 {
-            margin: 0 0 8px 0;
+            margin: 0 0 6px 0;
             font-size: 24px;
             font-weight: 500;
             text-align: center;
-            color: var(--text-main);
+            letter-spacing: 0.2px;
         }
 
         .description {
             display: block;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             font-size: 14px;
             color: var(--text-muted);
             text-align: center;
@@ -72,74 +81,88 @@
         .separator {
             height: 1px;
             background-color: var(--panel-border);
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             border: none;
             width: 100%;
         }
 
-        .log-date {
-            display: inline-block;
-            background-color: var(--warning-bg);
-            color: var(--warning-text);
-            border: 1px solid var(--warning-border);
-            padding: 6px 12px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            width: 100%;
-            text-align: center;
+        .form-row {
+            margin-bottom: 22px;
         }
 
-        .log-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .log-list li {
-            font-size: 14px;
+        .label-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
             color: var(--text-muted);
-            padding: 10px 0;
-            padding-left: 20px;
-            position: relative;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            line-height: 1.4;
+            font-size: 14px;
         }
 
-        .log-list li:last-child { border: none; }
+        .label-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            opacity: 0.85;
+        }
 
-        .log-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
+        input {
+            width: 100%;
+            height: 44px;
+            padding: 0 12px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--panel-border);
             color: var(--text-main);
-            font-weight: bold;
+            font-size: 14px;
+            opacity: 0.55;
+            outline: none;
+        }
+
+        input:disabled {
+            cursor: not-allowed;
+        }
+
+        button {
+            width: 100%;
+            height: 44px;
+            margin-top: 8px;
+            background-color: var(--disabled-bg);
+            color: var(--text-muted);
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            cursor: not-allowed;
         }
     </style>
 </head>
 <body oncontextmenu="return false;">
-
-    <div class="main-container">
-        <h2>Changelog</h2>
-        <span class="description">Latest updates for Slurp</span>
-        
+    <div class="login-container">
+        <div class="maintenance-notice">
+            Access is currently unavailable.
+        </div>
+        <h2>Login</h2>
+        <span class="description">Access your Slurp account</span>
         <div class="separator"></div>
-
-        <div class="log-date">02/06/2026</div>
-        
-        <ul class="log-list">
-            <li>Added inventory move</li>
-            <li>Added anti fireball</li>
-            <li>Added tick base</li>
-            <li>Added no rotate</li>
-            <li>Added auto pot</li>
-            <li>Fixed crashes when switching resource packs</li>
-        </ul>
+        <div class="form-row">
+            <div class="label-wrapper">
+                <i data-lucide="user" class="label-icon"></i>
+                <label>Username</label>
+            </div>
+            <input type="text" disabled value="Enter your username">
+        </div>
+        <div class="form-row">
+            <div class="label-wrapper">
+                <i data-lucide="lock" class="label-icon"></i>
+                <label>Password</label>
+            </div>
+            <input type="password" disabled value="••••••••">
+        </div>
+        <button disabled>Log in</button>
     </div>
-
     <script>
         lucide.createIcons();
-        
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => {
             if (
@@ -151,7 +174,6 @@
                 return false;
             }
         });
-
         (function () {
             const devtools = /./;
             devtools.toString = function () {
