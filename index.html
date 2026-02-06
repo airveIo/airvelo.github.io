@@ -12,15 +12,12 @@
       --muted: #9aa0b4;
       --beta: #a78bfa;
       --stable: #4ade80;
+      --discord: #5865f2;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html, body {
-      height: 100%;
-    }
+    html, body { height: 100%; }
 
     body {
       margin: 0;
@@ -104,10 +101,45 @@
       left: 0;
       color: #6366f1;
     }
+
+    .discord {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .discord span {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .discord a {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border: 1px solid rgba(88,101,242,0.4);
+      color: var(--discord);
+      background: rgba(88,101,242,0.08);
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .discord a:hover {
+      background: rgba(88,101,242,0.16);
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 <body>
   <div class="container">
+
+    <div class="entry discord">
+      <span>apply for access to slurp client here</span>
+      <a href="https://discord.gg/QCPzTp9e3m" target="_blank">
+        join discord
+      </a>
+    </div>
 
     <div class="entry">
       <div class="header">
