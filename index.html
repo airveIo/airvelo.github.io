@@ -1,134 +1,155 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Slurp</title>
+
     <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
+        :root {
+            --bg: #1a1d21;
+            --panel: #24292e;
+            --panel-border: #30363d;
+            --input-bg: #0d1117;
+            --text-main: #e6edf3;
+            --text-muted: #8b949e;
+            --warning-bg: #3b3215;
+            --warning-border: #6a571c;
+            --warning-text: #ffda6a;
+            --disabled-bg: #484f58;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #1a1d21; 
-            color: #e1e1e1;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             user-select: none;
             -webkit-user-select: none;
             -ms-user-select: none;
             overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .login-container {
-            background: #24292e; 
-            padding: 40px;
-            border: 1px solid #30363d;
             width: 100%;
-            max-width: 450px;
-            box-sizing: border-box;
-            border-radius: 0;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-            pointer-events: none; 
+            max-width: 440px;
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            padding: 36px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+            pointer-events: none;
         }
 
         .maintenance-notice {
-            background-color: #383214;
-            border: 1px solid #635219;
-            color: #ffda6a;
-            padding: 12px;
+            margin-bottom: 28px;
+            padding: 12px 14px;
             font-size: 13px;
-            margin-bottom: 25px;
-            border-radius: 0; 
-            line-height: 1.4;
+            line-height: 1.45;
             text-align: center;
+            background-color: var(--warning-bg);
+            color: var(--warning-text);
+            border: 1px solid var(--warning-border);
         }
 
         h2 {
+            margin: 0 0 6px 0;
             font-size: 24px;
-            margin-bottom: 8px;
-            font-weight: 400;
-            color: #ffffff;
+            font-weight: 500;
             text-align: center;
-            margin-top: 0;
+            letter-spacing: 0.2px;
         }
 
         .description {
-            font-size: 14px;
-            color: #8b949e;
-            margin-bottom: 30px;
             display: block;
+            margin-bottom: 28px;
+            font-size: 14px;
+            color: var(--text-muted);
             text-align: center;
         }
 
         .form-row {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .label-wrapper {
             display: flex;
             align-items: center;
-            justify-content: flex-start; 
-            gap: 8px; 
+            gap: 8px;
             margin-bottom: 8px;
-            color: #8b949e;
+            color: var(--text-muted);
+            font-size: 14px;
         }
 
         .label-icon {
             width: 16px;
             height: 16px;
-            display: inline-block;
-        }
-
-        label {
-            font-size: 14px;
+            flex-shrink: 0;
+            opacity: 0.85;
         }
 
         input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #30363d;
-            box-sizing: border-box;
-            background-color: #0d1117;
-            color: #c9d1d9;
-            opacity: 0.5;
-            text-align: left; 
-            border-radius: 0; 
+            height: 44px;
+            padding: 0 12px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--panel-border);
+            color: var(--text-main);
+            font-size: 14px;
+            opacity: 0.55;
+        }
+
+        input:disabled {
+            cursor: not-allowed;
         }
 
         button {
-            background-color: #484f58;
-            color: #8b949e;
-            border: none;
-            padding: 12px 24px;
-            font-weight: 600;
-            text-transform: uppercase;
             width: 100%;
-            margin-top: 10px;
+            height: 44px;
+            margin-top: 8px;
+            background-color: var(--disabled-bg);
+            color: var(--text-muted);
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
             cursor: not-allowed;
-            border-radius: 0; 
         }
     </style>
 </head>
+
 <body oncontextmenu="return false;">
 
     <div class="login-container">
+
         <div class="maintenance-notice">
             Maintenance is in progress. We will be back soon.
         </div>
 
         <h2>Login</h2>
         <span class="description">Access your Slurp account</span>
-        
+
         <div class="form-row">
             <div class="label-wrapper">
                 <i data-lucide="user" class="label-icon"></i>
                 <label>Username *</label>
             </div>
-            <input type="username" disabled value="admin">
+            <input type="text" disabled value="admin">
         </div>
-        
+
         <div class="form-row">
             <div class="label-wrapper">
                 <i data-lucide="lock" class="label-icon"></i>
@@ -136,21 +157,19 @@
             </div>
             <input type="password" disabled value="••••••••">
         </div>
-        
+
         <button disabled>Log in</button>
     </div>
 
     <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-        });
+        lucide.createIcons();
 
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-        
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        document.addEventListener('keydown', e => {
             if (
-                e.key === 'F12' || 
-                (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) ||
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) ||
                 (e.ctrlKey && e.key.toUpperCase() === 'U')
             ) {
                 e.preventDefault();
@@ -158,18 +177,15 @@
             }
         });
 
-        (function() {
+        (function () {
             const devtools = /./;
-            devtools.toString = function() {
+            devtools.toString = function () {
                 window.location.reload();
             };
-            
-            setInterval(function() {
+
+            setInterval(() => {
                 const start = performance.now();
-                try {
-                    debugger;
-                } catch(e) {}
-                
+                try { debugger; } catch {}
                 const end = performance.now();
                 if (end - start > 100) {
                     window.location.reload();
@@ -178,5 +194,6 @@
             }, 500);
         })();
     </script>
+
 </body>
 </html>
