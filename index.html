@@ -4,71 +4,138 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #11141b;
+      --border: #1c2030;
+      --text: #e8e9ee;
+      --muted: #9aa0b4;
+      --beta: #a78bfa;
+      --stable: #4ade80;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
     body {
-      background-color: #0f1115;
-      color: #e6e6eb;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       margin: 0;
-      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background:
+        radial-gradient(1200px 800px at 50% -200px, #15183a 0%, transparent 60%),
+        linear-gradient(180deg, #0c0f1a 0%, var(--bg) 60%);
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 40px 20px;
     }
 
     .container {
-      max-width: 800px;
-      margin: auto;
+      width: 100%;
+      max-width: 720px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
     }
 
-    h2 {
-      font-size: 18px;
-      margin-top: 32px;
-      margin-bottom: 12px;
+    .entry {
+      background: linear-gradient(180deg, #13172a, var(--panel));
+      border: 1px solid var(--border);
+      padding: 20px 22px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.01),
+        0 20px 40px rgba(0,0,0,0.45);
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: 13px;
+      letter-spacing: 0.4px;
+      text-transform: lowercase;
+    }
+
+    .tag {
+      padding: 3px 8px;
+      font-size: 11px;
       font-weight: 600;
+      border: 1px solid;
     }
 
     .beta {
-      color: #b388ff;
+      color: var(--beta);
+      border-color: rgba(167,139,250,0.35);
+      background: rgba(167,139,250,0.08);
     }
 
     .stable {
-      color: #4ade80;
+      color: var(--stable);
+      border-color: rgba(74,222,128,0.35);
+      background: rgba(74,222,128,0.08);
     }
 
     ul {
-      padding-left: 18px;
+      list-style: none;
+      padding: 0;
       margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
     li {
-      margin-bottom: 6px;
-      line-height: 1.5;
+      font-size: 14px;
+      color: var(--muted);
+      padding-left: 14px;
+      position: relative;
     }
 
-    .divider {
-      height: 1px;
-      background: #1f2430;
-      margin: 28px 0;
+    li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #6366f1;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2 class="beta">02/05/26 - beta</h2>
-    <ul>
-      <li>added inventory move</li>
-      <li>added anti fireball</li>
-      <li>added tick base</li>
-      <li>added no rotate</li>
-      <li>added auto pot</li>
-      <li>fixed crashing when switching resource packs</li>
-    </ul>
 
-    <div class="divider"></div>
+    <div class="entry">
+      <div class="header">
+        <span>02/05/26</span>
+        <span class="tag beta">beta</span>
+      </div>
+      <ul>
+        <li>added inventory move</li>
+        <li>added anti fireball</li>
+        <li>added tick base</li>
+        <li>added no rotate</li>
+        <li>added auto pot</li>
+        <li>fixed crashing when switching resource packs</li>
+      </ul>
+    </div>
 
-    <h2 class="stable">02/02/26 - stable</h2>
-    <ul>
-      <li>added target strafe</li>
-      <li>added safe walk</li>
-      <li>fixed and improved some stuff</li>
-    </ul>
+    <div class="entry">
+      <div class="header">
+        <span>02/02/26</span>
+        <span class="tag stable">stable</span>
+      </div>
+      <ul>
+        <li>added target strafe</li>
+        <li>added safe walk</li>
+        <li>fixed and improved some stuff</li>
+      </ul>
+    </div>
+
   </div>
 </body>
 </html>
