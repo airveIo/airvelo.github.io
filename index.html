@@ -150,6 +150,15 @@
                 e.preventDefault();
             }
         });
+
+        setInterval(() => {
+            const before = new Date().getTime();
+            debugger;
+            const after = new Date().getTime();
+            if (after - before > 100) {
+                window.location.reload();
+            }
+        }, 100);
     </script>
 </body>
 </html>
