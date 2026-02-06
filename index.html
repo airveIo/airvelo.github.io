@@ -17,6 +17,7 @@
             height: 100vh;
             user-select: none;
             -webkit-user-select: none;
+            -ms-user-select: none;
         }
 
         .login-container {
@@ -99,8 +100,8 @@
             color: #8b949e;
             border: none;
             padding: 12px 24px;
-            font-weight: 400;
-            text-transform: normal;
+            font-weight: 600;
+            text-transform: uppercase;
             width: 100%;
             margin-top: 10px;
             cursor: not-allowed;
@@ -116,7 +117,7 @@
             Maintenance is in progress. We will be back soon.
         </div>
 
-        <h2>Sign in</h2>
+        <h2>Login</h2>
         <span class="description">Access your Slurp account</span>
         
         <div class="form-row">
@@ -135,7 +136,7 @@
             <input type="password" disabled>
         </div>
         
-        <button disabled>Sign in</button>
+        <button disabled>Log in</button>
     </div>
 
     <script>
@@ -144,21 +145,33 @@
         document.addEventListener('contextmenu', (e) => e.preventDefault());
         
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'F12' || 
-                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
-                (e.ctrlKey && (e.key === 'U' || e.key === 'u'))) {
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) ||
+                (e.ctrlKey && e.key.toUpperCase() === 'U')
+            ) {
                 e.preventDefault();
+                return false;
             }
         });
 
-        setInterval(() => {
-            const before = new Date().getTime();
-            debugger;
-            const after = new Date().getTime();
-            if (after - before > 100) {
+        (function() {
+            const devtools = function() {};
+            devtools.toString = function() {
                 window.location.reload();
-            }
-        }, 100);
+                return 'tuna';
+            };
+            
+            setInterval(function() {
+                const start = performance.now();
+                debugger;
+                const end = performance.now();
+                if (end - start > 100) {
+                    window.location.reload();
+                }
+                console.clear();
+            }, 100);
+        })();
     </script>
 </body>
 </html>
