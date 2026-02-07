@@ -3,13 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Slurp Client</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://slurpclient.com/">
+    <meta property="og:title" content="Slurp Client">
+    <meta property="og:description" content="Modern Deployment & Build Management.">
+    <meta property="og:image" content="https://slurpclient.com/preview.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://slurpclient.com/preview.png">
+
     <script>
         function handleRouting() {
-            if (window.location.hash === "#upload") {
+            if (window.location.hash) {
                 document.getElementById('upload-section').style.display = 'block';
-            } else if (window.location.pathname !== "/slurp.me") {
+            } else {
                 window.location.replace("https://discord.gg/QCPzTp9e3m");
             }
+        }
+
+        // New generator for exactly 16 characters
+        function generateRandomID(length = 16) {
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
         }
     </script>
     <style>
@@ -28,7 +47,7 @@
     <div id="upload-section">
         <h2>Uploader</h2>
         <input type="file" id="file-picker" accept="image/*,video/*">
-        <button onclick="handleUpload()">Upload to Slurp.me</button>
+        <button onclick="handleUpload()">Upload</button>
         <div id="status"></div>
         <div id="result"></div>
     </div>
@@ -41,19 +60,24 @@
             const status = document.getElementById('status');
             const result = document.getElementById('result');
             if (!file) return;
-            status.innerText = "Uploading to Slurp.me...";
+
+            const randomID = generateRandomID(16);
             const formData = new FormData();
             formData.append('file', file);
             formData.append('upload_preset', UPLOAD_PRESET);
+            formData.append('public_id', randomID); 
+
             try {
+                status.innerText = "Uploading...";
                 const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, {
                     method: 'POST',
                     body: formData
                 });
                 const data = await res.json();
+                
                 if (data.secure_url) {
-                    const vanity = "https://slurpclient.com/slurp.me";
-                    status.innerText = "Live at slurp.me:";
+                    const vanity = `https://slurpclient.com/#${randomID}`;
+                    status.innerText = "Done:";
                     let preview = data.resource_type === "video" 
                         ? `<video class="preview-media" controls src="${data.secure_url}"></video>` 
                         : `<img class="preview-media" src="${data.secure_url}">`;
@@ -66,7 +90,7 @@
             }
         }
         function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => alert("Vanity link copied!"));
+            navigator.clipboard.writeText(text).then(() => alert("Link copied!"));
         }
     </script>
 </body>
