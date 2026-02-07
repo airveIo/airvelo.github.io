@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/slurp.me",
-      "destination": "https://res.cloudinary.com/duncq0kca/video/upload/slurp_latest.mp4"
-    }
-  ]
-}
