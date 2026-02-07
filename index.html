@@ -7,17 +7,17 @@
         function handleRouting() {
             if (window.location.hash === "#upload") {
                 document.getElementById('upload-section').style.display = 'block';
-            } else {
+            } else if (window.location.pathname !== "/slurp.me") {
                 window.location.replace("https://discord.gg/QCPzTp9e3m");
             }
         }
     </script>
     <style>
         body { background: #0b0b0b; color: #eee; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        #upload-section { display: none; background: #161616; padding: 30px; border-radius: 12px; border: 1px solid #333; width: 350px; text-align: center; margin: 20px; }
+        #upload-section { display: none; background: #161616; padding: 30px; border-radius: 12px; border: 1px solid #333; width: 350px; text-align: center; }
         h2 { color: #7289da; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px; margin-top: 0; }
         input[type="file"] { margin: 20px 0; font-size: 0.8rem; width: 100%; color: #888; }
-        button { background: #7289da; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        button { background: #7289da; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
         button:hover { background: #5b70be; }
         #status { margin-top: 15px; font-size: 0.9rem; color: #888; }
         .url-output { margin-top: 15px; background: #000; padding: 10px; border-radius: 4px; border: 1px solid #444; color: #0f0; font-family: monospace; font-size: 0.75rem; cursor: pointer; word-break: break-all; }
@@ -26,21 +26,22 @@
 </head>
 <body onload="handleRouting()">
     <div id="upload-section">
-        <h2>Uploader</h2>
+        <h2>Slurp Uploader</h2>
         <input type="file" id="file-picker" accept="image/*,video/*">
-        <button onclick="handleUpload()">Upload</button>
+        <button onclick="handleUpload()">Upload to Slurp.me</button>
         <div id="status"></div>
         <div id="result"></div>
     </div>
     <script>
         const CLOUD_NAME = "duncq0kca"; 
         const UPLOAD_PRESET = "slurp.me";
+
         async function handleUpload() {
             const file = document.getElementById('file-picker').files[0];
             const status = document.getElementById('status');
             const result = document.getElementById('result');
             if (!file) return;
-            status.innerText = "Uploading...";
+            status.innerText = "Uploading to Slurp.me...";
             const formData = new FormData();
             formData.append('file', file);
             formData.append('upload_preset', UPLOAD_PRESET);
@@ -51,27 +52,22 @@
                 });
                 const data = await res.json();
                 if (data.secure_url) {
-                    status.innerText = "Click link to copy:";
-                    let previewHtml = '';
-                    if (data.resource_type === "video") {
-                        previewHtml = `<video class="preview-media" controls src="${data.secure_url}"></video>`;
-                    } else {
-                        previewHtml = `<img class="preview-media" src="${data.secure_url}">`;
-                    }
-                    result.innerHTML = previewHtml + `<div class="url-output" onclick="copyToClipboard('${data.secure_url}')">${data.secure_url}</div>`;
+                    const vanity = "https://slurpclient.com/slurp.me";
+                    status.innerText = "Live at slurp.me:";
+                    let preview = data.resource_type === "video" 
+                        ? `<video class="preview-media" controls src="${data.secure_url}"></video>` 
+                        : `<img class="preview-media" src="${data.secure_url}">`;
+                    result.innerHTML = preview + `<div class="url-output" onclick="copyToClipboard('${vanity}')">${vanity}</div>`;
                 } else {
                     status.innerText = "Error: " + (data.error ? data.error.message : "Fail");
                 }
             } catch (err) {
-                status.innerText = "Error";
+                status.innerText = "Connection Error";
             }
         }
         function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                alert("Copied");
-            });
+            navigator.clipboard.writeText(text).then(() => alert("Vanity link copied!"));
         }
     </script>
 </body>
 </html>
-
