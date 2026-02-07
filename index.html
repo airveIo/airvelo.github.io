@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Slurp Client</title>
+    
     <meta property="og:type" content="video.other">
     <meta property="og:site_name" content="Slurp Client">
     <meta property="og:title" content="Slurp Media Share">
-    <meta property="og:description" content="View shared media on Slurp Client.">
-    <meta property="og:url" content="https://slurpclient.com/">
+    <meta property="og:description" content="Click to view shared media.">
     <meta property="og:image" content="./preview.png">
     <meta property="og:video" content="./preview.mp4">
     <meta property="og:video:type" content="video/mp4">
@@ -17,56 +17,64 @@
     <meta name="twitter:player" content="./preview.mp4">
     <meta name="twitter:player:width" content="1280">
     <meta name="twitter:player:height" content="720">
-    <script>
-        function handleRouting() {
-            if (window.location.hash) {
-                document.getElementById('upload-section').style.display = 'block';
-            } else {
-                window.location.replace("https://discord.gg/QCPzTp9e3m");
-            }
-        }
-        function generateRandomID(length = 16) {
-            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return result;
-        }
-    </script>
+
     <style>
         body { background: #0b0b0b; color: #eee; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        #upload-section { display: none; background: #161616; padding: 30px; border-radius: 12px; border: 1px solid #333; width: 350px; text-align: center; }
+        #upload-section, #view-section { display: none; background: #161616; padding: 30px; border-radius: 12px; border: 1px solid #333; width: 400px; text-align: center; }
         h2 { color: #7289da; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px; margin-top: 0; }
-        input[type="file"] { margin: 20px 0; font-size: 0.8rem; width: 100%; color: #888; }
-        button { background: #7289da; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        button:hover { background: #5b70be; }
-        #status { margin-top: 15px; font-size: 0.9rem; color: #888; }
-        .url-output { margin-top: 15px; background: #000; padding: 10px; border-radius: 4px; border: 1px solid #444; color: #0f0; font-family: monospace; font-size: 0.75rem; cursor: pointer; word-break: break-all; }
-        .preview-media { width: 100%; margin-top: 15px; border-radius: 8px; border: 1px solid #333; }
+        button { background: #7289da; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 15px; }
+        .url-output { margin-top: 15px; background: #000; padding: 10px; color: #0f0; font-family: monospace; font-size: 0.75rem; cursor: pointer; border: 1px solid #444; word-break: break-all; }
+        .display-media { width: 100%; border-radius: 8px; margin-top: 15px; border: 1px solid #333; }
     </style>
 </head>
 <body onload="handleRouting()">
+
     <div id="upload-section">
         <h2>Uploader</h2>
         <input type="file" id="file-picker" accept="image/*,video/*">
-        <button onclick="handleUpload()">Upload</button>
+        <button onclick="handleUpload()">Upload to Cloudinary</button>
         <div id="status"></div>
         <div id="result"></div>
     </div>
+
+    <div id="view-section">
+        <h2>Slurp View</h2>
+        <div id="media-container"></div>
+        <button onclick="window.location.hash='upload'; location.reload();">Upload Your Own</button>
+    </div>
+
     <script>
         const CLOUD_NAME = "duncq0kca"; 
         const UPLOAD_PRESET = "slurp.me";
+
+        function handleRouting() {
+            const hash = window.location.hash.replace('#', '');
+            
+            if (hash.length === 16) {
+                // If it's a 16-char ID, show the viewer
+                document.getElementById('view-section').style.display = 'block';
+                loadMedia(hash);
+            } else if (hash === 'upload') {
+                // If it's #upload, show the uploader
+                document.getElementById('upload-section').style.display = 'block';
+            } else {
+                // No hash or invalid hash -> Redirect to Discord
+                window.location.replace("https://discord.gg/QCPzTp9e3m");
+            }
+        }
+
         async function handleUpload() {
             const file = document.getElementById('file-picker').files[0];
             const status = document.getElementById('status');
             const result = document.getElementById('result');
             if (!file) return;
+
             const randomID = generateRandomID(16);
             const formData = new FormData();
             formData.append('file', file);
             formData.append('upload_preset', UPLOAD_PRESET);
             formData.append('public_id', randomID); 
+
             try {
                 status.innerText = "Uploading...";
                 const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, {
@@ -77,18 +85,28 @@
                 if (data.secure_url) {
                     const vanity = window.location.origin + "/#" + randomID;
                     status.innerText = "Done:";
-                    let preview = data.resource_type === "video" 
-                        ? `<video class="preview-media" controls src="${data.secure_url}"></video>` 
-                        : `<img class="preview-media" src="${data.secure_url}">`;
-                    result.innerHTML = preview + `<div class="url-output" onclick="copyToClipboard('${vanity}')">${vanity}</div>`;
-                } else {
-                    status.innerText = "Error";
+                    result.innerHTML = `<div class="url-output" onclick="copyText('${vanity}')">${vanity}</div>`;
                 }
-            } catch (err) {
-                status.innerText = "Connection Error";
-            }
+            } catch (err) { status.innerText = "Upload failed."; }
         }
-        function copyToClipboard(text) {
+
+        function loadMedia(id) {
+            const container = document.getElementById('media-container');
+            // We check for image first, if it fails, we try video
+            const imgUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${id}`;
+            const videoUrl = `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/${id}.mp4`;
+            
+            container.innerHTML = `<img src="${imgUrl}" class="display-media" onerror="this.onerror=null; this.parentElement.innerHTML='<video src=\'${videoUrl}\' class=\'display-media\' controls autoplay></video>';">`;
+        }
+
+        function generateRandomID(length) {
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) result += chars.charAt(Math.floor(Math.random() * chars.length));
+            return result;
+        }
+
+        function copyText(text) {
             navigator.clipboard.writeText(text).then(() => alert("Link copied!"));
         }
     </script>
