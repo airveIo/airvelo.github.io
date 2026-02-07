@@ -3,6 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Slurp Client</title>
+    <meta property="og:type" content="video.other">
+    <meta property="og:site_name" content="Slurp Client">
+    <meta property="og:title" content="Slurp Media Share">
+    <meta property="og:description" content="View shared media on Slurp Client.">
+    <meta property="og:url" content="https://slurpclient.com/">
+    <meta property="og:image" content="./preview.png">
+    <meta property="og:video" content="./preview.mp4">
+    <meta property="og:video:type" content="video/mp4">
+    <meta property="og:video:width" content="1280">
+    <meta property="og:video:height" content="720">
+    <meta name="twitter:card" content="player">
+    <meta name="twitter:player" content="./preview.mp4">
+    <meta name="twitter:player:width" content="1280">
+    <meta name="twitter:player:height" content="720">
     <script>
         function handleRouting() {
             if (window.location.hash) {
@@ -11,7 +25,6 @@
                 window.location.replace("https://discord.gg/QCPzTp9e3m");
             }
         }
-
         function generateRandomID(length = 16) {
             const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
             let result = '';
@@ -44,19 +57,16 @@
     <script>
         const CLOUD_NAME = "duncq0kca"; 
         const UPLOAD_PRESET = "slurp.me";
-
         async function handleUpload() {
             const file = document.getElementById('file-picker').files[0];
             const status = document.getElementById('status');
             const result = document.getElementById('result');
             if (!file) return;
-
             const randomID = generateRandomID(16);
             const formData = new FormData();
             formData.append('file', file);
             formData.append('upload_preset', UPLOAD_PRESET);
             formData.append('public_id', randomID); 
-
             try {
                 status.innerText = "Uploading...";
                 const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, {
@@ -64,9 +74,8 @@
                     body: formData
                 });
                 const data = await res.json();
-                
                 if (data.secure_url) {
-                    const vanity = `https://slurpclient.com/#${randomID}`;
+                    const vanity = window.location.origin + "/#" + randomID;
                     status.innerText = "Done:";
                     let preview = data.resource_type === "video" 
                         ? `<video class="preview-media" controls src="${data.secure_url}"></video>` 
