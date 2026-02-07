@@ -3,15 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Slurp Client</title>
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://slurpclient.com/">
-    <meta property="og:title" content="Slurp Client">
-    <meta property="og:description" content="Modern Deployment & Build Management.">
-    <meta property="og:image" content="https://slurpclient.com/preview.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://slurpclient.com/preview.png">
-
     <script>
         function handleRouting() {
             if (window.location.hash) {
@@ -21,7 +12,6 @@
             }
         }
 
-        // New generator for exactly 16 characters
         function generateRandomID(length = 16) {
             const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
             let result = '';
@@ -83,7 +73,7 @@
                         : `<img class="preview-media" src="${data.secure_url}">`;
                     result.innerHTML = preview + `<div class="url-output" onclick="copyToClipboard('${vanity}')">${vanity}</div>`;
                 } else {
-                    status.innerText = "Error: " + (data.error ? data.error.message : "Fail");
+                    status.innerText = "Error";
                 }
             } catch (err) {
                 status.innerText = "Connection Error";
