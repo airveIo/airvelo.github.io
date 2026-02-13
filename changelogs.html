@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            background: #0e0e0e;
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0e0e0e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a2a;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a3a3a;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin: 0 0 5px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .meta {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #ccc;
+            font-size: 16px;
+        }
+
+        li::before {
+            content: "•";
+            color: #fff;
+            margin-right: 10px;
+        }
+
+        .back-container {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        a {
+            font-size: 20px;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.2s;
+            text-underline-offset: 8px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+    <h1>Changelogs</h1>
+    <p class="subtitle">Latest updates for Slurp Client</p>
+
+    <div class="container">
+        <div class="section">
+            <span class="meta">Jan. 26, 2026</span>
+            <ul>
+                <li>added inventory move</li>
+                <li>added anti fireball</li>
+                <li>added tick base</li>
+                <li>added no rotate</li>
+                <li>added auto pot</li>
+                <li>fixed crashing when switching resource packs</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <span class="meta">Feb. 4, 2026</span>
+            <ul>
+                <li>added staff detector</li>
+                <li>added ambience</li>
+                <li>added anti void</li>
+                <li>added no fall</li>
+                <li>improved scaffold</li>
+                <li>fixed auto tool</li>
+                <li>fixed lag range</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <span class="meta">Feb. 12, 2026</span>
+            <ul>
+                <li>added session information</li>
+                <li>added notifications</li>
+                <li>added chest esp</li>
+                <li>added item esp</li>
+                <li>improved no slowdown</li>
+                <li>improved back track</li>
+                <li>improved target hud</li>
+                <li>fixed fast place</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="back-container">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+</body>
+</html>
