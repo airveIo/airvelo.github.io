@@ -145,9 +145,9 @@
         async function loadFeed() {
             const feedContainer = document.getElementById('feed');
             try {
-                const response = await fetch('news.json');
+                const response = await fetch('news.html');
                 if (!response.ok) throw new Error();
-                const posts = await response.json();
+                const posts = await response.html();
                 feedContainer.innerHTML = posts.map(post => `
                     <article class="post">
                         <h2>${escapeHTML(post.title)}</h2>
@@ -170,3 +170,4 @@
     </script>
 </body>
 </html>
+
