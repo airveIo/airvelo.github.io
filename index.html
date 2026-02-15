@@ -29,14 +29,6 @@
             line-height: 1.5;
         }
 
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { 
-            background: #333; 
-            border-radius: 10px;
-            border: 2px solid var(--bg);
-        }
-
         header {
             text-align: center;
             margin-bottom: 60px;
@@ -70,43 +62,35 @@
             padding: 32px;
             border-radius: 16px;
             border: 1px solid var(--border);
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-
-        .post:hover {
-            transform: translateY(-2px);
-            border-color: #3f3f46;
         }
 
         .post h2 { 
             margin: 0 0 12px; 
             font-size: 1.5rem; 
-            font-weight: 600;
-            letter-spacing: -0.01em;
         }
 
         .post p { 
             color: var(--text-dim); 
-            font-size: 1rem;
-            margin: 0; 
             white-space: pre-wrap; 
+        }
+
+        .post a {
+            color: #ffffff;
+            text-decoration: underline;
+            font-weight: 600;
         }
 
         .meta {
             font-size: 0.8rem;
             color: #52525b;
             margin-top: 24px;
-            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
 
         .error-msg {
-            color: var(--text-dim);
+            color: #ff4444;
             text-align: center;
-            padding: 40px;
-            border: 1px dashed var(--border);
-            border-radius: 12px;
+            padding: 20px;
         }
     </style>
 </head>
@@ -120,27 +104,27 @@
     <main id="feed"></main>
 
     <script>
+        function linkify(text) {
+            const urlPattern = /(https?:\/\/[^\s]+)/g;
+            return text.replace(urlPattern, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+        }
+
         async function loadFeed() {
             const feedContainer = document.getElementById('feed');
             try {
                 const response = await fetch('news.html');
-                if (!response.ok) throw new Error();
+                if (!response.ok) throw new Error('news.html not found');
                 
                 const posts = await response.json();
-                
                 feedContainer.innerHTML = posts.map(post => `
                     <article class="post">
                         <h2>${post.title}</h2>
-                        <p>${post.content}</p>
+                        <p>${linkify(post.content)}</p>
                         <div class="meta">${post.date}</div>
                     </article>
                 `).join('');
             } catch (err) {
-                feedContainer.innerHTML = `
-                    <div class="error-msg">
-                        <p>Check back later for updates.</p>
-                    </div>
-                `;
+                feedContainer.innerHTML = `<div class="error-msg">Check back later for updates</div>`;
             }
         }
 
