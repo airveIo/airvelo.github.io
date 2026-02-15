@@ -60,6 +60,9 @@
         #feed {
             width: 100%;
             max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
 
         .post {
@@ -67,7 +70,6 @@
             padding: 32px;
             border-radius: 16px;
             border: 1px solid var(--border);
-            margin-bottom: 24px;
             transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
@@ -115,9 +117,7 @@
         <p class="subtitle">Updates and Announcements</p>
     </header>
 
-    <main id="feed">
-        <div class="error-msg">Loading updates...</div>
-    </main>
+    <main id="feed"></main>
 
     <script>
         async function loadFeed() {
@@ -125,8 +125,16 @@
             try {
                 const response = await fetch('news.html');
                 if (!response.ok) throw new Error();
-                const content = await response.text();
-                feedContainer.innerHTML = content;
+                
+                const posts = await response.json();
+                
+                feedContainer.innerHTML = posts.map(post => `
+                    <article class="post">
+                        <h2>${post.title}</h2>
+                        <p>${post.content}</p>
+                        <div class="meta">${post.date}</div>
+                    </article>
+                `).join('');
             } catch (err) {
                 feedContainer.innerHTML = `
                     <div class="error-msg">
