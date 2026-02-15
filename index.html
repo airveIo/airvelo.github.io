@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slurp | Feed</title>
     <style>
         :root {
             --bg: #0a0a0a;
@@ -26,7 +25,7 @@
             align-items: center;
             min-height: 100vh;
             padding: 80px 20px;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         header {
@@ -56,21 +55,21 @@
 
         .post {
             background: var(--card-bg);
-            padding: 40px;
+            padding: 32px;
             border-radius: 16px;
             border: 1px solid var(--border);
+            margin-bottom: 24px;
         }
 
         .post h2 { 
-            margin: 0 0 16px; 
-            font-size: 1.75rem; 
-            font-weight: 700;
-            color: #ffffff;
+            margin: 0 0 12px; 
+            font-size: 1.5rem; 
+            font-weight: 600;
         }
 
         .post p { 
             color: var(--text-dim); 
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin: 0; 
             white-space: pre-wrap; 
         }
@@ -82,12 +81,11 @@
         }
 
         .meta {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #52525b;
-            margin-top: 32px;
-            font-weight: 600;
+            margin-top: 24px;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
     </style>
 </head>
@@ -98,49 +96,20 @@
         <p class="subtitle">Updates and Announcements</p>
     </header>
 
-    <main id="feed">
-        <div id="loading-state" style="text-align: center; color: var(--text-dim);">Loading...</div>
-    </main>
+    <main id="feed"></main>
 
     <script>
-        function linkify(text) {
-            const urlPattern = /(https?:\/\/[^\s]+)/g;
-            return text.replace(urlPattern, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-        }
-
         async function loadFeed() {
             const feedContainer = document.getElementById('feed');
             try {
                 const response = await fetch('news.html');
                 if (!response.ok) throw new Error();
-                
-                const rawText = await response.text();
-                let postData;
-
-                try {
-                    const parsed = JSON.parse(rawText);
-                    postData = Array.isArray(parsed) ? parsed[0] : parsed;
-                } catch (e) {
-                    postData = {
-                        title: "Latest Update",
-                        content: rawText,
-                        date: "Feb. 15, 2026"
-                    };
-                }
-
-                feedContainer.innerHTML = `
-                    <article class="post">
-                        <h2>${postData.title || "Update"}</h2>
-                        <p>${linkify(postData.content || rawText)}</p>
-                        <div class="meta">${postData.date || "Feb. 15, 2026"}</div>
-                    </article>
-                `;
-
+                const content = await response.text();
+                feedContainer.innerHTML = content;
             } catch (err) {
-                feedContainer.innerHTML = `<div style="text-align: center; color: #ff4444;">Check back later for updates</div>`;
+                feedContainer.innerHTML = `<div style="text-align: center; color: var(--text-dim);">Check back later for updates</div>`;
             }
         }
-
         window.addEventListener('DOMContentLoaded', loadFeed);
     </script>
 </body>
