@@ -3,82 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slurp | Feed</title>
     <style>
+        :root {
+            --bg: #0a0a0a;
+            --card-bg: #161616;
+            --text-main: #ffffff;
+            --text-dim: #a1a1aa;
+            --border: #27272a;
+            --font: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
             margin: 0;
-            background: #0e0e0e;
-            color: #fff;
-            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 60px 20px;
-            box-sizing: border-box;
+            padding: 80px 20px;
+            line-height: 1.5;
         }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0e0e0e; }
 
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { 
-            background: #2a2a2a; 
-            border-radius: 0; 
+            background: #333; 
+            border-radius: 10px;
+            border: 2px solid var(--bg);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
         }
 
         h1 {
-            font-size: 48px;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
             margin: 0;
-            letter-spacing: 2px;
-            text-transform: normal;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            text-transform: uppercase;
         }
+
         .subtitle {
-            font-size: 18px;
-            color: #888;
-            margin: 10px 0 50px;
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-top: 8px;
         }
+
         #feed {
             width: 100%;
-            max-width: 650px;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
+
         .post {
-            background: #161616;
-            padding: 25px;
-            border-radius: 0; 
-            border-left: 3px solid #fff;
-            margin-bottom: 25px;
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
-        .post h2 { margin: 0 0 10px; font-size: 22px; }
-        .post p { color: #aaa; line-height: 1.6; margin: 0; white-space: pre-wrap; }
+
+        .post:hover {
+            transform: translateY(-2px);
+            border-color: #3f3f46;
+        }
+
+        .post h2 { 
+            margin: 0 0 12px; 
+            font-size: 1.5rem; 
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .post p { 
+            color: var(--text-dim); 
+            font-size: 1rem;
+            margin: 0; 
+            white-space: pre-wrap; 
+        }
+
         .meta {
-            font-size: 11px;
-            color: #444;
-            margin-top: 15px;
-            letter-spacing: 1px;
-            text-transform: normal;
+            font-size: 0.8rem;
+            color: #52525b;
+            margin-top: 24px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .skeleton {
+            height: 200px;
+            background: linear-gradient(90deg, #161616 25%, #1d1d1d 50%, #161616 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 16px;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .error-msg {
+            color: var(--text-dim);
+            text-align: center;
+            padding: 40px;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
         }
     </style>
 </head>
 <body>
-    <h1>Slurp</h1>
-    <p class="subtitle">Updates and Announcements</p>
-    <div id="feed"></div>
+
+    <header>
+        <h1>SLURP</h1>
+        <p class="subtitle">Updates and Announcements</p>
+    </header>
+
+    <main id="feed">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+    </main>
+
     <script>
-        async function load() {
+        function escapeHTML(str) {
+            const p = document.createElement('p');
+            p.textContent = str;
+            return p.innerHTML;
+        }
+
+        async function loadFeed() {
+            const feedContainer = document.getElementById('feed');
             try {
-                const r = await fetch('news.html');
-                const d = await r.json();
-                document.getElementById('feed').innerHTML = d.map(p => `
-                    <div class="post">
-                        <h2>${p.title}</h2>
-                        <p>${p.content}</p>
-                        <div class="meta">${p.date}</div>
-                    </div>
+                const response = await fetch('news.json');
+                if (!response.ok) throw new Error();
+                const posts = await response.json();
+                feedContainer.innerHTML = posts.map(post => `
+                    <article class="post">
+                        <h2>${escapeHTML(post.title)}</h2>
+                        <p>${escapeHTML(post.content)}</p>
+                        <div class="meta">${escapeHTML(post.date)}</div>
+                    </article>
                 `).join('');
-            } catch (e) {
-                document.getElementById('feed').innerHTML = "Check back later for updates.";
+            } catch (err) {
+                feedContainer.innerHTML = `
+                    <div class="error-msg">
+                        <p>Check back later for updates.</p>
+                    </div>
+                `;
             }
         }
-        load();
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(loadFeed, 600); 
+        });
     </script>
 </body>
 </html>
-
