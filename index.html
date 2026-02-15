@@ -64,16 +64,9 @@
             border: 1px solid var(--border);
         }
 
-        .post h2 { 
-            margin: 0 0 12px; 
-            font-size: 1.5rem; 
-        }
-
-        .post p { 
-            color: var(--text-dim); 
-            white-space: pre-wrap; 
-        }
-
+        .post h2 { margin: 0 0 12px; font-size: 1.5rem; }
+        .post p { color: var(--text-dim); white-space: pre-wrap; margin: 0; }
+        
         .post a {
             color: #ffffff;
             text-decoration: underline;
@@ -91,6 +84,7 @@
             color: #ff4444;
             text-align: center;
             padding: 20px;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -101,7 +95,9 @@
         <p class="subtitle">Updates and Announcements</p>
     </header>
 
-    <main id="feed"></main>
+    <main id="feed">
+        <div style="text-align: center; color: #333;">Loading feed content...</div>
+    </main>
 
     <script>
         function linkify(text) {
@@ -113,18 +109,40 @@
             const feedContainer = document.getElementById('feed');
             try {
                 const response = await fetch('news.html');
-                if (!response.ok) throw new Error('news.html not found');
                 
-                const posts = await response.json();
-                feedContainer.innerHTML = posts.map(post => `
-                    <article class="post">
-                        <h2>${post.title}</h2>
-                        <p>${linkify(post.content)}</p>
-                        <div class="meta">${post.date}</div>
-                    </article>
-                `).join('');
+                if (!response.ok) {
+                    throw new Error('news.html file not found');
+                }
+
+                const rawText = await response.text();
+                
+                try {
+                    const posts = JSON.parse(rawText);
+                    
+                    if (!Array.isArray(posts)) {
+                        throw new Error('Data is not a valid list');
+                    }
+
+                    feedContainer.innerHTML = posts.map(post => `
+                        <article class="post">
+                            <h2>${post.title}</h2>
+                            <p>${linkify(post.content)}</p>
+                            <div class="meta">${post.date}</div>
+                        </article>
+                    `).join('');
+
+                } catch (parseError) {
+                    throw new Error('Invalid JSON format in news.html');
+                }
+
             } catch (err) {
-                feedContainer.innerHTML = `<div class="error-msg">Check back later for updates</div>`;
+                feedContainer.innerHTML = `
+                    <div class="error-msg">
+                        Unable to load feed: ${err.message}<br>
+                        <span style="color: #666; font-size: 0.8rem;">
+                            Note: This script requires a local server or web host to work.
+                        </span>
+                    </div>`;
             }
         }
 
