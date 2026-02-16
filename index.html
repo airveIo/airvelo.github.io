@@ -131,7 +131,7 @@
         async function loadFeed() {
             const feed = document.getElementById('feed');
             try {
-                const response = await fetch('news.html');
+                const response = await fetch('test.html');
                 if (!response.ok) throw new Error();
                 const content = await response.text();
                 setTimeout(() => {
@@ -145,4 +145,5 @@
     </script>
 </body>
 </html>
+
 
