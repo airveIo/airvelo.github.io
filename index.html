@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
-            --bg: #0a0a0a;
-            --card-bg: #161616;
-            --text-main: #ffffff;
+            --bg: #050505;
+            --card-bg: #121212;
+            --text-main: #fafafa;
             --text-dim: #a1a1aa;
+            --accent: #ffffff;
             --border: #27272a;
+            --meta: #52525b;
             --font: 'Inter', system-ui, -apple-system, sans-serif;
+            --transition: all 0.2s ease;
         }
 
         * { box-sizing: border-box; }
@@ -25,27 +28,26 @@
             align-items: center;
             min-height: 100vh;
             padding: 80px 20px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 64px;
         }
 
         h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            font-weight: 800;
+            font-size: clamp(2.5rem, 10vw, 4rem);
+            font-weight: 900;
             margin: 0;
-            letter-spacing: 0.05em;
-            color: #ffffff;
+            letter-spacing: -0.02em;
             text-transform: uppercase;
         }
 
         .subtitle {
             font-size: 1.1rem;
             color: var(--text-dim);
-            margin-top: 8px;
+            margin-top: 12px;
         }
 
         #feed {
@@ -56,58 +58,95 @@
         .post {
             background: var(--card-bg);
             padding: 32px;
-            border-radius: 16px;
+            border-radius: 20px;
             border: 1px solid var(--border);
             margin-bottom: 24px;
+            transition: var(--transition);
+        }
+
+        .post:hover {
+            border-color: #3f3f46;
+            transform: translateY(-2px);
         }
 
         .post h2 { 
             margin: 0 0 12px; 
             font-size: 1.5rem; 
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .post p { 
             color: var(--text-dim); 
-            font-size: 1rem;
+            font-size: 1.05rem;
             margin: 0; 
-            white-space: pre-wrap; 
         }
 
         .post a {
-            color: #ffffff;
-            text-decoration: underline;
-            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent);
+            font-weight: 500;
         }
 
+        .post a:hover { opacity: 0.8; }
+
         .meta {
-            font-size: 0.8rem;
-            color: #52525b;
-            margin-top: 24px;
-            font-weight: 500;
+            font-size: 0.75rem;
+            color: var(--meta);
+            margin-top: 28px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
+        }
+
+        .skeleton {
+            background: var(--card-bg);
+            border-radius: 20px;
+            height: 160px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .skeleton::after {
+            content: "";
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
     </style>
 </head>
 <body>
 
-    <header>
+    <header role="banner">
         <h1>SLURP</h1>
         <p class="subtitle">Updates and Announcements</p>
     </header>
 
-    <main id="feed"></main>
+    <main id="feed" aria-live="polite">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+    </main>
 
     <script>
         async function loadFeed() {
-            const feedContainer = document.getElementById('feed');
+            const feed = document.getElementById('feed');
             try {
                 const response = await fetch('news.html');
                 if (!response.ok) throw new Error();
                 const content = await response.text();
-                feedContainer.innerHTML = content;
+                setTimeout(() => {
+                    feed.innerHTML = content;
+                }, 400);
             } catch (err) {
-                feedContainer.innerHTML = `<div style="text-align: center; color: var(--text-dim);">Check back later for updates</div>`;
+                feed.innerHTML = `<p style="text-align: center; color: var(--meta);">Unable to load updates. Try refreshing.</p>`;
             }
         }
         window.addEventListener('DOMContentLoaded', loadFeed);
