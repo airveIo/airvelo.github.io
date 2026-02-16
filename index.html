@@ -152,7 +152,9 @@
                     metaElements.forEach(meta => {
                         const timestamp = meta.getAttribute('data-timestamp');
                         if (timestamp) {
-                            const date = new Date(timestamp);
+                            const [year, month, day] = timestamp.split('-').map(Number);
+                            const date = new Date(year, month - 1, day);
+                            
                             meta.textContent = date.toLocaleDateString(undefined, {
                                 month: 'short',
                                 day: 'numeric',
@@ -169,4 +171,3 @@
     </script>
 </body>
 </html>
-
