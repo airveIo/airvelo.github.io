@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLURP | Updates</title>
     <style>
         :root {
             --bg: #050505;
@@ -13,7 +14,6 @@
             --border: #050505;
             --meta: #52525b;
             --font: 'Inter', system-ui, -apple-system, sans-serif;
-            --transition: all 0.2s ease;
         }
 
         * { box-sizing: border-box; }
@@ -60,13 +60,8 @@
             padding: 32px;
             border-radius: 20px;
             border: 1px solid var(--border);
-            margin-bottom: 24px;
-            transition: var(--transition);
-        }
-
-        .post:hover {
-            border-color: #050505;
-            transform: translateY(-2px);
+            margin-bottom: 32px;
+            display: block;
         }
 
         .post h2 { 
@@ -88,8 +83,6 @@
             font-weight: 500;
         }
 
-        .post a:hover { opacity: 0.8; }
-
         .meta {
             font-size: 0.75rem;
             color: var(--meta);
@@ -103,7 +96,7 @@
             background: var(--card-bg);
             border-radius: 20px;
             height: 160px;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
             position: relative;
             overflow: hidden;
             border: 1px solid var(--border);
@@ -153,4 +146,3 @@
     </script>
 </body>
 </html>
-
