@@ -10,7 +10,7 @@
             --text-main: #fafafa;
             --text-dim: #a1a1aa;
             --accent: #ffffff;
-            --border: #050505;
+            --border: #27272a;
             --meta: #52525b;
             --font: 'Inter', system-ui, -apple-system, sans-serif;
         }
@@ -75,22 +75,6 @@
             margin: 0; 
         }
 
-        .post img, .post video {
-            max-width: 250px;
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            margin: 20px 0 0 0;
-            display: block;
-        }
-
-        .post a {
-            color: var(--accent);
-            text-decoration: none;
-            border-bottom: 1px solid var(--accent);
-            font-weight: 500;
-        }
-
         .meta {
             font-size: 0.75rem;
             color: var(--meta);
@@ -146,24 +130,18 @@
                 
                 setTimeout(() => {
                     feed.innerHTML = content;
-                    const metaElements = feed.querySelectorAll('.meta');
-                    
-                    metaElements.forEach(meta => {
-                        const timestamp = meta.getAttribute('data-timestamp');
-                        if (timestamp) {
-                            const [year, month, day] = timestamp.split('-').map(Number);
-                            const date = new Date(year, month - 1, day);
-                            
-                            meta.textContent = date.toLocaleDateString(undefined, {
-                                month: 'short',
-                                day: 'numeric',
-                                year: 'numeric'
+                    feed.querySelectorAll('.meta').forEach(meta => {
+                        const ts = meta.getAttribute('data-timestamp');
+                        if (ts) {
+                            const [y, m, d] = ts.split('-').map(Number);
+                            meta.textContent = new Date(y, m - 1, d).toLocaleDateString(undefined, {
+                                month: 'short', day: 'numeric', year: 'numeric'
                             });
                         }
                     });
-                }, 400);
+                }, 600);
             } catch (err) {
-                feed.innerHTML = `<p style="text-align: center; color: var(--meta);">Unable to load updates. Try refreshing.</p>`;
+                feed.innerHTML = `<p style="text-align: center; color: var(--meta);">Unable to load updates.</p>`;
             }
         }
         window.addEventListener('DOMContentLoaded', loadFeed);
