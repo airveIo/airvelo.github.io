@@ -141,16 +141,14 @@
                     
                     metaElements.forEach(meta => {
                         const timestamp = meta.getAttribute('data-timestamp');
-                        const date = timestamp ? new Date(timestamp) : new Date();
-                        
-                        meta.textContent = date.toLocaleString(undefined, {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric',
-                            hour: 'numeric',
-                            minute: '2-digit',
-                            hour12: true
-                        });
+                        if (timestamp) {
+                            const date = new Date(timestamp);
+                            meta.textContent = date.toLocaleDateString(undefined, {
+                                month: 'short',
+                                day: 'numeric',
+                                year: 'numeric'
+                            });
+                        }
                     });
                 }, 400);
             } catch (err) {
