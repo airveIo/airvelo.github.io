@@ -26,7 +26,7 @@
 
         ::-webkit-scrollbar-thumb {
             background: #121212;
-            border-radius: 10px;
+            border-radius: 20px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
@@ -67,7 +67,7 @@
 
         #feed {
             width: 100%;
-            max-width: 700px;
+            max-width: 600px;
         }
 
         .post {
@@ -105,6 +105,7 @@
         }
 
         .post img, .post video {
+            max-width: 250px;
             width: 100%;
             height: auto;
             border-radius: 20px;
@@ -178,7 +179,7 @@
         <div class="skeleton"></div>
     </main>
 
-    <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">UP</button>
+    <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back To Top</button>
 
     <script>
         async function loadFeed() {
@@ -218,4 +219,3 @@
     </script>
 </body>
 </html>
-
