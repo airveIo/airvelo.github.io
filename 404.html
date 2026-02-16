@@ -11,11 +11,27 @@
             --text-dim: #a1a1aa;
             --accent: #ffffff;
             --border: #121212;
-            --meta: #52525b;
-            --font: 'Inter', system-ui, -apple-system, sans-serif;
+            --font: 'Tahoma', sans-serif;
         }
 
         * { box-sizing: border-box; }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #121212;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
 
         body {
             margin: 0;
@@ -61,6 +77,7 @@
             border: 1px solid var(--border);
             margin-bottom: 32px;
             display: block;
+            overflow: hidden;
         }
 
         .post h2 { 
@@ -75,13 +92,54 @@
             margin: 0; 
         }
 
+        .post a {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-color: var(--text-dim);
+        }
+
+        .post a:hover {
+            color: var(--accent);
+            text-decoration-color: var(--accent);
+        }
+
+        .post img, .post video {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            margin-top: 20px;
+            display: block;
+            border: 1px solid var(--border);
+        }
+
         .meta {
             font-size: 0.75rem;
-            color: var(--meta);
+            color: var(--text-dim);
             margin-top: 28px;
             font-weight: 600;
             letter-spacing: 0.05em;
             text-transform: uppercase;
+        }
+
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: none;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 100;
+        }
+
+        #backToTop:hover {
+            background: var(--border);
         }
 
         .skeleton {
@@ -120,6 +178,8 @@
         <div class="skeleton"></div>
     </main>
 
+    <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">UP</button>
+
     <script>
         async function loadFeed() {
             const feed = document.getElementById('feed');
@@ -141,9 +201,19 @@
                     });
                 }, 600);
             } catch (err) {
-                feed.innerHTML = `<p style="text-align: center; color: var(--meta);">Unable to load updates.</p>`;
+                feed.innerHTML = `<p style="text-align: center; color: var(--text-dim);">Unable to load updates.</p>`;
             }
         }
+
+        window.onscroll = function() {
+            const btn = document.getElementById("backToTop");
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+
         window.addEventListener('DOMContentLoaded', loadFeed);
     </script>
 </body>
