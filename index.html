@@ -96,6 +96,7 @@
             font-weight: 600;
             letter-spacing: -0.02em;
             color: var(--text-main);
+            cursor: pointer;
         }
 
         .nav-center {
@@ -109,6 +110,7 @@
             color: var(--text-muted);
             font-size: 0.85rem;
             transition: 0.2s;
+            cursor: pointer;
         }
 
         .nav-center a:hover { color: white; }
@@ -160,46 +162,29 @@
             justify-content: center;
         }
 
-        .btn-primary {
-            background: var(--accent);
-            color: white;
+        .btn-primary, .btn-secondary {
             padding: 12px 28px;
             border-radius: var(--radius-full);
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
             transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
         }
 
         .btn-secondary {
             background: rgba(255, 255, 255, 0.05);
             color: white;
-            padding: 12px 28px;
-            border-radius: var(--radius-full);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: 0.3s;
         }
 
         .btn-primary:hover, .btn-secondary:hover { 
             opacity: 0.9; 
             transform: translateY(-1px);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .section-header {
@@ -227,7 +212,7 @@
         .features-container {
             width: 100%;
             max-width: 1000px;
-            margin-top: 15vh;
+            margin-top: 10vh;
             margin-bottom: 20vh;
             scroll-margin-top: 100px;
         }
@@ -262,10 +247,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-5px);
         }
 
         .feature-item h4 {
@@ -313,77 +294,24 @@
             border-top: 1px solid var(--line-color);
         }
 
-        .footer-logo {
-            flex: 1;
-            font-weight: 600;
-            opacity: 0.8;
-            color: var(--text-main);
+        .footer-logo { flex: 1; font-weight: 600; opacity: 0.8; color: var(--text-main); }
+        .footer-links { display: flex; gap: 32px; justify-content: center; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; }
+        .copyright { flex: 1; text-align: right; font-size: 0.75rem; color: rgba(255, 255, 255, 0.2); }
+
+        .hidden { display: none; }
+        .view-transition { animation: fadeIn 0.4s ease forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .footer-links {
-            display: flex;
-            gap: 32px;
-            justify-content: center;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        .copyright {
-            flex: 1;
-            text-align: right;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         @media (max-width: 768px) {
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            header, footer {
-                height: auto;
-                padding: 30px 20px;
-                flex-direction: column;
-                gap: 20px;
-                position: static;
-            }
-            .logo, .header-cta, .footer-logo, .copyright {
-                flex: none;
-                text-align: center;
-            }
-            .nav-center, .footer-links {
-                flex-wrap: wrap;
-            }
-            .header-cta {
-                justify-content: center;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto;
-            }
-            .cube {
-                animation: none;
-                display: none;
-            }
-            .reveal {
-                transition: none;
-                opacity: 1;
-                transform: translateY(0);
-            }
+            .features-grid { grid-template-columns: 1fr; }
+            header, footer { flex-direction: column; gap: 20px; height: auto; padding: 30px 20px; }
         }
     </style>
 </head>
@@ -391,69 +319,70 @@
 
     <div class="hero-bg"></div>
 
-    <svg class="cube" aria-hidden="true" style="left:15%; width:20px; animation-duration:18s;" viewBox="0 0 30 34"><path d="M15 0L30 8L15 16V34L15 16L0 8Z" fill="white" opacity="0.1"></path></svg>
-    <svg class="cube" aria-hidden="true" style="left:85%; width:15px; animation-duration:14s; animation-delay:3s;" viewBox="0 0 30 34"><path d="M15 0L30 8L15 16V34L15 16L0 8Z" fill="white" opacity="0.1"></path></svg>
+    <svg class="cube" style="left:15%; width:20px; animation-duration:18s;" viewBox="0 0 30 34"><path d="M15 0L30 8L15 16V34L15 16L0 8Z" fill="white" opacity="0.1"></path></svg>
+    <svg class="cube" style="left:85%; width:15px; animation-duration:14s; animation-delay:3s;" viewBox="0 0 30 34"><path d="M15 0L30 8L15 16V34L15 16L0 8Z" fill="white" opacity="0.1"></path></svg>
 
     <header>
-        <div class="logo">Slurp</div>
+        <div class="logo" onclick="openLanding()">Slurp</div>
         <nav class="nav-center">
-            <a href="#">Home</a>
-            <a href="#features">Features</a>
-            <a href="#purchase">Purchase</a>
+            <a onclick="openLanding(); scrollToSection('home')">Home</a>
+            <a onclick="openLanding(); scrollToSection('features')">Features</a>
+            <a onclick="openPurchase()">Purchase</a>
         </nav>
         <div class="header-cta">
-            <a href="https://discord.gg/QCPzTp9e3m" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 8px 20px; font-size: 0.8rem;">Discord</a>
+            <a href="https://discord.gg/QCPzTp9e3m" target="_blank" class="btn-primary" style="padding: 8px 20px; font-size: 0.8rem;">Discord</a>
         </div>
     </header>
 
     <main>
-        <section class="hero-content reveal active">
-            <h1>Slurp</h1>
-            <p>A premier Minecraft client engineered for total dominance. Experience advanced multi-server bypasses, secure delivery, and instant access to the next generation of utility.</p>
-            <div class="btn-group">
-                <a href="#purchase" class="btn-primary">Get Started</a>
-                <a href="#features" class="btn-secondary">Learn More</a>
-            </div>
-        </section>
-
-        <section class="features-container reveal" id="features">
-            <div class="section-header">
-                <h2>Why Choose Slurp?</h2>
-                <p>Equipped with an extensive feature set, you will never need to settle for another client again.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h4>Reliable Bypasses</h4>
-                    <p>Rigorous testing ensures seamless and stable bypasses across all major server networks.</p>
+        <div id="landing-view" class="view-transition">
+            <section id="home" class="hero-content">
+                <h1>Slurp</h1>
+                <p>A premier Minecraft client engineered for total dominance. Experience advanced multi-server bypasses, secure delivery, and instant access to the next generation of utility.</p>
+                <div class="btn-group">
+                    <a onclick="openPurchase()" class="btn-primary">Get Started</a>
+                    <a onclick="scrollToSection('features')" class="btn-secondary">Learn More</a>
                 </div>
-                <div class="feature-item">
-                    <h4>Optimized Performance</h4>
-                    <p>A lightweight architecture and efficient rendering deliver a fluid, high-FPS experience.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>Continuous Support</h4>
-                    <p>Regular maintenance ensures quality updates and effective countermeasures against modern anti-cheats.</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <div class="section-divider reveal"></div>
+            <section class="features-container" id="features">
+                <div class="section-header">
+                    <h2>Why Choose Slurp?</h2>
+                    <p>Equipped with an extensive feature set, you will never need to settle for another client again.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h4>Reliable Bypasses</h4>
+                        <p>Rigorous testing ensures seamless and stable bypasses across all major server networks.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>Optimized Performance</h4>
+                        <p>A lightweight architecture and efficient rendering deliver a fluid, high-FPS experience.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>Continuous Support</h4>
+                        <p>Regular maintenance ensures quality updates and effective countermeasures against modern anti-cheats.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
 
-        <section class="content-section reveal" id="purchase">
-            <div class="section-header">
-                <h2>Everything You Need</h2>
-                <p>Unlock the full suite of tools designed to elevate your gameplay and provide a definitive competitive edge.</p>
-            </div>
-            
-            <div class="vantage-card">
-                <h3 style="font-size: 2rem; margin: 0; font-weight: 700; color: white;">Slurp Client</h3>
-                <p style="color: var(--text-muted); font-size: 1rem; margin-top: 20px; max-width: 600px; line-height: 1.6;">
-                    The ultimate solution for multi-server bypasses. Expertly optimized for Watchdog and industry-leading anti-cheats with a primary focus on stealth and reliability.
-                </p>
-                <div class="product-price">USD 19.99</div>
-                <a href="https://discord.gg/QCPzTp9e3m" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:inline-block; margin-top: 32px; padding: 14px 40px;">Purchase Now</a>
-            </div>
-        </section>
+        <div id="purchase-view" class="hidden view-transition">
+            <section class="content-section" style="margin-top: 15vh;">
+                <div class="section-header">
+                    <h2>Everything You Need</h2>
+                    <p>Unlock the full suite of tools designed to elevate your gameplay and provide a definitive competitive edge.</p>
+                </div>
+                <div class="vantage-card">
+                    <h3 style="font-size: 2rem; margin: 0; font-weight: 700; color: white;">Slurp Client</h3>
+                    <p style="color: var(--text-muted); font-size: 1rem; margin-top: 20px; max-width: 600px; line-height: 1.6;">
+                        The ultimate solution for multi-server bypasses. Expertly optimized for Watchdog and industry-leading anti-cheats with a primary focus on stealth and reliability.
+                    </p>
+                    <div class="product-price">USD 19.99</div>
+                    <a href="https://discord.gg/QCPzTp9e3m" target="_blank" class="btn-primary" style="display:inline-block; margin-top: 32px; padding: 14px 40px;">Purchase Now</a>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer>
@@ -461,28 +390,28 @@
         <div class="footer-links">
             <a href="#">Terms of Service</a>
             <a href="#">Privacy Policy</a>
-            <a href="https://discord.gg/QCPzTp9e3m" target="_blank" rel="noopener noreferrer">Discord</a>
+            <a href="https://discord.gg/QCPzTp9e3m" target="_blank">Discord</a>
         </div>
         <div class="copyright">© 2026 Slurp Client</div>
     </footer>
 
     <script>
-        const observerOptions = {
-            threshold: 0.1
-        };
+        function openPurchase() {
+            document.getElementById('landing-view').classList.add('hidden');
+            document.getElementById('purchase-view').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
 
-        const observer = new IntersectionObserver((entries, observerInstance) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observerInstance.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+        function openLanding() {
+            document.getElementById('purchase-view').classList.add('hidden');
+            document.getElementById('landing-view').classList.remove('hidden');
+        }
 
-        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
     </script>
 
 </body>
 </html>
-
