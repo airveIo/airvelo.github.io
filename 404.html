@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slurp</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --base-100: #0d1117; 
+            --card-bg: #161b22; 
+            --accent: #3b82f6;
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --radius-full: 500px;
+            --radius-card: 24px;
+            --container-width: 1100px;
+            --border-color: #21262d;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--base-100);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            outline: none; 
+            margin: 0;
+            padding: 0;
+            box-shadow: none !important;
+            text-shadow: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--base-100);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-color: var(--base-100);
+            z-index: -2;
+            height: 100vh;
+        }
+
+        @keyframes cubeFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .cube {
+            position: absolute;
+            top: -50px;
+            animation: cubeFall linear infinite;
+            pointer-events: none;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: #0d1117;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-main);
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 32px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-center a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-center a:hover { color: white; }
+
+        main {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 72px;
+        }
+
+        .hero-content {
+            min-height: calc(100vh - 72px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 24px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3.5rem, 12vw, 8rem);
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+        }
+
+        .hero-content p {
+            color: var(--text-muted);
+            max-width: 580px;
+            margin: 32px auto;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 14px 32px;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #21262d;
+            color: white;
+        }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-2px);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section {
+            width: 100%;
+            max-width: var(--container-width);
+            padding: 120px 24px;
+            scroll-margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-header {
+            margin-bottom: 64px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .section-header h2 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .section-header p.wide-text {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            width: 100%;
+        }
+
+        .feature-item {
+            background: var(--card-bg);
+            padding: 48px 32px;
+            border-radius: var(--radius-card);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .feature-item h4 {
+            margin-bottom: 16px;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .feature-item p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .section-divider {
+            width: 100%;
+            max-width: var(--container-width);
+            height: 1px;
+            background: var(--border-color);
+            margin: 0 auto;
+        }
+
+        .vantage-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-card);
+            padding: 80px 40px;
+            max-width: 850px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .product-price {
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 1.75rem;
+            margin: 24px 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        footer {
+            padding: 60px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0d1117;
+            margin-top: 100px;
+            border-top: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .footer-logo {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .footer-links a:hover { color: white; }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (max-width: 900px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-center, .footer-links {
+                position: static;
+                transform: none;
+                margin: 20px 0;
+            }
+            header, footer {
+                flex-direction: column;
+                height: auto;
+                padding: 30px 5%;
+                text-align: center;
+            }
+            .footer-links {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-bg"></div>
+
+    <svg class="cube" style="left:15%; width:20px; animation-duration:18s;" viewBox="0 0 30 34"><path d="M15 0L30 8L15 16V34L15 16L0 8Z" fill="white" opacity="0.1"></path></svg>
+    <svg class="cube" style="left:85%; width:15px; animation-duration:14s; animation-delay:3s;" viewBox="0 0 30 34"><path d="M15 0L30 8L15 16V34L15 16L0 8Z" fill="white" opacity="0.1"></path></svg>
+
+    <header>
+        <div class="logo">Slurp</div>
+        <nav class="nav-center">
+            <a href="#">Home</a>
+            <a href="#features">Features</a>
+            <a href="#purchase">Purchase</a>
+        </nav>
+        <div class="header-cta">
+            <a href="https://discord.gg/QCPzTp9e3m" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 10px 24px; font-size: 0.85rem;">Discord</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-content reveal active">
+            <h1>Slurp</h1>
+            <p>A premier Minecraft client engineered for total dominance. Experience advanced multi-server bypasses, secure delivery, and instant access to the next generation of utility.</p>
+            <div class="btn-group">
+                <a href="#purchase" class="btn-primary">Get Started</a>
+                <a href="#features" class="btn-secondary">Learn More</a>
+            </div>
+        </section>
+
+        <section class="reveal" id="features">
+            <div class="section-header">
+                <h2>Why Choose Slurp?</h2>
+                <p class="wide-text">Equipped with an extensive feature set, you will never need to settle for another client again.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h4>Reliable Bypasses</h4>
+                    <p>Rigorous testing ensures seamless and stable bypasses across all major server networks.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Optimized Performance</h4>
+                    <p>A lightweight architecture and efficient rendering deliver a fluid, high-FPS experience.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Continuous Support</h4>
+                    <p>Regular maintenance ensures quality updates and effective countermeasures against modern anti-cheats.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider reveal"></div>
+
+        <section class="reveal" id="purchase">
+            <div class="section-header">
+                <h2>Everything You Need</h2>
+                <p class="wide-text">Unlock the full suite of tools designed to elevate your gameplay and provide a definitive competitive edge.</p>
+            </div>
+            
+            <div class="vantage-card">
+                <h3 style="font-size: 2.25rem; margin: 0; font-weight: 700; color: white;">Slurp Client</h3>
+                <p style="color: var(--text-muted); font-size: 1.1rem; margin-top: 24px; max-width: 600px; line-height: 1.6;">
+                    The ultimate solution for multi-server bypasses. Expertly optimized for Watchdog and industry-leading anti-cheats with a primary focus on stealth and reliability.
+                </p>
+                <div class="product-price">Private</div>
+                <a href="https://discord.gg/QCPzTp9e3m" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:inline-block; margin-top: 12px; padding: 16px 48px;">Apply For Access</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-logo">Slurp</div>
+        <div class="footer-links">
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
+            <a href="https://discord.gg/QCPzTp9e3m" target="_blank" rel="noopener noreferrer">Discord</a>
+        </div>
+        <div class="copyright">© 2026 Slurp Client</div>
+    </footer>
+
+    <script>
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    </script>
+
+</body>
+</html>
