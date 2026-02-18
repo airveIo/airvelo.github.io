@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slurp</title>
+    <meta name="description" content="Slurp - A premier Minecraft client engineered for total dominance with advanced multi-server bypasses and optimized performance.">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -55,44 +56,44 @@
         }
 
         .hero-bg {
-            position: absolute;
+            position: fixed;
             inset: 0;
             background-color: var(--base-100);
             z-index: -2;
-            height: 100%;
         }
 
         @keyframes cubeFall {
             0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
             10% { opacity: 0.4; }
             90% { opacity: 0.4; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
         .cube {
-            position: absolute;
+            position: fixed;
             top: -50px;
             animation: cubeFall linear infinite;
             pointer-events: none;
+            z-index: -1;
         }
 
         header {
             position: sticky;
             top: 0;
-            z-index: 50;
+            z-index: 100;
+            -webkit-backdrop-filter: blur(20px);
             backdrop-filter: blur(20px);
             background: rgba(13, 17, 23, 0.5);
             height: 64px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             padding: 0 40px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .logo {
-            position: absolute;
-            left: 40px;
+            flex: 1;
             font-size: 1.25rem;
             font-weight: 600;
             letter-spacing: -0.02em;
@@ -102,6 +103,7 @@
         .nav-center {
             display: flex;
             gap: 32px;
+            justify-content: center;
         }
 
         .nav-center a {
@@ -114,8 +116,9 @@
         .nav-center a:hover { color: white; }
 
         .header-cta {
-            position: absolute;
-            right: 40px;
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
         }
 
         main {
@@ -125,6 +128,7 @@
             align-items: center;
             text-align: center;
             padding: 0 20px;
+            z-index: 1;
         }
 
         .hero-content {
@@ -233,7 +237,8 @@
         }
 
         .section-divider {
-            width: 0px;
+            width: 100%;
+            max-width: 800px;
             height: 1px;
             background: rgba(255, 255, 255, 0.05);
             margin: 5vh auto;
@@ -283,6 +288,7 @@
 
         .vantage-card {
             background: var(--card-bg);
+            -webkit-backdrop-filter: blur(20px);
             backdrop-filter: blur(20px);
             border-radius: var(--radius-card);
             padding: 60px;
@@ -305,7 +311,7 @@
             padding: 40px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             background: rgba(255, 255, 255, 0.01);
             margin-top: 50px;
             position: relative;
@@ -313,8 +319,7 @@
         }
 
         .footer-logo {
-            position: absolute;
-            left: 40px;
+            flex: 1;
             font-weight: 600;
             opacity: 0.8;
             color: var(--text-main);
@@ -338,8 +343,8 @@
         }
 
         .copyright {
-            position: absolute;
-            right: 40px;
+            flex: 1;
+            text-align: right;
             font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.2);
         }
@@ -356,14 +361,33 @@
                 height: auto;
                 padding: 30px 20px;
                 flex-direction: column;
+                gap: 20px;
                 position: static;
             }
             .logo, .header-cta, .footer-logo, .copyright {
-                position: static;
-                margin-bottom: 15px;
+                flex: none;
+                text-align: center;
             }
             .nav-center, .footer-links {
-                margin-bottom: 15px;
+                flex-wrap: wrap;
+            }
+            .header-cta {
+                justify-content: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            .cube {
+                animation: none;
+                display: none;
+            }
+            .reveal {
+                transition: none;
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
@@ -372,8 +396,8 @@
 
     <div class="hero-bg"></div>
 
-    <svg class="cube" style="left:15%; width:20px; animation-duration:18s;" viewBox="0 0 30 34"><path d="M15 0L30 8L15 16V34L15 16L0 8Z" fill="white" opacity="0.1"></path></svg>
-    <svg class="cube" style="left:85%; width:15px; animation-duration:14s; animation-delay:3s;" viewBox="0 0 30 34"><path d="M15 0L30 8L15 16V34L15 16L0 8Z" fill="white" opacity="0.1"></path></svg>
+    <svg class="cube" aria-hidden="true" style="left:15%; width:20px; animation-duration:18s;" viewBox="0 0 30 34"><path d="M15 0L30 8L15 16V34L15 16L0 8Z" fill="white" opacity="0.1"></path></svg>
+    <svg class="cube" aria-hidden="true" style="left:85%; width:15px; animation-duration:14s; animation-delay:3s;" viewBox="0 0 30 34"><path d="M15 0L30 8L15 16V34L15 16L0 8Z" fill="white" opacity="0.1"></path></svg>
 
     <header>
         <div class="logo">Slurp</div>
@@ -431,8 +455,8 @@
                 <p style="color: var(--text-muted); font-size: 1rem; margin-top: 20px; max-width: 600px; line-height: 1.6;">
                     The ultimate solution for multi-server bypasses. Expertly optimized for Watchdog and industry-leading anti-cheats with a primary focus on stealth and reliability.
                 </p>
-                <div class="product-price">Private</div>
-                <a href="https://discord.gg/QCPzTp9e3m" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:inline-block; margin-top: 32px; padding: 14px 40px;">Apply For Access</a>
+                <div class="product-price">USD 19.99</div>
+                <a href="https://discord.gg/QCPzTp9e3m" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:inline-block; margin-top: 32px; padding: 14px 40px;">Purchase Now</a>
             </div>
         </section>
     </main>
@@ -452,10 +476,11 @@
             threshold: 0.1
         };
 
-        const observer = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver((entries, observerInstance) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
+                    observerInstance.unobserve(entry.target);
                 }
             });
         }, observerOptions);
@@ -465,5 +490,3 @@
 
 </body>
 </html>
-
-
