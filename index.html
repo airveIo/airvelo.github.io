@@ -65,11 +65,14 @@
             height: 64px;
             display: flex;
             align-items: center;
+            justify-content: center;
             padding: 0 40px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .logo {
+            position: absolute;
+            left: 40px;
             font-size: 1.25rem;
             font-weight: 600;
             letter-spacing: -0.02em;
@@ -77,9 +80,6 @@
         }
 
         .nav-center {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
             gap: 32px;
         }
@@ -92,6 +92,11 @@
         }
 
         .nav-center a:hover { color: white; }
+
+        .header-cta {
+            position: absolute;
+            right: 40px;
+        }
 
         main {
             position: relative;
@@ -130,6 +135,7 @@
         .btn-group {
             display: flex;
             gap: 16px;
+            justify-content: center;
         }
 
         .btn-primary {
@@ -178,6 +184,7 @@
 
         .section-header {
             margin-bottom: 48px;
+            text-align: center;
         }
 
         .section-header h2 {
@@ -192,6 +199,9 @@
             color: var(--text-muted);
             margin-top: 12px;
             font-size: 1.1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .features-container {
@@ -220,7 +230,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 24px;
-            text-align: left;
+            text-align: center;
         }
 
         .feature-item {
@@ -228,6 +238,9 @@
             padding: 40px;
             border-radius: var(--radius-card);
             transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .feature-item:hover {
@@ -256,6 +269,9 @@
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .product-price {
@@ -266,15 +282,19 @@
         }
 
         footer {
-            padding: 60px 40px;
+            padding: 40px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: center;
             background: rgba(255, 255, 255, 0.01);
             margin-top: 50px;
+            position: relative;
+            min-height: 100px;
         }
 
         .footer-logo {
+            position: absolute;
+            left: 40px;
             font-weight: 600;
             opacity: 0.8;
             color: var(--text-main);
@@ -282,13 +302,14 @@
 
         .footer-links {
             display: flex;
-            gap: 24px;
+            gap: 32px;
+            justify-content: center;
         }
 
         .footer-links a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             transition: 0.2s;
         }
 
@@ -297,12 +318,33 @@
         }
 
         .copyright {
+            position: absolute;
+            right: 40px;
             font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.2);
         }
 
         html {
             scroll-behavior: smooth;
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            header, footer {
+                height: auto;
+                padding: 30px 20px;
+                flex-direction: column;
+                position: static;
+            }
+            .logo, .header-cta, .footer-logo, .copyright {
+                position: static;
+                margin-bottom: 15px;
+            }
+            .nav-center, .footer-links {
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
@@ -319,7 +361,7 @@
             <a href="#">Home</a>
             <a href="#features">Features</a>
         </nav>
-        <div style="margin-left:auto;">
+        <div class="header-cta">
             <a href="https://discord.gg/QCPzTp9e3m" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 8px 20px; font-size: 0.8rem;">Discord</a>
         </div>
     </header>
@@ -365,7 +407,7 @@
             
             <div class="vantage-card">
                 <h3 style="font-size: 2rem; margin: 0; font-weight: 700; color: white;">Slurp Client</h3>
-                <p style="color: var(--text-muted); font-size: 1rem; margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                <p style="color: var(--text-muted); font-size: 1rem; margin-top: 20px; max-width: 600px; line-height: 1.6;">
                     The ultimate solution for multi-server bypasses. Expertly optimized for Watchdog and industry-leading anti-cheats with a primary focus on stealth and reliability.
                 </p>
                 <div class="product-price">USD 19.99</div>
