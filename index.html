@@ -1,153 +1,71 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Minecraft Alt Shop</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slurp Client Discontinued</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      text-align: center;
+    }
 
-<style>
-body{
-font-family: Arial;
-background:#0f172a;
-color:white;
-text-align:center;
-margin:0;
-}
+    .card {
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      padding: 40px 30px;
+      max-width: 600px;
+    }
 
-header{
-background:#020617;
-padding:20px;
-}
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
 
-.product{
-background:#1e293b;
-padding:20px;
-margin:40px auto;
-width:250px;
-border-radius:10px;
-}
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
 
-button{
-padding:10px 20px;
-background:#22c55e;
-border:none;
-color:white;
-cursor:pointer;
-border-radius:5px;
-}
+    .footer {
+      font-size: 0.9rem;
+      color: #aaaaaa;
+      margin-top: 10px;
+    }
 
-button:hover{
-background:#16a34a;
-}
-
-.cart{
-margin-top:20px;
-}
-
-.modal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.8);
-}
-
-.modal-content{
-background:#1e293b;
-padding:20px;
-width:300px;
-margin:120px auto;
-border-radius:10px;
-}
-
-input,select{
-width:100%;
-padding:8px;
-margin-top:8px;
-margin-bottom:10px;
-border-radius:5px;
-border:none;
-}
-</style>
-
+    @media (max-width: 600px) {
+      .card {
+        padding: 30px 20px;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<header>
-<h1>Minecraft Alt Shop</h1>
-<p>Unbanned Minecraft Alts - $0.10 each</p>
-</header>
-
-<div class="product">
-<h2>Unbanned Minecraft Alt</h2>
-<p>Instant Delivery</p>
-<p>Price: $0.10</p>
-<button onclick="addToCart()">Add to Cart</button>
-</div>
-
-<div class="cart">
-<h2>Cart</h2>
-<p>Items: <span id="count">0</span></p>
-<p>Total: $<span id="total">0.00</span></p>
-<button onclick="openCheckout()">Checkout</button>
-</div>
-
-<div id="checkout" class="modal">
-<div class="modal-content">
-
-<h2>Checkout</h2>
-
-<label>Email</label>
-<input type="email" placeholder="email@example.com">
-
-<label>Payment Method</label>
-<select>
-<option>Demo Payment</option>
-<option>PayPal (demo)</option>
-<option>Crypto (demo)</option>
-</select>
-
-<button onclick="completeOrder()">Complete Order</button>
-<br><br>
-<button onclick="closeCheckout()">Cancel</button>
-
-</div>
-</div>
-
-<script>
-let cart = 0;
-let price = 0.10;
-
-function addToCart(){
-cart++;
-document.getElementById("count").innerText = cart;
-document.getElementById("total").innerText = (cart * price).toFixed(2);
-}
-
-function openCheckout(){
-if(cart == 0){
-alert("Your cart is empty!");
-return;
-}
-document.getElementById("checkout").style.display="block";
-}
-
-function closeCheckout(){
-document.getElementById("checkout").style.display="none";
-}
-
-function completeOrder(){
-alert("Demo order complete!");
-cart=0;
-document.getElementById("count").innerText=0;
-document.getElementById("total").innerText="0.00";
-closeCheckout();
-}
-</script>
-
+  <div class="card">
+    <h1>Slurp Client Discontinued</h1>
+    <p>
+      Thank you to everyone who supported Slurp Client. Development and maintenance have officially ended, and there will be no further updates or patches.
+    </p>
+    <p>
+      Any downloads or services associated with the client may be taken offline in the near future. We appreciate your time and support in the Slurp community.
+    </p>
+    <div class="footer">— The Slurp Team</div>
+  </div>
 </body>
 </html>
-```
