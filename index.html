@@ -9,44 +9,34 @@
       margin: 0;
       height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       font-family: Arial, sans-serif;
       background-color: #121212;
       color: #ffffff;
       text-align: center;
-    }
-
-    .card {
-      background-color: #1e1e1e;
-      border-radius: 12px;
-      padding: 40px 30px;
-      max-width: 600px;
+      padding: 0 20px;
     }
 
     h1 {
       font-size: 2rem;
       margin-bottom: 20px;
-      color: #ffffff;
     }
 
     p {
       font-size: 1.1rem;
       line-height: 1.6;
       margin-bottom: 20px;
-      color: #ffffff;
     }
 
     .footer {
       font-size: 0.9rem;
       color: #aaaaaa;
-      margin-top: 10px;
+      margin-top: 20px;
     }
 
     @media (max-width: 600px) {
-      .card {
-        padding: 30px 20px;
-      }
       h1 {
         font-size: 1.6rem;
       }
@@ -57,15 +47,13 @@
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Slurp Client Discontinued</h1>
-    <p>
-      Thank you to everyone who supported Slurp Client. Development and maintenance have officially ended, and there will be no further updates or patches.
-    </p>
-    <p>
-      Any downloads or services associated with the client may be taken offline in the near future. We appreciate your time and support in the Slurp community.
-    </p>
-    <div class="footer">— The Slurp Team</div>
-  </div>
+  <h1>Slurp Client Discontinued</h1>
+  <p>
+    Thank you to everyone who supported Slurp Client. Development and maintenance have officially ended, and there will be no further updates or patches.
+  </p>
+  <p>
+    Any downloads or services associated with the client may be taken offline in the near future. We appreciate your time and support in the Slurp community.
+  </p>
+  <div class="footer">— The Slurp Team</div>
 </body>
 </html>
