@@ -3,62 +3,376 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Slurp Client Discontinued</title>
+  <meta name="description" content="Slurp — a premier Minecraft client engineered for multi-server bypasses and total dominance.">
+  <meta name="theme-color" content="#181a20">
+  <title>Slurp Client</title>
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #181a20;
+      --bg-raised:    #1e2028;
+      --surface:      #22252e;
+      --surface2:     #292c38;
+      --surface-hover:#2e3244;
+      --border:       rgba(255,255,255,0.06);
+      --accent:       #60a5fa;
+      --accent-hover: #4f96f5;
+      --text:         #f0f1f4;
+      --muted:        #5b6070;
+      --subtle:       #8b95a8;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      padding: 0 20px;
-      height: 100vh;
+      font-family: Tahoma, Geneva, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
       display: flex;
-      justify-content: center;
       align-items: center;
-      font-family: Arial, sans-serif;
-      background-color: #121212;
-      color: #ffffff;
+      height: 56px;
+      padding: 0 56px;
+      background: rgba(24,26,32,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.4px;
+      flex: 1;
+      user-select: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+      flex: 2;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      transition: color 0.18s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-right {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-discord {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-family: Tahoma, Geneva, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.18s, transform 0.15s;
+    }
+
+    .btn-discord:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    #hero {
+      min-height: calc(100vh - 56px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      line-height: 1.6;
+      padding: 80px 56px;
     }
 
-    .content {
-      max-width: 650px;
+    .hero-title {
+      font-size: clamp(68px, 12vw, 116px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 0.9;
+      letter-spacing: -4px;
+      margin-bottom: 26px;
     }
 
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
+    .hero-sub {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.85;
+      max-width: 400px;
+      margin: 0 auto 38px;
     }
 
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 15px;
+    .hero-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
     }
 
-    .footer {
-      margin-top: 30px;
-      font-size: 0.9rem;
-      color: #aaaaaa;
+    .btn-primary {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      font-family: Tahoma, Geneva, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      padding: 11px 24px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.15s;
     }
 
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-      p {
-        font-size: 1rem;
-      }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--surface2);
+      border: none;
+      color: var(--subtle);
+      font-family: Tahoma, Geneva, sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      padding: 11px 24px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    hr.section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+      margin: 0 56px;
+    }
+
+    #products {
+      padding: 80px 56px 96px;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: clamp(22px, 3.5vw, 32px);
+      font-weight: 700;
+      text-align: center;
+      color: var(--text);
+      letter-spacing: -0.4px;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.75;
+      max-width: 360px;
+      margin: 0 auto 44px;
+    }
+
+    .product-card {
+      background: var(--surface);
+      border-radius: 16px;
+      transition: transform 0.22s;
+    }
+
+    .product-card:hover { transform: translateY(-4px); }
+
+    .product-body { padding: 24px; }
+
+    .product-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .product-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .product-price {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    hr.product-rule {
+      border: none;
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 14px;
+    }
+
+    p.product-desc {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    .product-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .tag {
+      background: var(--bg-raised);
+      color: var(--subtle);
+      font-size: 11px;
+      font-weight: 400;
+      padding: 3px 11px;
+      border-radius: 999px;
+      transition: color 0.15s;
+    }
+
+    .tag:hover { color: var(--text); }
+
+    .buy-btn {
+      width: 100%;
+      background: var(--surface2);
+      border: none;
+      color: var(--subtle);
+      font-family: Tahoma, Geneva, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      padding: 11px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .buy-btn:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 56px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-logo {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.4px;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      font-weight: 400;
+      color: #3c3f50;
+      letter-spacing: 0.2px;
     }
   </style>
 </head>
 <body>
-  <div class="content">
-    <h1>Slurp Client Discontinued</h1>
-    <p>
-      Thank you to everyone who supported Slurp Client. Development and maintenance have officially ended, and there will be no further updates or patches.
-    </p>
-    <p>
-      Any downloads or services associated with the client may be taken offline soon. We appreciate your time and support in the Slurp community.
-    </p>
-    <div class="footer">— The Slurp Team</div>
+
+<nav>
+  <a href="#hero" class="nav-logo">Slurp</a>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#products">Products</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#" class="btn-discord">Discord</a>
   </div>
+</nav>
+
+<section id="hero">
+  <h1 class="hero-title">Slurp</h1>
+  <p class="hero-sub">A premier Minecraft client engineered for total dominance. Advanced multi-server bypasses, secure delivery, and instant access to next-generation utility.</p>
+  <div class="hero-btns">
+    <button type="button" class="btn-primary">Browse</button>
+    <button type="button" class="btn-secondary">Get Started</button>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section id="products">
+  <h2 class="section-title">Everything You Need</h2>
+  <p class="section-sub">The full suite of tools designed to elevate your gameplay and deliver a definitive competitive edge.</p>
+  <div class="product-card">
+    <div class="product-body">
+      <div class="product-header">
+        <span class="product-name">Slurp Client</span>
+        <span class="product-price">USD 14.99</span>
+      </div>
+      <hr class="product-rule">
+      <p class="product-desc">The ultimate solution for multi-server bypasses. Expertly optimized for Watchdog and industry-leading anti-cheats with a primary focus on stealth and reliability.</p>
+      <div class="product-tags">
+        <span class="tag">Hypixel</span>
+        <span class="tag">Cubecraft</span>
+        <span class="tag">BlocksMC</span>
+        <span class="tag">Lifetime Updates</span>
+        <span class="tag">Closet &amp; Blatant</span>
+      </div>
+      <button type="button" class="buy-btn">Buy</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">Slurp</span>
+  <span class="footer-copy">Slurp Client &copy; All Rights Reserved</span>
+</footer>
+
 </body>
 </html>
