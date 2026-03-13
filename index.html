@@ -1,111 +1,153 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Slurp Client</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-<link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">
+<title>Minecraft Alt Shop</title>
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:"Inter",sans-serif;
-}
-
 body{
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-background:radial-gradient(circle at top,#1a1a2e,#0a0a0f);
+font-family: Arial;
+background:#0f172a;
 color:white;
-overflow:hidden;
-}
-
-/* glowing background */
-
-body::before{
-content:"";
-position:absolute;
-width:600px;
-height:600px;
-background:linear-gradient(45deg,#7b2cff,#00d4ff);
-filter:blur(160px);
-opacity:.35;
-}
-
-/* card */
-
-.card{
-position:relative;
-backdrop-filter:blur(20px);
-background:rgba(255,255,255,0.05);
-padding:60px 70px;
-border-radius:18px;
 text-align:center;
-max-width:520px;
+margin:0;
 }
 
-/* Minecraft title */
-
-h1{
-font-family:"Minecraft",sans-serif;
-font-size:44px;
-letter-spacing:1px;
-margin-bottom:10px;
+header{
+background:#020617;
+padding:20px;
 }
 
-.status{
-margin-top:18px;
-padding:12px 18px;
+.product{
+background:#1e293b;
+padding:20px;
+margin:40px auto;
+width:250px;
 border-radius:10px;
-background:rgba(255,0,60,.12);
-color:#ff6b81;
-font-size:14px;
 }
 
-p{
-margin-top:18px;
-color:#b5b5b5;
-font-size:15px;
-line-height:1.6;
+button{
+padding:10px 20px;
+background:#22c55e;
+border:none;
+color:white;
+cursor:pointer;
+border-radius:5px;
 }
 
-footer{
-margin-top:30px;
-font-size:12px;
-color:#666;
+button:hover{
+background:#16a34a;
 }
 
+.cart{
+margin-top:20px;
+}
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+}
+
+.modal-content{
+background:#1e293b;
+padding:20px;
+width:300px;
+margin:120px auto;
+border-radius:10px;
+}
+
+input,select{
+width:100%;
+padding:8px;
+margin-top:8px;
+margin-bottom:10px;
+border-radius:5px;
+border:none;
+}
 </style>
+
 </head>
 
 <body>
 
-<div class="card">
+<header>
+<h1>Minecraft Alt Shop</h1>
+<p>Unbanned Minecraft Alts - $0.10 each</p>
+</header>
 
-<h1>Slurp Client</h1>
-
-<div class="status">
-Project Discontinued
+<div class="product">
+<h2>Unbanned Minecraft Alt</h2>
+<p>Instant Delivery</p>
+<p>Price: $0.10</p>
+<button onclick="addToCart()">Add to Cart</button>
 </div>
 
-<p>
-Slurp Client is no longer maintained and development has officially ended.
-This page remains online for archival purposes.
-</p>
+<div class="cart">
+<h2>Cart</h2>
+<p>Items: <span id="count">0</span></p>
+<p>Total: $<span id="total">0.00</span></p>
+<button onclick="openCheckout()">Checkout</button>
+</div>
 
-<footer>
-Slurp Client. © All Rights Reserved
-</footer>
+<div id="checkout" class="modal">
+<div class="modal-content">
+
+<h2>Checkout</h2>
+
+<label>Email</label>
+<input type="email" placeholder="email@example.com">
+
+<label>Payment Method</label>
+<select>
+<option>Demo Payment</option>
+<option>PayPal (demo)</option>
+<option>Crypto (demo)</option>
+</select>
+
+<button onclick="completeOrder()">Complete Order</button>
+<br><br>
+<button onclick="closeCheckout()">Cancel</button>
 
 </div>
+</div>
+
+<script>
+let cart = 0;
+let price = 0.10;
+
+function addToCart(){
+cart++;
+document.getElementById("count").innerText = cart;
+document.getElementById("total").innerText = (cart * price).toFixed(2);
+}
+
+function openCheckout(){
+if(cart == 0){
+alert("Your cart is empty!");
+return;
+}
+document.getElementById("checkout").style.display="block";
+}
+
+function closeCheckout(){
+document.getElementById("checkout").style.display="none";
+}
+
+function completeOrder(){
+alert("Demo order complete!");
+cart=0;
+document.getElementById("count").innerText=0;
+document.getElementById("total").innerText="0.00";
+closeCheckout();
+}
+</script>
 
 </body>
 </html>
+```
