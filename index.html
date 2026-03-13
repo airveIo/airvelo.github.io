@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Slurp — a premier Minecraft client engineered for multi-server bypasses and total dominance.">
 <meta name="theme-color" content="#181a20">
-<title>Slurp — Minecraft Client</title>
+<title>Slurp Client</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -204,28 +204,40 @@ justify-content:center
 
 .feature-card{
 background:var(--surface);
-border-radius:14px;
-padding:22px;
-flex:1;
-transition:transform .2s,background .18s
+border-radius:16px;
+transition:transform .22s;
+flex:1
 }
 
-.feature-card:hover{
-transform:translateY(-3px);
-background:var(--surface-hover)
+.feature-card:hover{transform:translateY(-4px)}
+
+.feature-body{padding:24px}
+
+.feature-header{
+display:flex;
+align-items:baseline;
+justify-content:space-between;
+margin-bottom:10px
 }
 
-.feature-title{
-font-size:14px;
+.feature-name{
+font-size:15px;
 font-weight:700;
-margin-bottom:6px;
 color:var(--text)
+}
+
+hr.feature-rule{
+border:none;
+height:1px;
+background:var(--border);
+margin-bottom:14px
 }
 
 .feature-desc{
 font-size:12px;
+font-weight:400;
 color:var(--muted);
-line-height:1.7
+line-height:1.8
 }
 
 #products{
@@ -378,18 +390,33 @@ color:#3c3f50
 <div class="features-grid">
 
 <div class="feature-card">
-<div class="feature-title">Reliable Bypasses</div>
-<div class="feature-desc">Rigorous testing ensures seamless and stable bypasses across all major server networks.</div>
+<div class="feature-body">
+<div class="feature-header">
+<span class="feature-name">Reliable Bypasses</span>
+</div>
+<hr class="feature-rule">
+<p class="feature-desc">Rigorous testing ensures seamless and stable bypasses across all major server networks.</p>
+</div>
 </div>
 
 <div class="feature-card">
-<div class="feature-title">Optimized Performance</div>
-<div class="feature-desc">A lightweight architecture and efficient rendering deliver a fluid, high-FPS experience.</div>
+<div class="feature-body">
+<div class="feature-header">
+<span class="feature-name">Optimized Performance</span>
+</div>
+<hr class="feature-rule">
+<p class="feature-desc">A lightweight architecture and efficient rendering deliver a fluid, high-FPS experience.</p>
+</div>
 </div>
 
 <div class="feature-card">
-<div class="feature-title">Continuous Support</div>
-<div class="feature-desc">Regular maintenance ensures quality updates and effective countermeasures against modern anti-cheats.</div>
+<div class="feature-body">
+<div class="feature-header">
+<span class="feature-name">Continuous Support</span>
+</div>
+<hr class="feature-rule">
+<p class="feature-desc">Regular maintenance ensures quality updates and effective countermeasures against modern anti-cheats.</p>
+</div>
 </div>
 
 </div>
