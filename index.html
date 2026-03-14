@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="Slurp — a premier Minecraft client engineered for multi-server bypasses and total dominance.">
 <meta name="theme-color" content="#181a20">
+<meta name="color-scheme" content="dark">
 <meta property="og:title" content="Slurp Client">
 <meta property="og:description" content="Slurp — a premier Minecraft client engineered for multi-server bypasses and total dominance.">
 <meta property="og:type" content="website">
@@ -25,9 +26,9 @@
 --accent-hover:#4f96f5;
 --on-accent:#ffffff;
 --text:#f0f1f4;
---muted:#5b6070;
+--muted:#7a8494;
 --subtle:#8b95a8;
---footer-copy:#3c3f50;
+--footer-copy:#5b6275;
 --fw-bold:700;
 --nav-height:56px;
 --layout-max:900px;
@@ -50,17 +51,17 @@
 --lh-sub:1.75;
 --lh-card:1.8;
 --lh-home:1.85;
---fs-xs:11px;
---fs-sm:12px;
---fs-base:13px;
---fs-md:15px;
---fs-body:14px;
---fs-home-min:68px;
+--fs-xs:0.6875rem;
+--fs-sm:0.75rem;
+--fs-base:0.8125rem;
+--fs-md:0.9375rem;
+--fs-body:0.875rem;
+--fs-home-min:4.25rem;
 --fs-home-fluid:12vw;
---fs-home-max:116px;
---fs-title-min:22px;
+--fs-home-max:7.25rem;
+--fs-title-min:1.375rem;
 --fs-title-fluid:3.5vw;
---fs-title-max:32px;
+--fs-title-max:2rem;
 --space-xs:3px;
 --space-sm:8px;
 --space-btn:11px;
@@ -85,20 +86,21 @@
 html{scroll-behavior:smooth}
 }
 
+html{overflow-x:hidden}
+
 body{
 font-family:Tahoma,Geneva,sans-serif;
 font-size:var(--fs-body);
 line-height:var(--lh-body);
 background:var(--bg);
 color:var(--text);
-overflow-x:hidden;
 min-height:100vh;
 -webkit-font-smoothing:antialiased;
 -moz-osx-font-smoothing:grayscale
 }
 
 .skip-link{
-position:absolute;
+position:fixed;
 top:-100%;
 left:var(--space-5);
 background:var(--accent);
@@ -110,7 +112,7 @@ text-decoration:none;
 z-index:var(--z-skip)
 }
 
-.skip-link:focus{top:var(--space-2)}
+.skip-link:focus-visible{top:var(--space-2)}
 
 :focus-visible{
 outline:var(--focus-outline) solid var(--accent);
@@ -126,9 +128,10 @@ display:flex;
 align-items:center;
 height:var(--nav-height);
 padding:0 var(--space-9);
+background:rgba(24,26,32,0.88);
 background:var(--bg-nav);
-backdrop-filter:blur(var(--blur-nav));
 -webkit-backdrop-filter:blur(var(--blur-nav));
+backdrop-filter:blur(var(--blur-nav));
 border-bottom:1px solid var(--border)
 }
 
@@ -163,8 +166,7 @@ color:var(--muted);
 text-decoration:none;
 font-size:var(--fs-base);
 letter-spacing:0.015em;
-transition:color var(--duration-base);
-cursor:pointer
+transition:color var(--duration-base)
 }
 
 .nav-links a:hover,
@@ -195,9 +197,10 @@ transform:translateY(var(--lift-btn))
 .view{display:none}
 .view.active{display:block}
 
-#view-main{display:block}
+#main:focus{outline:none}
 
 #home{
+min-height:calc(100vh - var(--nav-height));
 min-height:calc(100svh - var(--nav-height));
 display:flex;
 flex-direction:column;
@@ -226,7 +229,8 @@ margin:0 auto var(--space-7)
 .home-btns{
 display:flex;
 gap:var(--space-2);
-justify-content:center
+justify-content:center;
+flex-wrap:wrap
 }
 
 .btn-primary{
@@ -237,8 +241,7 @@ letter-spacing:0.025em;
 padding:var(--space-btn) var(--space-5);
 border-radius:var(--radius-pill);
 text-decoration:none;
-transition:background-color var(--duration-base),transform var(--duration-fast);
-cursor:pointer
+transition:background-color var(--duration-base),transform var(--duration-fast)
 }
 
 .btn-primary:hover{
@@ -275,7 +278,9 @@ margin:0 auto
 
 .card-grid{
 display:flex;
-gap:var(--space-3)
+gap:var(--space-3);
+list-style:none;
+padding:0
 }
 
 .feature-card,
@@ -329,10 +334,14 @@ line-height:var(--lh-card)
 .product-card .card-desc{margin-bottom:var(--space-4)}
 
 #view-products{
+min-height:calc(100vh - var(--nav-height));
+min-height:calc(100svh - var(--nav-height))
+}
+
+#view-products section{
 padding:var(--space-10) var(--space-9);
 max-width:var(--layout-product);
-margin:0 auto;
-min-height:calc(100svh - var(--nav-height))
+margin:0 auto
 }
 
 .section-title{
@@ -358,7 +367,9 @@ margin:0 auto var(--space-8)
 display:flex;
 gap:var(--space-1);
 flex-wrap:wrap;
-margin-bottom:var(--space-4)
+margin-bottom:var(--space-4);
+list-style:none;
+padding:0
 }
 
 .tag{
@@ -366,7 +377,8 @@ background:var(--bg-raised);
 color:var(--subtle);
 font-size:var(--fs-xs);
 padding:var(--space-xs) var(--space-btn);
-border-radius:var(--radius-pill)
+border-radius:var(--radius-pill);
+white-space:nowrap
 }
 
 .buy-btn{
@@ -398,8 +410,7 @@ border-top:1px solid var(--border)
 font-size:var(--fs-sm);
 font-weight:var(--fw-bold);
 color:var(--text);
-text-decoration:none;
-cursor:pointer
+text-decoration:none
 }
 
 .footer-copy{
@@ -407,9 +418,14 @@ font-size:var(--fs-xs);
 color:var(--footer-copy)
 }
 
+@media (prefers-reduced-motion: reduce){
+*,*::before,*::after{transition:none!important;animation:none!important;transform:none!important}
+}
+
 @media (max-width:700px){
 nav{padding:0 var(--space-mobile)}
-#home,#features,#view-products{padding-left:var(--space-mobile);padding-right:var(--space-mobile)}
+#home,#features{padding-left:var(--space-mobile);padding-right:var(--space-mobile)}
+#view-products section{padding-left:var(--space-mobile);padding-right:var(--space-mobile)}
 .card-grid{flex-direction:column}
 footer{padding:var(--space-4) var(--space-mobile)}
 }
@@ -417,100 +433,112 @@ footer{padding:var(--space-4) var(--space-mobile)}
 </head>
 <body>
 
-<a href="#main" class="skip-link">Skip to content</a>
+<a href="#" class="skip-link" data-view="main" data-skip>Skip to content</a>
 
-<nav aria-label="Main">
+<nav aria-label="Main navigation">
 <div class="nav-inner">
-<a class="nav-logo" data-view="main">Slurp</a>
-<ul class="nav-links">
-<li><a data-view="main" class="active">Home</a></li>
-<li><a data-view="main" data-scroll="features">Features</a></li>
-<li><a data-view="products">Products</a></li>
+<a href="#" class="nav-logo" data-view="main" aria-label="Slurp — go to home">Slurp</a>
+<ul class="nav-links" role="list">
+<li><a href="#" data-view="main" class="active" aria-current="page">Home</a></li>
+<li><a href="#" data-view="main" data-scroll="features">Features</a></li>
+<li><a href="#" data-view="products">Products</a></li>
 </ul>
 <div class="nav-right">
-<a href="https://discord.gg/QCPzTp9e3m" class="btn-discord" target="_blank" rel="noopener noreferrer">Discord</a>
+<a href="https://discord.gg/QCPzTp9e3m" class="btn-discord" target="_blank" rel="noreferrer" aria-label="Join our Discord (opens in new tab)">Discord</a>
 </div>
 </div>
 </nav>
 
-<main id="main">
+<main id="main" tabindex="-1">
 
   <div id="view-main" class="view active">
 
-    <section id="home">
-      <h1 class="home-title">Slurp</h1>
+    <section id="home" aria-labelledby="home-title">
+      <h1 id="home-title" class="home-title">Slurp</h1>
       <p class="home-sub">A premier Minecraft client engineered for total dominance. Advanced multi-server bypasses, secure delivery, and instant access to next-generation utility.</p>
-      <div class="home-btns">
-        <a class="btn-primary" data-view="products">Purchase</a>
-        <a class="btn-secondary" data-view="main" data-scroll="features">Learn More</a>
+      <div class="home-btns" role="group" aria-label="Get started">
+        <a href="#" class="btn-primary" data-view="products">Purchase</a>
+        <a href="#" class="btn-secondary" data-view="main" data-scroll="features">Learn More</a>
       </div>
     </section>
 
-    <hr class="section-divider">
+    <hr class="section-divider" aria-hidden="true">
 
-    <section id="features">
-      <h2 class="section-title">Why Choose Slurp?</h2>
+    <section id="features" aria-labelledby="features-title">
+      <h2 id="features-title" class="section-title">Why Choose Slurp?</h2>
       <p class="section-sub">Equipped with an extensive feature set, you will never need to settle for another client again.</p>
-      <div class="card-grid">
-        <div class="feature-card">
+      <ul class="card-grid" role="list">
+        <li class="feature-card">
           <div class="card-body">
             <h3 class="card-name">Reliable Bypasses</h3>
-            <hr class="card-rule">
+            <hr class="card-rule" aria-hidden="true">
             <p class="card-desc">Rigorous testing ensures seamless and stable bypasses across all major server networks.</p>
           </div>
-        </div>
-        <div class="feature-card">
+        </li>
+        <li class="feature-card">
           <div class="card-body">
             <h3 class="card-name">Optimized Performance</h3>
-            <hr class="card-rule">
+            <hr class="card-rule" aria-hidden="true">
             <p class="card-desc">A lightweight architecture and efficient rendering deliver a fluid, high-FPS experience.</p>
           </div>
-        </div>
-        <div class="feature-card">
+        </li>
+        <li class="feature-card">
           <div class="card-body">
             <h3 class="card-name">Continuous Support</h3>
-            <hr class="card-rule">
+            <hr class="card-rule" aria-hidden="true">
             <p class="card-desc">Regular maintenance ensures quality updates and effective countermeasures against modern anti-cheats.</p>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
     </section>
 
   </div>
 
   <div id="view-products" class="view">
-    <h2 class="section-title">Everything You Need</h2>
-    <p class="section-sub">The full suite of tools designed to elevate your gameplay and deliver a definitive competitive edge.</p>
-    <div class="product-card">
-      <div class="card-body">
-        <div class="card-header">
-          <h3 class="card-name">Slurp Client</h3>
-          <span class="product-price">USD 24.99</span>
+    <section aria-labelledby="products-title">
+      <h2 id="products-title" class="section-title">Everything You Need</h2>
+      <p class="section-sub">The full suite of tools designed to elevate your gameplay and deliver a definitive competitive edge.</p>
+      <article class="product-card" aria-labelledby="product-name">
+        <div class="card-body">
+          <header class="card-header">
+            <h3 id="product-name" class="card-name">Slurp Client</h3>
+            <data class="product-price" value="24.99">USD 24.99</data>
+          </header>
+          <hr class="card-rule" aria-hidden="true">
+          <p class="card-desc">The ultimate solution for multi-server bypasses. Expertly optimized for Watchdog and industry-leading anti-cheats with a primary focus on stealth and reliability.</p>
+          <ul class="product-tags" role="list" aria-label="Supported servers and features">
+            <li class="tag">Hypixel</li>
+            <li class="tag">Cubecraft</li>
+            <li class="tag">BlocksMC</li>
+            <li class="tag">Lifetime Updates</li>
+            <li class="tag">Closet &amp; Blatant</li>
+          </ul>
+          <a href="https://discord.gg/QCPzTp9e3m" class="buy-btn" target="_blank" rel="noreferrer" aria-label="Purchase Slurp Client via Discord (opens in new tab)">Purchase</a>
         </div>
-        <hr class="card-rule">
-        <p class="card-desc">The ultimate solution for multi-server bypasses. Expertly optimized for Watchdog and industry-leading anti-cheats with a primary focus on stealth and reliability.</p>
-        <div class="product-tags">
-          <span class="tag">Hypixel</span>
-          <span class="tag">Cubecraft</span>
-          <span class="tag">BlocksMC</span>
-          <span class="tag">Lifetime Updates</span>
-          <span class="tag">Closet &amp; Blatant</span>
-        </div>
-        <a href="https://discord.gg/QCPzTp9e3m" class="buy-btn" target="_blank" rel="noopener noreferrer">Purchase</a>
-      </div>
-    </div>
+      </article>
+    </section>
   </div>
 
 </main>
 
 <footer>
-<a class="footer-logo" data-view="main">Slurp</a>
-<span class="footer-copy">Slurp Client &copy; All Rights Reserved</span>
+<a href="#" class="footer-logo" data-view="main" aria-label="Slurp — go to home">Slurp</a>
+<small class="footer-copy">Slurp Client &copy; All Rights Reserved</small>
 </footer>
 
 <script>
 (function () {
-  function showView(viewName, scrollTarget) {
+  var viewTitles = {
+    main: 'Slurp Client',
+    products: 'Products — Slurp Client'
+  };
+
+  function showView(viewName, scrollTarget, moveFocus) {
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var scrollBehavior = reducedMotion ? 'auto' : 'smooth';
+
+    if (viewTitles[viewName]) document.title = viewTitles[viewName];
+
     document.querySelectorAll('.view').forEach(function (v) {
       v.classList.remove('active');
     });
@@ -519,17 +547,29 @@ footer{padding:var(--space-4) var(--space-mobile)}
     if (target) target.classList.add('active');
 
     document.querySelectorAll('.nav-links a').forEach(function (a) {
-      a.classList.remove('active');
-      if (a.dataset.view === viewName) a.classList.add('active');
+      var sameView = a.dataset.view === viewName;
+      var sameScroll = (a.dataset.scroll || null) === (scrollTarget || null);
+      var isActive = sameView && sameScroll;
+      a.classList.toggle('active', isActive);
+      if (isActive) {
+        a.setAttribute('aria-current', 'page');
+      } else {
+        a.removeAttribute('aria-current');
+      }
     });
 
     if (scrollTarget) {
       var el = document.getElementById(scrollTarget);
       if (el) {
-        setTimeout(function () { el.scrollIntoView({ behavior: 'smooth' }); }, 10);
+        requestAnimationFrame(function () { el.scrollIntoView({ behavior: scrollBehavior }); });
       }
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      requestAnimationFrame(function () { window.scrollTo({ top: 0, behavior: scrollBehavior }); });
+    }
+
+    if (moveFocus) {
+      var main = document.getElementById('main');
+      if (main) main.focus();
     }
   }
 
@@ -537,7 +577,7 @@ footer{padding:var(--space-4) var(--space-mobile)}
     var el = e.target.closest('[data-view]');
     if (!el) return;
     e.preventDefault();
-    showView(el.dataset.view, el.dataset.scroll || null);
+    showView(el.dataset.view, el.dataset.scroll || null, el.hasAttribute('data-skip'));
   });
 })();
 </script>
