@@ -9,9 +9,10 @@
 <meta property="og:description" content="Slurp — a premier Minecraft client engineered for multi-server bypasses and total dominance.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
-<title>Slurp Client</title>
+<title>Slurp</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
 :root{
 --bg:#181a20;
 --bg-nav:color-mix(in srgb,var(--bg) 88%,transparent);
@@ -30,8 +31,7 @@
 --fw-bold:700;
 --nav-height:56px;
 --layout-max:900px;
---layout-product:540px;
---layout-hero-sub:400px;
+--layout-home-sub:400px;
 --layout-section-sub:360px;
 --blur-nav:12px;
 --focus-offset:3px;
@@ -48,15 +48,15 @@
 --lh-heading:1.15;
 --lh-sub:1.75;
 --lh-card:1.8;
---lh-hero:1.85;
+--lh-home:1.85;
 --fs-xs:11px;
 --fs-sm:12px;
 --fs-base:13px;
 --fs-md:15px;
 --fs-body:14px;
---fs-hero-min:68px;
---fs-hero-fluid:12vw;
---fs-hero-max:116px;
+--fs-home-min:68px;
+--fs-home-fluid:12vw;
+--fs-home-max:116px;
 --fs-title-min:22px;
 --fs-title-fluid:3.5vw;
 --fs-title-max:32px;
@@ -79,7 +79,11 @@
 --radius-lg:16px;
 --radius-pill:999px
 }
-@media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
+
+@media (prefers-reduced-motion: no-preference){
+html{scroll-behavior:smooth}
+}
+
 body{
 font-family:Tahoma,Geneva,sans-serif;
 font-size:var(--fs-body);
@@ -91,6 +95,7 @@ min-height:100vh;
 -webkit-font-smoothing:antialiased;
 -moz-osx-font-smoothing:grayscale
 }
+
 .skip-link{
 position:absolute;
 top:-100%;
@@ -103,12 +108,15 @@ border-radius:var(--radius-md);
 text-decoration:none;
 z-index:var(--z-skip)
 }
+
 .skip-link:focus{top:var(--space-2)}
+
 :focus-visible{
 outline:var(--focus-outline) solid var(--accent);
 outline-offset:var(--focus-offset);
 border-radius:var(--radius-sm)
 }
+
 nav{
 position:sticky;
 top:0;
@@ -122,6 +130,7 @@ backdrop-filter:blur(var(--blur-nav));
 -webkit-backdrop-filter:blur(var(--blur-nav));
 border-bottom:1px solid var(--border)
 }
+
 .nav-inner{
 display:flex;
 align-items:center;
@@ -129,6 +138,7 @@ width:100%;
 max-width:var(--layout-max);
 margin:0 auto
 }
+
 .nav-logo{
 font-size:var(--fs-md);
 font-weight:var(--fw-bold);
@@ -137,6 +147,7 @@ text-decoration:none;
 letter-spacing:0.025em;
 flex:1
 }
+
 .nav-links{
 display:flex;
 gap:var(--space-6);
@@ -145,6 +156,7 @@ align-items:center;
 flex:2;
 justify-content:center
 }
+
 .nav-links a{
 color:var(--muted);
 text-decoration:none;
@@ -152,14 +164,16 @@ font-size:var(--fs-base);
 letter-spacing:0.015em;
 transition:color var(--duration-base)
 }
+
 .nav-links a:hover{color:var(--text)}
+
 .nav-right{
 flex:1;
 display:flex;
 justify-content:flex-end
 }
+
 .btn-discord{
-display:inline-block;
 background-color:var(--accent);
 color:var(--on-accent);
 font-size:var(--fs-sm);
@@ -167,13 +181,14 @@ letter-spacing:0.025em;
 padding:var(--space-sm) var(--space-4);
 border-radius:var(--radius-pill);
 text-decoration:none;
-transition:background-color var(--duration-base),transform var(--duration-fast);
-cursor:pointer
+transition:background-color var(--duration-base),transform var(--duration-fast)
 }
+
 .btn-discord:hover{
 background-color:var(--accent-hover);
 transform:translateY(var(--lift-btn))
 }
+
 #home{
 min-height:calc(100svh - var(--nav-height));
 display:flex;
@@ -183,116 +198,108 @@ justify-content:center;
 text-align:center;
 padding:var(--space-10) var(--space-9)
 }
-.hero-title{
-font-size:clamp(var(--fs-hero-min),var(--fs-hero-fluid),var(--fs-hero-max));
+
+.home-title{
+font-size:clamp(var(--fs-home-min),var(--fs-home-fluid),var(--fs-home-max));
 font-weight:var(--fw-bold);
 color:var(--text);
 line-height:var(--lh-display);
 letter-spacing:-0.035em;
 margin-bottom:var(--space-7)
 }
-.hero-sub{
+
+.home-sub{
 color:var(--muted);
-line-height:var(--lh-hero);
-max-width:var(--layout-hero-sub);
+line-height:var(--lh-home);
+max-width:var(--layout-home-sub);
 margin:0 auto var(--space-7)
 }
-.hero-btns{
+
+.home-btns{
 display:flex;
 gap:var(--space-2);
 justify-content:center
 }
+
 .btn-primary{
 background-color:var(--accent);
-border:none;
 color:var(--on-accent);
 font-size:var(--fs-base);
 letter-spacing:0.025em;
 padding:var(--space-btn) var(--space-5);
 border-radius:var(--radius-pill);
-cursor:pointer;
-transition:background-color var(--duration-base),transform var(--duration-fast);
 text-decoration:none;
-display:inline-block
+transition:background-color var(--duration-base),transform var(--duration-fast)
 }
+
 .btn-primary:hover{
 background-color:var(--accent-hover);
 transform:translateY(var(--lift-btn))
 }
+
 .btn-secondary{
-display:inline-block;
 background-color:var(--surface2);
-border:none;
 color:var(--subtle);
 font-size:var(--fs-base);
 padding:var(--space-btn) var(--space-5);
 border-radius:var(--radius-pill);
-cursor:pointer;
 text-decoration:none;
 transition:background-color var(--duration-base),color var(--duration-base)
 }
+
 .btn-secondary:hover{
 background-color:var(--surface-hover);
 color:var(--text)
 }
+
 .section-divider{
 border:none;
 height:1px;
 background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent)
 }
+
 #features{
 padding:var(--space-10) var(--space-9);
 max-width:var(--layout-max);
 margin:0 auto
 }
+
 .card-grid{
 display:flex;
 gap:var(--space-3)
 }
-.feature-card,
-.product-card{
+
+.feature-card{
 background:var(--surface);
 border-radius:var(--radius-lg);
-transition:transform var(--duration-card)
+transition:transform var(--duration-card);
+flex:1
 }
-.feature-card{flex:1}
-.feature-card:hover,
-.product-card:hover{transform:translateY(var(--lift-card))}
+
+.feature-card:hover{transform:translateY(var(--lift-card))}
+
 .card-body{padding:var(--space-5)}
+
 .card-name{
 font-size:var(--fs-md);
 font-weight:var(--fw-bold);
-color:var(--text)
-}
-.feature-card .card-name{margin-bottom:var(--space-2)}
-.product-card .card-header{
-display:flex;
-align-items:baseline;
+color:var(--text);
 margin-bottom:var(--space-2)
 }
-.product-price{
-font-size:var(--fs-body);
-font-weight:var(--fw-bold);
-color:var(--accent);
-margin-left:auto
-}
+
 .card-rule{
 border:none;
 height:1px;
 background:var(--border);
 margin-bottom:var(--space-3)
 }
+
 .card-desc{
 font-size:var(--fs-sm);
 color:var(--muted);
 line-height:var(--lh-card)
 }
-.product-card .card-desc{margin-bottom:var(--space-4)}
-#products{
-padding:var(--space-10) var(--space-9);
-max-width:var(--layout-product);
-margin:0 auto
-}
+
 .section-title{
 font-size:clamp(var(--fs-title-min),var(--fs-title-fluid),var(--fs-title-max));
 font-weight:var(--fw-bold);
@@ -302,6 +309,7 @@ letter-spacing:-0.015em;
 line-height:var(--lh-heading);
 margin-bottom:var(--space-2)
 }
+
 .section-sub{
 text-align:center;
 color:var(--muted);
@@ -310,37 +318,7 @@ line-height:var(--lh-sub);
 max-width:var(--layout-section-sub);
 margin:0 auto var(--space-8)
 }
-.product-tags{
-display:flex;
-gap:var(--space-1);
-flex-wrap:wrap;
-margin-bottom:var(--space-4)
-}
-.tag{
-background:var(--bg-raised);
-color:var(--subtle);
-font-size:var(--fs-xs);
-padding:var(--space-xs) var(--space-btn);
-border-radius:var(--radius-pill)
-}
-.buy-btn{
-width:100%;
-background-color:var(--surface2);
-border:none;
-color:var(--subtle);
-font-size:var(--fs-base);
-padding:var(--space-btn);
-border-radius:var(--radius-md);
-cursor:pointer;
-transition:background-color var(--duration-base),color var(--duration-base);
-text-decoration:none;
-display:inline-block;
-text-align:center
-}
-.buy-btn:hover{
-background-color:var(--surface-hover);
-color:var(--text)
-}
+
 footer{
 display:flex;
 align-items:center;
@@ -348,19 +326,22 @@ justify-content:space-between;
 padding:var(--space-4) var(--space-9);
 border-top:1px solid var(--border)
 }
+
 .footer-logo{
 font-size:var(--fs-sm);
 font-weight:var(--fw-bold);
 color:var(--text);
 text-decoration:none
 }
+
 .footer-copy{
 font-size:var(--fs-xs);
 color:var(--footer-copy)
 }
+
 @media (max-width:700px){
 nav{padding:0 var(--space-mobile)}
-#home,#features,#products{padding-left:var(--space-mobile);padding-right:var(--space-mobile)}
+#home,#features{padding-left:var(--space-mobile);padding-right:var(--space-mobile)}
 .card-grid{flex-direction:column}
 footer{padding:var(--space-4) var(--space-mobile)}
 }
@@ -376,10 +357,10 @@ footer{padding:var(--space-4) var(--space-mobile)}
 <ul class="nav-links">
 <li><a href="#home">Home</a></li>
 <li><a href="#features">Features</a></li>
-<li><a href="#products">Products</a></li>
+<li><a href="products.html">Products</a></li>
 </ul>
 <div class="nav-right">
-<a href="#" class="btn-discord" onclick="window.open('https://discord.gg/QCPzTp9e3m','discord','width=600,height=700,resizable=yes');return false;">Discord</a>
+<a href="https://discord.gg/QCPzTp9e3m" class="btn-discord" target="_blank" rel="noopener noreferrer">Discord</a>
 </div>
 </div>
 </nav>
@@ -387,10 +368,10 @@ footer{padding:var(--space-4) var(--space-mobile)}
 <main id="main">
 
 <section id="home">
-<h1 class="hero-title">Slurp</h1>
-<p class="hero-sub">A premier Minecraft client engineered for total dominance. Advanced multi-server bypasses, secure delivery, and instant access to next-generation utility.</p>
-<div class="hero-btns">
-<a href="#products" class="btn-primary">Purchase</a>
+<h1 class="home-title">Slurp</h1>
+<p class="home-sub">A premier Minecraft client engineered for total dominance. Advanced multi-server bypasses, secure delivery, and instant access to next-generation utility.</p>
+<div class="home-btns">
+<a href="https://discord.gg/QCPzTp9e3m" class="btn-primary" target="_blank" rel="noopener noreferrer">Purchase</a>
 <a href="#features" class="btn-secondary">Learn More</a>
 </div>
 </section>
@@ -428,33 +409,6 @@ footer{padding:var(--space-4) var(--space-mobile)}
 </div>
 
 </div>
-</section>
-
-<hr class="section-divider">
-
-<section id="products">
-<h2 class="section-title">Everything You Need</h2>
-<p class="section-sub">The full suite of tools designed to elevate your gameplay and deliver a definitive competitive edge.</p>
-
-<div class="product-card">
-<div class="card-body">
-<div class="card-header">
-<h3 class="card-name">Slurp Client</h3>
-<span class="product-price">USD 24.99</span>
-</div>
-<hr class="card-rule">
-<p class="card-desc">The ultimate solution for multi-server bypasses. Expertly optimized for Watchdog and industry-leading anti-cheats with a primary focus on stealth and reliability.</p>
-<div class="product-tags">
-<span class="tag">Hypixel</span>
-<span class="tag">Cubecraft</span>
-<span class="tag">BlocksMC</span>
-<span class="tag">Lifetime Updates</span>
-<span class="tag">Closet &amp; Blatant</span>
-</div>
-<a href="#" class="buy-btn" onclick="window.open('https://discord.gg/QCPzTp9e3m','discord','width=600,height=700,resizable=yes');return false;">Purchase</a>
-</div>
-</div>
-
 </section>
 
 </main>
