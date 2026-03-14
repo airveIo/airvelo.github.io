@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#181a20">
-<title>Slurp Dashboard</title>
+<title>Dashboard Slurp</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -297,8 +297,9 @@ nav{
   <div class="nav-inner">
     <a href="#" class="nav-logo">Slurp</a>
     <ul class="nav-tabs">
-      <li><a href="#" class="active" onclick="switchView('downloads');return false;">Downloads</a></li>
-      <li><a href="#" onclick="switchView('configs');return false;">Cloud Configs</a></li>
+      <li><a href="#" class="active" onclick="switchView('forums');return false;">Forums</a></li>
+      <li><a href="#" onclick="switchView('downloads');return false;">Downloads</a></li>
+      <li><a href="#" onclick="switchView('configs');return false;">Configs</a></li>
       <li><a href="#" onclick="switchView('settings');return false;">Settings</a></li>
     </ul>
     <div class="nav-right">
@@ -310,7 +311,7 @@ nav{
 
 <div class="page">
 
-  <div class="view active" id="view-downloads">
+  <div class="view" id="view-downloads">
     <p class="section-label">Downloads</p>
     <div class="grid-2">
       <div class="card">
@@ -322,7 +323,8 @@ nav{
         <p class="card-desc">A ghost and blatant client engineered for multi-server bypasses. Supports closet and blatant cheating across all major server networks.</p>
         <div style="display:flex;gap:8px">
           <a href="https://discord.gg/QCPzTp9e3m" target="_blank" rel="noreferrer" class="btn">Download</a>
-          <button class="btn-ghost" onclick="showChangelog('client')">Changelog</button>
+          <button class="btn-ghost" onclick="showChangelog('client')">Changelogs</button>
+          <button class="btn-ghost" onclick="showChangelog('client-inst')">Instructions</button>
         </div>
       </div>
       <div class="card">
@@ -334,6 +336,7 @@ nav{
         <p class="card-desc">A ghost client built for closet cheating. Designed to stay undetected while providing subtle advantages across supported servers.</p>
         <div style="display:flex;gap:8px">
           <a href="https://discord.gg/QCPzTp9e3m" target="_blank" rel="noreferrer" class="btn">Download</a>
+          <button class="btn-ghost" onclick="showChangelog('lite-log')">Changelogs</button>
           <button class="btn-ghost" onclick="showChangelog('lite')">Instructions</button>
         </div>
       </div>
@@ -342,13 +345,13 @@ nav{
 
   <div class="view" id="view-configs">
     <div id="configs-home">
-      <p class="section-label">Cloud Configs</p>
+      <p class="section-label">Configs</p>
       <div class="card" style="margin-bottom:12px">
         <div class="card-head">
           <span class="card-title">Config Library</span>
         </div>
         <div class="card-rule"></div>
-        <p class="card-desc">Browse and download configs shared by the community. Import directly into your client with one click.</p>
+        <p class="card-desc">Download configs shared by the community. Once downloaded, drag the .json file into your Slurp configs folder to load it in-game.</p>
         <div style="display:flex;gap:8px">
           <button class="btn" onclick="showConfigList()">Browse configs</button>
           <button class="btn-ghost" onclick="showShareForm()">Share mine</button>
@@ -361,14 +364,39 @@ nav{
         <button class="btn-ghost" onclick="showConfigHome()" style="padding:6px 14px;font-size:0.75rem">← Back</button>
         <p class="section-label" style="margin:0">Browse Configs</p>
       </div>
-      <div class="settings-card">
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Hypixel Blatant</div>
-            <div class="settings-sub">Shared by x · 6 downloads</div>
+      <input type="text" class="settings-input" id="config-search" placeholder="Search configs..." style="width:100%;margin-bottom:12px" oninput="filterConfigs()">
+      <div class="settings-card" id="config-list-inner"></div>
+    </div>
+
+    <div id="configs-user-search" style="display:none">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <button class="btn-ghost" onclick="showConfigHome()" style="padding:6px 14px;font-size:0.75rem">← Back</button>
+        <p class="section-label" style="margin:0">Search Users</p>
+      </div>
+      <input type="text" class="settings-input" id="user-search" placeholder="Search by username..." style="width:100%;margin-bottom:12px" oninput="filterUsers()">
+      <div class="settings-card" id="user-list-inner"></div>
+    </div>
+
+    <div id="configs-profile" style="display:none">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <button class="btn-ghost" id="profile-back-btn" style="padding:6px 14px;font-size:0.75rem">← Back</button>
+        <p class="section-label" style="margin:0">User Profile</p>
+      </div>
+      <div class="card" style="margin-bottom:12px">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:16px">
+            <div style="width:52px;height:52px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:700;color:var(--accent);flex-shrink:0" id="profile-avatar">x</div>
+            <div>
+              <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:2px" id="profile-username">x</div>
+              <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px" id="profile-meta">Member · 0 configs shared</div>
+              <div style="font-size:0.8rem;color:var(--subtle)" id="profile-bio">No bio set.</div>
+            </div>
           </div>
-          <button class="btn" style="padding:6px 16px;font-size:0.75rem" onclick="downloadConfig()">Download</button>
+          <button class="btn-danger" style="padding:6px 16px;font-size:0.75rem;flex-shrink:0" onclick="showModal('report-user')">Report</button>
         </div>
+        <div class="card-rule"></div>
+        <p class="section-label" style="margin-bottom:10px">Shared Configs</p>
+        <div class="settings-card" style="margin:0" id="profile-configs"></div>
       </div>
     </div>
 
@@ -394,6 +422,96 @@ nav{
         <button class="btn" onclick="submitConfig()">Submit config</button>
       </div>
     </div>
+  </div>
+
+  <div class="view active" id="view-forums">
+
+    <div id="forums-home">
+      <p class="section-label">Forums</p>
+      <div class="settings-card">
+        <div class="settings-row" style="cursor:pointer" onclick="openCategory('General')">
+          <div>
+            <div class="settings-label">General</div>
+            <div class="settings-sub">General discussion</div>
+          </div>
+          <span style="font-size:0.75rem;color:var(--muted)" id="count-General">0 posts</span>
+        </div>
+        <div class="settings-row" style="cursor:pointer" onclick="openCategory('Support')">
+          <div>
+            <div class="settings-label">Support</div>
+            <div class="settings-sub">Get help with installation and troubleshooting</div>
+          </div>
+          <span style="font-size:0.75rem;color:var(--muted)" id="count-Support">0 posts</span>
+        </div>
+        <div class="settings-row" style="cursor:pointer" onclick="openCategory('Announcements')">
+          <div>
+            <div class="settings-label">Announcements</div>
+            <div class="settings-sub">Official updates from the team</div>
+          </div>
+          <span style="font-size:0.75rem;color:var(--muted)" id="count-Announcements">0 posts</span>
+        </div>
+        <div class="settings-row" style="cursor:pointer" onclick="openCategory('Suggestions')">
+          <div>
+            <div class="settings-label">Suggestions</div>
+            <div class="settings-sub">Share ideas and feature requests</div>
+          </div>
+          <span style="font-size:0.75rem;color:var(--muted)" id="count-Suggestions">0 posts</span>
+        </div>
+        <div class="settings-row" style="cursor:pointer" onclick="openCategory('Off-topic')">
+          <div>
+            <div class="settings-label">Off-topic</div>
+            <div class="settings-sub">Anything goes</div>
+          </div>
+          <span style="font-size:0.75rem;color:var(--muted)" id="count-Off-topic">0 posts</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="forums-category" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <button class="btn-ghost" onclick="showForumsHome()" style="padding:6px 14px;font-size:0.75rem">← Back</button>
+          <p class="section-label" style="margin:0" id="category-title">General</p>
+        </div>
+        <button class="btn" style="padding:7px 16px;font-size:0.75rem" onclick="showNewPostForm()">+ New post</button>
+      </div>
+      <div id="posts-list"></div>
+    </div>
+
+    <div id="forums-new-post" style="display:none">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <button class="btn-ghost" onclick="showCategoryFromPost()" style="padding:6px 14px;font-size:0.75rem">← Back</button>
+        <p class="section-label" style="margin:0">New Post</p>
+      </div>
+      <div class="card">
+        <div class="card-rule" style="margin-top:0;margin-bottom:20px"></div>
+        <div style="margin-bottom:14px">
+          <label style="display:block;font-size:0.6875rem;color:var(--subtle);letter-spacing:0.015em;margin-bottom:6px">Title</label>
+          <input id="post-title-input" class="settings-input" type="text" placeholder="Post title..." style="width:100%">
+        </div>
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:0.6875rem;color:var(--subtle);letter-spacing:0.015em;margin-bottom:6px">Content</label>
+          <textarea id="post-body-input" class="settings-input" placeholder="Write your post..." style="width:100%;height:120px;resize:vertical;font-family:Tahoma,Geneva,sans-serif;line-height:1.6"></textarea>
+        </div>
+        <button class="btn" onclick="submitPost()">Post</button>
+      </div>
+    </div>
+
+    <div id="forums-post-view" style="display:none">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <button class="btn-ghost" onclick="showCategoryFromPost()" style="padding:6px 14px;font-size:0.75rem">← Back</button>
+        <p class="section-label" style="margin:0" id="post-view-category"></p>
+      </div>
+      <div class="card">
+        <div style="margin-bottom:14px">
+          <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px" id="post-view-title"></div>
+          <div style="font-size:0.75rem;color:var(--muted)" id="post-view-meta"></div>
+        </div>
+        <div class="card-rule"></div>
+        <div style="font-size:0.875rem;color:var(--subtle);line-height:1.7;white-space:pre-wrap" id="post-view-body"></div>
+      </div>
+    </div>
+
   </div>
 
   <div class="view" id="view-settings">
@@ -462,29 +580,198 @@ nav{
 })();
 
 function switchView(view) {
-  ['downloads','configs','settings'].forEach(function(v){
+  ['downloads','configs','forums','settings'].forEach(function(v){
     document.getElementById('view-' + v).classList.toggle('active', v === view);
   });
   document.querySelectorAll('.nav-tabs a').forEach(function(a){ a.classList.remove('active'); });
   event.target.classList.add('active');
 }
 
+var forumPosts = { General: [], Support: [], Announcements: [], Suggestions: [], 'Off-topic': [] };
+var currentCategory = 'General';
+
+function updatePostCounts() {
+  Object.keys(forumPosts).forEach(function(cat) {
+    var el = document.getElementById('count-' + cat);
+    if(el) { var n = forumPosts[cat].length; el.textContent = n + ' post' + (n !== 1 ? 's' : ''); }
+  });
+}
+
+function openCategory(cat) {
+  currentCategory = cat;
+  document.getElementById('forums-home').style.display = 'none';
+  document.getElementById('forums-category').style.display = 'block';
+  document.getElementById('forums-new-post').style.display = 'none';
+  document.getElementById('forums-post-view').style.display = 'none';
+  document.getElementById('category-title').textContent = cat;
+  renderPosts();
+}
+
+function renderPosts() {
+  var el = document.getElementById('posts-list');
+  var posts = forumPosts[currentCategory];
+  if(!posts.length) {
+    el.innerHTML = '<div class="card" style="text-align:center;padding:32px;color:var(--muted);font-size:0.8rem">No posts yet. Be the first to post!</div>';
+    return;
+  }
+  el.innerHTML = '<div class="settings-card">' + posts.map(function(p, i) {
+    return '<div class="settings-row" style="cursor:pointer" onclick="viewPost(' + i + ')"><div><div class="settings-label">' + escHtml(p.title) + '</div><div class="settings-sub">by ' + escHtml(p.author) + ' · ' + p.time + '</div></div><span style="font-size:0.75rem;color:var(--muted)">→</span></div>';
+  }).join('') + '</div>';
+}
+
+function viewPost(index) {
+  var p = forumPosts[currentCategory][index];
+  document.getElementById('forums-category').style.display = 'none';
+  document.getElementById('forums-post-view').style.display = 'block';
+  document.getElementById('post-view-category').textContent = currentCategory;
+  document.getElementById('post-view-title').textContent = p.title;
+  document.getElementById('post-view-meta').textContent = 'Posted by ' + p.author + ' · ' + p.time;
+  document.getElementById('post-view-body').textContent = p.body;
+}
+
+function showNewPostForm() {
+  document.getElementById('forums-category').style.display = 'none';
+  document.getElementById('forums-new-post').style.display = 'block';
+  document.getElementById('post-title-input').value = '';
+  document.getElementById('post-body-input').value = '';
+}
+
+function showCategoryFromPost() {
+  document.getElementById('forums-new-post').style.display = 'none';
+  document.getElementById('forums-post-view').style.display = 'none';
+  document.getElementById('forums-category').style.display = 'block';
+  renderPosts();
+}
+
+function showForumsHome() {
+  document.getElementById('forums-home').style.display = 'block';
+  document.getElementById('forums-category').style.display = 'none';
+  document.getElementById('forums-new-post').style.display = 'none';
+  document.getElementById('forums-post-view').style.display = 'none';
+}
+
+function submitPost() {
+  var title = document.getElementById('post-title-input').value.trim();
+  var body = document.getElementById('post-body-input').value.trim();
+  if(!title) { alert('Please enter a title.'); return; }
+  if(!body) { alert('Please write something.'); return; }
+  var now = new Date();
+  var time = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' at ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+  forumPosts[currentCategory].unshift({ title: title, body: body, author: 'x', time: time });
+  updatePostCounts();
+  showCategoryFromPost();
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+updatePostCounts();
+
+var profiles = {
+  'x':        { bio: 'I eat turkey', role: 'Owner', configs: [{ name: 'Hypixel Blatant', downloads: 6 }] },
+  'ghost_':   { bio: 'Closet main on Hypixel.', role: 'Member', configs: [{ name: 'Hypixel KA', downloads: 34 }] },
+  'notch42':  { bio: 'Playing since 2011.', role: 'Member', configs: [] },
+  'voidpvp':  { bio: 'Best reach settings only.', role: 'Member', configs: [{ name: 'BlocksMC Blatant', downloads: 18 }] },
+  'slurpfan': { bio: 'Slurp is the best.', role: 'Member', configs: [] },
+  'aimbotx':  { bio: 'Killaura enthusiast.', role: 'Member', configs: [{ name: 'General KA', downloads: 9 }] },
+  'pvpgod':   { bio: 'Top 10 Hypixel BW.', role: 'Member', configs: [{ name: 'BW Blatant', downloads: 22 }] },
+  'nohitbox': { bio: 'Reach diff.', role: 'Member', configs: [] },
+  'bypasskid':{ bio: 'Testing every anticheat.', role: 'Member', configs: [{ name: 'AC Bypass v2', downloads: 11 }] },
+  'shadow99': { bio: 'Closet cheater since forever.', role: 'Member', configs: [] },
+  'cloakmod': { bio: 'Undetected or uninstalled.', role: 'Member', configs: [{ name: 'Hypixel Closet', downloads: 41 }] },
+  'reach404': { bio: 'No bio.', role: 'Member', configs: [] },
+  'mlgwaver': { bio: 'Bridging and hacking.', role: 'Member', configs: [{ name: 'CubeCraft Blatant', downloads: 7 }] },
+  'vortex_':  { bio: 'Speed and velocity.', role: 'Member', configs: [] },
+  'zerolag':  { bio: 'Optimized everything.', role: 'Member', configs: [{ name: 'Low Ping Config', downloads: 15 }] },
+  'invis1':   { bio: 'Ghost mode activated.', role: 'Member', configs: [] },
+  'hackpro':  { bio: 'Professional bypass tester.', role: 'Member', configs: [{ name: 'Multi-Server Pack', downloads: 29 }] },
+  'pixelx':   { bio: 'HCF and practice servers.', role: 'Member', configs: [] },
+  'lunarfall':{ bio: 'Lunar bypass main.', role: 'Member', configs: [{ name: 'Lunar KA', downloads: 5 }] },
+  'enderman8':{ bio: 'End crystals and cheats.', role: 'Member', configs: [] }
+};
+
+var allConfigs = [];
+(function(){
+  Object.keys(profiles).forEach(function(u){
+    profiles[u].configs.forEach(function(c){
+      allConfigs.push({ name: c.name, author: u, downloads: c.downloads });
+    });
+  });
+})();
+
+function renderConfigList(list) {
+  var el = document.getElementById('config-list-inner');
+  if(!list.length){ el.innerHTML = '<div style="padding:16px 24px;font-size:0.8rem;color:var(--muted)">No configs found.</div>'; return; }
+  el.innerHTML = list.map(function(c){
+    return '<div class="settings-row"><div><div class="settings-label">'+c.name+'</div><div class="settings-sub">Shared by <a href="#" onclick="showProfile(\''+c.author+'\');return false;" style="color:var(--accent);text-decoration:none">'+c.author+'</a> · '+c.downloads+' downloads</div></div><button class="btn" style="padding:6px 16px;font-size:0.75rem" onclick="downloadConfig()">Download</button></div>';
+  }).join('');
+}
+
+function renderUserList(list) {
+  var el = document.getElementById('user-list-inner');
+  if(!list.length){ el.innerHTML = '<div style="padding:16px 24px;font-size:0.8rem;color:var(--muted)">No users found.</div>'; return; }
+  el.innerHTML = list.map(function(u){
+    return '<div class="settings-row"><div><div class="settings-label">'+u+'</div><div class="settings-sub">'+profiles[u].role+' · '+profiles[u].configs.length+' config'+(profiles[u].configs.length!==1?'s':'')+' shared</div></div><button class="btn-ghost" style="padding:6px 16px;font-size:0.75rem" onclick="showProfile(\''+u+'\')">View profile</button></div>';
+  }).join('');
+}
+
+function filterConfigs() {
+  var q = document.getElementById('config-search').value.toLowerCase();
+  renderConfigList(allConfigs.filter(function(c){ return c.name.toLowerCase().includes(q) || c.author.toLowerCase().includes(q); }));
+}
+
+function filterUsers() {
+  var q = document.getElementById('user-search').value.toLowerCase();
+  renderUserList(Object.keys(profiles).filter(function(u){ return u.toLowerCase().includes(q); }));
+}
+
+function showProfile(username) {
+  var p = profiles[username] || { bio: 'No bio set.', role: 'Member', configs: [] };
+  var panels = ['configs-home','configs-list','configs-share','configs-user-search'];
+  var prevPanel = panels.find(function(id){ return document.getElementById(id).style.display !== 'none'; }) || 'configs-list';
+  panels.forEach(function(id){ document.getElementById(id).style.display = 'none'; });
+  document.getElementById('configs-profile').style.display = 'block';
+  document.getElementById('profile-username').textContent = username;
+  document.getElementById('profile-avatar').textContent = username.charAt(0).toUpperCase();
+  document.getElementById('profile-meta').textContent = p.role + ' · ' + p.configs.length + ' config' + (p.configs.length !== 1 ? 's' : '') + ' shared';
+  document.getElementById('profile-bio').textContent = p.bio;
+  var configsEl = document.getElementById('profile-configs');
+  configsEl.innerHTML = p.configs.length ? p.configs.map(function(c){
+    return '<div class="settings-row"><div><div class="settings-label">'+c.name+'</div><div class="settings-sub">'+c.downloads+' downloads</div></div><button class="btn" style="padding:6px 16px;font-size:0.75rem" onclick="downloadConfig()">Download</button></div>';
+  }).join('') : '<div style="padding:16px 24px;font-size:0.8rem;color:var(--muted)">No configs shared yet.</div>';
+  document.getElementById('profile-back-btn').onclick = function(){
+    document.getElementById('configs-profile').style.display = 'none';
+    document.getElementById(prevPanel).style.display = 'block';
+  };
+}
+
 function showConfigList() {
-  document.getElementById('configs-home').style.display = 'none';
+  hideAllConfigPanels();
   document.getElementById('configs-list').style.display = 'block';
-  document.getElementById('configs-share').style.display = 'none';
+  renderConfigList(allConfigs);
+}
+
+function showUserSearch() {
+  hideAllConfigPanels();
+  document.getElementById('configs-user-search').style.display = 'block';
+  renderUserList(Object.keys(profiles));
 }
 
 function showShareForm() {
-  document.getElementById('configs-home').style.display = 'none';
-  document.getElementById('configs-list').style.display = 'none';
+  hideAllConfigPanels();
   document.getElementById('configs-share').style.display = 'block';
 }
 
 function showConfigHome() {
+  hideAllConfigPanels();
   document.getElementById('configs-home').style.display = 'block';
-  document.getElementById('configs-list').style.display = 'none';
-  document.getElementById('configs-share').style.display = 'none';
+}
+
+function hideAllConfigPanels() {
+  ['configs-home','configs-list','configs-share','configs-user-search','configs-profile'].forEach(function(id){
+    document.getElementById(id).style.display = 'none';
+  });
 }
 
 function submitConfig() {
@@ -494,13 +781,20 @@ function submitConfig() {
 }
 
 function downloadConfig() {
-  openModal('<div style="font-size:0.9375rem;font-weight:700;color:var(--text);margin-bottom:8px">Download started</div><p style="font-size:0.8rem;color:var(--muted);margin-bottom:20px">Hypixel Blatant config is downloading.</p><button class="btn" style="width:100%" onclick="closeModalDirect()">Close</button>');
+  openModal('<div style="font-size:0.9375rem;font-weight:700;color:var(--text);margin-bottom:8px">Download config</div><p style="font-size:0.8rem;color:var(--muted);margin-bottom:6px">Your config is downloading.</p><p style="font-size:0.8rem;color:var(--muted);margin-bottom:20px">Once downloaded, drag the <span style="color:var(--text);font-weight:700">.json</span> file into your <span style="color:var(--text);font-weight:700">Slurp/configs</span> folder and reload your configs in-game.</p><button class="btn" style="width:100%" onclick="closeModalDirect()">Got it</button>');
 }
 
 function showChangelog(type) {
-  var content = type === 'client'
-    ? '<div style="font-size:0.9375rem;font-weight:700;color:var(--text);margin-bottom:8px">Slurp Client Changelog</div><p style="font-size:0.8rem;color:var(--muted);margin-bottom:20px">No changelog available yet.</p><button class="btn-ghost" style="width:100%" onclick="closeModalDirect()">Close</button>'
-    : '<div style="font-size:0.9375rem;font-weight:700;color:var(--text);margin-bottom:4px">Slurp Lite Instructions</div><p style="font-size:0.75rem;color:var(--muted);margin-bottom:16px">Setup guide</p><div style="font-size:0.8rem;color:var(--muted);line-height:1.8">1. Download Slurp Lite<br>2. Run the installer<br>3. Launch Minecraft<br>4. Inject via the loader<br>5. Press INSERT to open the menu</div><br><button class="btn-ghost" style="width:100%" onclick="closeModalDirect()">Close</button>';
+  var content;
+  if(type === 'client') {
+    content = '<div style="font-size:0.9375rem;font-weight:700;color:var(--text);margin-bottom:8px">Slurp Client Changelogs</div><p style="font-size:0.8rem;color:var(--muted);margin-bottom:20px">No changelogs available yet.</p><button class="btn-ghost" style="width:100%" onclick="closeModalDirect()">Close</button>';
+  } else if(type === 'client-inst') {
+    content = '<div style="font-size:0.9375rem;font-weight:700;color:var(--text);margin-bottom:4px">Slurp Client Instructions</div><p style="font-size:0.75rem;color:var(--muted);margin-bottom:16px">Minecraft 1.21.11 Fabric mod</p><div style="font-size:0.8rem;color:var(--muted);line-height:1.8">1. Download Slurp Client<br>2. Open your Minecraft mods folder<br>3. Drag the <span style="color:var(--text);font-weight:700">.jar</span> file into the mods folder<br>4. Launch Minecraft 1.21.11 with Fabric<br>5. Press <span style="color:var(--text);font-weight:700">Right Shift</span> to open the ClickGUI</div><br><button class="btn-ghost" style="width:100%" onclick="closeModalDirect()">Close</button>';
+  } else if(type === 'lite') {
+    content = '<div style="font-size:0.9375rem;font-weight:700;color:var(--text);margin-bottom:4px">Slurp Lite Instructions</div><p style="font-size:0.75rem;color:var(--muted);margin-bottom:16px">Loader / Injector — 1.8.9 to 1.21.11</p><div style="font-size:0.8rem;color:var(--muted);line-height:1.8">1. Download Slurp Lite<br>2. Launch Minecraft and enter a world or server<br>3. Run the Slurp Lite loader<br>4. Click inject and wait for confirmation<br>5. An external display will appear automatically showing all modules</div><br><button class="btn-ghost" style="width:100%" onclick="closeModalDirect()">Close</button>';
+  } else if(type === 'lite-log') {
+    content = '<div style="font-size:0.9375rem;font-weight:700;color:var(--text);margin-bottom:8px">Slurp Lite Changelogs</div><p style="font-size:0.8rem;color:var(--muted);margin-bottom:20px">No changelogs available yet.</p><button class="btn-ghost" style="width:100%" onclick="closeModalDirect()">Close</button>';
+  }
   openModal(content);
 }
 
@@ -512,6 +806,8 @@ function showModal(type) {
     content = '<div style="font-size:0.9375rem;font-weight:700;color:var(--text);margin-bottom:16px">Change Password</div><div style="margin-bottom:12px"><label style="display:block;font-size:0.6875rem;color:var(--subtle);margin-bottom:6px">Current password</label><input type="password" class="settings-input" placeholder="••••••••" style="width:100%"></div><div style="margin-bottom:12px"><label style="display:block;font-size:0.6875rem;color:var(--subtle);margin-bottom:6px">New password</label><input type="password" class="settings-input" placeholder="••••••••" style="width:100%"></div><div style="margin-bottom:20px"><label style="display:block;font-size:0.6875rem;color:var(--subtle);margin-bottom:6px">Confirm new password</label><input type="password" class="settings-input" placeholder="••••••••" style="width:100%"></div><div style="display:flex;gap:8px"><button class="btn" style="flex:1" onclick="closeModalDirect()">Save</button><button class="btn-ghost" style="flex:1" onclick="closeModalDirect()">Cancel</button></div>';
   } else if(type === 'delete'){
     content = '<div style="font-size:0.9375rem;font-weight:700;color:var(--error);margin-bottom:8px">Delete account</div><p style="font-size:0.8rem;color:var(--muted);margin-bottom:16px">This will permanently delete your account and all associated data. This cannot be undone.</p><div style="margin-bottom:20px"><label style="display:block;font-size:0.6875rem;color:var(--subtle);margin-bottom:6px">Enter your password to confirm</label><input type="password" class="settings-input" placeholder="••••••••" style="width:100%"></div><div style="display:flex;gap:8px"><button class="btn-danger" style="flex:1" onclick="closeModalDirect()">Delete permanently</button><button class="btn-ghost" style="flex:1" onclick="closeModalDirect()">Cancel</button></div>';
+  } else if(type === 'report' || type === 'report-user'){
+    content = '<div style="font-size:0.9375rem;font-weight:700;color:var(--error);margin-bottom:8px">Report user</div><p style="font-size:0.8rem;color:var(--muted);margin-bottom:16px">Report this user for violating community guidelines.</p><div style="margin-bottom:20px"><label style="display:block;font-size:0.6875rem;color:var(--subtle);margin-bottom:6px">Reason</label><textarea class="settings-input" placeholder="Describe the issue..." style="width:100%;height:80px;resize:vertical;font-family:Tahoma,Geneva,sans-serif;line-height:1.5"></textarea></div><div style="display:flex;gap:8px"><button class="btn-danger" style="flex:1" onclick="closeModalDirect()">Submit report</button><button class="btn-ghost" style="flex:1" onclick="closeModalDirect()">Cancel</button></div>';
   }
   openModal(content);
 }
