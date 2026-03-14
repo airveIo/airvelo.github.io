@@ -163,10 +163,12 @@ color:var(--muted);
 text-decoration:none;
 font-size:var(--fs-base);
 letter-spacing:0.015em;
-transition:color var(--duration-base)
+transition:color var(--duration-base);
+cursor:pointer
 }
 
-.nav-links a:hover{color:var(--text)}
+.nav-links a:hover,
+.nav-links a.active{color:var(--text)}
 
 .nav-right{
 flex:1;
@@ -189,6 +191,11 @@ transition:background-color var(--duration-base),transform var(--duration-fast)
 background-color:var(--accent-hover);
 transform:translateY(var(--lift-btn))
 }
+
+.view{display:none}
+.view.active{display:block}
+
+#view-main{display:block}
 
 #home{
 min-height:calc(100svh - var(--nav-height));
@@ -230,7 +237,8 @@ letter-spacing:0.025em;
 padding:var(--space-btn) var(--space-5);
 border-radius:var(--radius-pill);
 text-decoration:none;
-transition:background-color var(--duration-base),transform var(--duration-fast)
+transition:background-color var(--duration-base),transform var(--duration-fast);
+cursor:pointer
 }
 
 .btn-primary:hover{
@@ -320,10 +328,11 @@ line-height:var(--lh-card)
 
 .product-card .card-desc{margin-bottom:var(--space-4)}
 
-#products{
+#view-products{
 padding:var(--space-10) var(--space-9);
 max-width:var(--layout-product);
-margin:0 auto
+margin:0 auto;
+min-height:calc(100svh - var(--nav-height))
 }
 
 .section-title{
@@ -389,7 +398,8 @@ border-top:1px solid var(--border)
 font-size:var(--fs-sm);
 font-weight:var(--fw-bold);
 color:var(--text);
-text-decoration:none
+text-decoration:none;
+cursor:pointer
 }
 
 .footer-copy{
@@ -399,7 +409,7 @@ color:var(--footer-copy)
 
 @media (max-width:700px){
 nav{padding:0 var(--space-mobile)}
-#home,#features,#products{padding-left:var(--space-mobile);padding-right:var(--space-mobile)}
+#home,#features,#view-products{padding-left:var(--space-mobile);padding-right:var(--space-mobile)}
 .card-grid{flex-direction:column}
 footer{padding:var(--space-4) var(--space-mobile)}
 }
@@ -411,11 +421,11 @@ footer{padding:var(--space-4) var(--space-mobile)}
 
 <nav aria-label="Main">
 <div class="nav-inner">
-<a href="#home" class="nav-logo">Slurp</a>
+<a class="nav-logo" data-view="main">Slurp</a>
 <ul class="nav-links">
-<li><a href="#home">Home</a></li>
-<li><a href="#features">Features</a></li>
-<li><a href="#products">Products</a></li>
+<li><a data-view="main" class="active">Home</a></li>
+<li><a data-view="main" data-scroll="features">Features</a></li>
+<li><a data-view="products">Products</a></li>
 </ul>
 <div class="nav-right">
 <a href="https://discord.gg/QCPzTp9e3m" class="btn-discord" target="_blank" rel="noopener noreferrer">Discord</a>
@@ -425,83 +435,112 @@ footer{padding:var(--space-4) var(--space-mobile)}
 
 <main id="main">
 
-<section id="home">
-<h1 class="home-title">Slurp</h1>
-<p class="home-sub">A premier Minecraft client engineered for total dominance. Advanced multi-server bypasses, secure delivery, and instant access to next-generation utility.</p>
-<div class="home-btns">
-<a href="#products" class="btn-primary">Purchase</a>
-<a href="#features" class="btn-secondary">Learn More</a>
-</div>
-</section>
+  <div id="view-main" class="view active">
 
-<hr class="section-divider">
+    <section id="home">
+      <h1 class="home-title">Slurp</h1>
+      <p class="home-sub">A premier Minecraft client engineered for total dominance. Advanced multi-server bypasses, secure delivery, and instant access to next-generation utility.</p>
+      <div class="home-btns">
+        <a class="btn-primary" data-view="products">Purchase</a>
+        <a class="btn-secondary" data-view="main" data-scroll="features">Learn More</a>
+      </div>
+    </section>
 
-<section id="features">
-<h2 class="section-title">Why Choose Slurp?</h2>
-<p class="section-sub">Equipped with an extensive feature set, you will never need to settle for another client again.</p>
+    <hr class="section-divider">
 
-<div class="card-grid">
+    <section id="features">
+      <h2 class="section-title">Why Choose Slurp?</h2>
+      <p class="section-sub">Equipped with an extensive feature set, you will never need to settle for another client again.</p>
+      <div class="card-grid">
+        <div class="feature-card">
+          <div class="card-body">
+            <h3 class="card-name">Reliable Bypasses</h3>
+            <hr class="card-rule">
+            <p class="card-desc">Rigorous testing ensures seamless and stable bypasses across all major server networks.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="card-body">
+            <h3 class="card-name">Optimized Performance</h3>
+            <hr class="card-rule">
+            <p class="card-desc">A lightweight architecture and efficient rendering deliver a fluid, high-FPS experience.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="card-body">
+            <h3 class="card-name">Continuous Support</h3>
+            <hr class="card-rule">
+            <p class="card-desc">Regular maintenance ensures quality updates and effective countermeasures against modern anti-cheats.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div class="feature-card">
-<div class="card-body">
-<h3 class="card-name">Reliable Bypasses</h3>
-<hr class="card-rule">
-<p class="card-desc">Rigorous testing ensures seamless and stable bypasses across all major server networks.</p>
-</div>
-</div>
+  </div>
 
-<div class="feature-card">
-<div class="card-body">
-<h3 class="card-name">Optimized Performance</h3>
-<hr class="card-rule">
-<p class="card-desc">A lightweight architecture and efficient rendering deliver a fluid, high-FPS experience.</p>
-</div>
-</div>
-
-<div class="feature-card">
-<div class="card-body">
-<h3 class="card-name">Continuous Support</h3>
-<hr class="card-rule">
-<p class="card-desc">Regular maintenance ensures quality updates and effective countermeasures against modern anti-cheats.</p>
-</div>
-</div>
-
-</div>
-</section>
-
-<hr class="section-divider">
-
-<section id="products">
-<h2 class="section-title">Everything You Need</h2>
-<p class="section-sub">The full suite of tools designed to elevate your gameplay and deliver a definitive competitive edge.</p>
-
-<div class="product-card">
-<div class="card-body">
-<div class="card-header">
-<h3 class="card-name">Slurp Client</h3>
-<span class="product-price">USD 24.99</span>
-</div>
-<hr class="card-rule">
-<p class="card-desc">The ultimate solution for multi-server bypasses. Expertly optimized for Watchdog and industry-leading anti-cheats with a primary focus on stealth and reliability.</p>
-<div class="product-tags">
-<span class="tag">Hypixel</span>
-<span class="tag">Cubecraft</span>
-<span class="tag">BlocksMC</span>
-<span class="tag">Lifetime Updates</span>
-<span class="tag">Closet &amp; Blatant</span>
-</div>
-<a href="https://discord.gg/QCPzTp9e3m" class="buy-btn" target="_blank" rel="noopener noreferrer">Purchase</a>
-</div>
-</div>
-
-</section>
+  <div id="view-products" class="view">
+    <h2 class="section-title">Everything You Need</h2>
+    <p class="section-sub">The full suite of tools designed to elevate your gameplay and deliver a definitive competitive edge.</p>
+    <div class="product-card">
+      <div class="card-body">
+        <div class="card-header">
+          <h3 class="card-name">Slurp Client</h3>
+          <span class="product-price">USD 24.99</span>
+        </div>
+        <hr class="card-rule">
+        <p class="card-desc">The ultimate solution for multi-server bypasses. Expertly optimized for Watchdog and industry-leading anti-cheats with a primary focus on stealth and reliability.</p>
+        <div class="product-tags">
+          <span class="tag">Hypixel</span>
+          <span class="tag">Cubecraft</span>
+          <span class="tag">BlocksMC</span>
+          <span class="tag">Lifetime Updates</span>
+          <span class="tag">Closet &amp; Blatant</span>
+        </div>
+        <a href="https://discord.gg/QCPzTp9e3m" class="buy-btn" target="_blank" rel="noopener noreferrer">Purchase</a>
+      </div>
+    </div>
+  </div>
 
 </main>
 
 <footer>
-<a href="#home" class="footer-logo">Slurp</a>
+<a class="footer-logo" data-view="main">Slurp</a>
 <span class="footer-copy">Slurp Client &copy; All Rights Reserved</span>
 </footer>
+
+<script>
+(function () {
+  function showView(viewName, scrollTarget) {
+    document.querySelectorAll('.view').forEach(function (v) {
+      v.classList.remove('active');
+    });
+
+    var target = document.getElementById('view-' + viewName);
+    if (target) target.classList.add('active');
+
+    document.querySelectorAll('.nav-links a').forEach(function (a) {
+      a.classList.remove('active');
+      if (a.dataset.view === viewName) a.classList.add('active');
+    });
+
+    if (scrollTarget) {
+      var el = document.getElementById(scrollTarget);
+      if (el) {
+        setTimeout(function () { el.scrollIntoView({ behavior: 'smooth' }); }, 10);
+      }
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-view]');
+    if (!el) return;
+    e.preventDefault();
+    showView(el.dataset.view, el.dataset.scroll || null);
+  });
+})();
+</script>
 
 </body>
 </html>
