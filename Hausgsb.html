@@ -136,7 +136,7 @@ nav{
 .page{
   max-width:960px;
   margin:0 auto;
-  padding:36px 36px 80px;
+  padding:36px 36px 20px;
 }
 
 .view{display:none;animation:fadeIn .2s ease both}
@@ -696,7 +696,12 @@ textarea.settings-input{resize:vertical}
 
 </div>
 
-<!-- MODAL -->
+<footer style="position:fixed;bottom:0;left:0;right:0;padding:14px 36px;display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-top:1px solid rgba(255,255,255,0.05);z-index:5">
+  <span style="font-size:0.8125rem;font-weight:700;color:var(--text);letter-spacing:0.025em">Slurp</span>
+  <span style="font-size:0.75rem;color:var(--muted)">&copy; Slurp Client. All Rights Reserved.</span>
+</footer>
+
+
 <div id="modal-overlay" onclick="closeModal(event)">
   <div id="modal-box" onclick="event.stopPropagation()">
     <button id="modal-close-x" onclick="closeModalDirect()" style="position:absolute;top:14px;right:16px;background:var(--surface2);border:none;color:var(--muted);font-size:1rem;width:28px;height:28px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;font-family:Tahoma,Geneva,sans-serif;transition:background .15s,color .15s" onmouseover="this.style.background='var(--hover)';this.style.color='var(--text)'" onmouseout="this.style.background='var(--surface2)';this.style.color='var(--muted)'">✕</button>
@@ -804,26 +809,7 @@ function escHtml(s){
 updatePostCounts();
 
 var profiles={
-  'x':        {bio:'I eat turkey',role:'Owner',configs:[{name:'Hypixel Blatant',downloads:6}]},
-  'ghost_':   {bio:'Closet main on Hypixel.',role:'Member',configs:[{name:'Hypixel KA',downloads:34}]},
-  'notch42':  {bio:'Playing since 2011.',role:'Member',configs:[]},
-  'voidpvp':  {bio:'Best reach settings only.',role:'Member',configs:[{name:'BlocksMC Blatant',downloads:18}]},
-  'slurpfan': {bio:'Slurp is the best.',role:'Member',configs:[]},
-  'aimbotx':  {bio:'Killaura enthusiast.',role:'Member',configs:[{name:'General KA',downloads:9}]},
-  'pvpgod':   {bio:'Top 10 Hypixel BW.',role:'Member',configs:[{name:'BW Blatant',downloads:22}]},
-  'nohitbox': {bio:'Reach diff.',role:'Member',configs:[]},
-  'bypasskid':{bio:'Testing every anticheat.',role:'Member',configs:[{name:'AC Bypass v2',downloads:11}]},
-  'shadow99': {bio:'Closet cheater since forever.',role:'Member',configs:[]},
-  'cloakmod': {bio:'Undetected or uninstalled.',role:'Member',configs:[{name:'Hypixel Closet',downloads:41}]},
-  'reach404': {bio:'No bio.',role:'Member',configs:[]},
-  'mlgwaver': {bio:'Bridging and hacking.',role:'Member',configs:[{name:'CubeCraft Blatant',downloads:7}]},
-  'vortex_':  {bio:'Speed and velocity.',role:'Member',configs:[]},
-  'zerolag':  {bio:'Optimized everything.',role:'Member',configs:[{name:'Low Ping Config',downloads:15}]},
-  'invis1':   {bio:'Ghost mode activated.',role:'Member',configs:[]},
-  'hackpro':  {bio:'Professional bypass tester.',role:'Member',configs:[{name:'Multi-Server Pack',downloads:29}]},
-  'pixelx':   {bio:'HCF and practice servers.',role:'Member',configs:[]},
-  'lunarfall':{bio:'Lunar bypass main.',role:'Member',configs:[{name:'Lunar KA',downloads:5}]},
-  'enderman8':{bio:'End crystals and cheats.',role:'Member',configs:[]}
+  'x':{bio:'I eat turkey',role:'Owner',configs:[{name:'Hypixel Blatant',downloads:6}]}
 };
 
 var allConfigs=[];
