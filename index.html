@@ -6,90 +6,107 @@
 
 <style>
 body{
-  background:#0f0f0f;
+  background:#0b0b0b;
   color:#00ff9c;
   font-family:monospace;
   padding:30px;
 }
 
 h1{
-  font-size:40px;
+  font-size:42px;
+  margin-bottom:20px;
 }
 
-p{
-  color:white;
+#terminal{
+  background:#111;
+  padding:20px;
+  border-radius:8px;
+}
+
+.line{
+  color:#fff;
+  margin:4px 0;
+}
+
+.label{
+  color:#00ff9c;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Hi Reap 👋</h1>
+<h1>Hello friend 👋</h1>
 
-<div id="info"></div>
+<div id="terminal"></div>
 
 <script>
-const info = document.getElementById("info");
 
-function add(label,value){
-  const p=document.createElement("p");
-  p.innerHTML="<b>"+label+":</b> "+value;
-  info.appendChild(p);
+const term = document.getElementById("terminal");
+
+function line(label,value){
+  const div=document.createElement("div");
+  div.className="line";
+  div.innerHTML="<span class='label'>"+label+":</span> "+value;
+  term.appendChild(div);
+}
+
+/* Basic browser info */
+line("User Agent", navigator.userAgent);
+line("Platform", navigator.platform);
+line("Language", navigator.language);
+line("Languages", navigator.languages.join(", "));
+line("Cookies Enabled", navigator.cookieEnabled);
+line("Online", navigator.onLine);
+line("Do Not Track", navigator.doNotTrack);
+
+/* Screen info */
+line("Screen Resolution", screen.width+" x "+screen.height);
+line("Available Screen", screen.availWidth+" x "+screen.availHeight);
+line("Color Depth", screen.colorDepth);
+
+/* Hardware info */
+line("CPU Cores", navigator.hardwareConcurrency || "Unknown");
+line("Device Memory (GB)", navigator.deviceMemory || "Unknown");
+line("Max Touch Points", navigator.maxTouchPoints);
+
+/* Time */
+line("Timezone", Intl.DateTimeFormat().resolvedOptions().timeZone);
+
+/* Network */
+if(navigator.connection){
+line("Network Type", navigator.connection.effectiveType);
+line("Downlink", navigator.connection.downlink+" Mbps");
+}
+
+/* Battery */
+if(navigator.getBattery){
+navigator.getBattery().then(b=>{
+  line("Battery Level", Math.round(b.level*100)+"%");
+  line("Charging", b.charging);
+});
+}
+
+/* Location (permission required) */
+if(navigator.geolocation){
+navigator.geolocation.getCurrentPosition(pos=>{
+  line("Latitude", pos.coords.latitude);
+  line("Longitude", pos.coords.longitude);
+},()=>{
+  line("Location","Permission denied");
+});
 }
 
 /* IP + location */
 fetch("https://ipapi.co/json/")
 .then(r=>r.json())
 .then(d=>{
-  add("IP",d.ip);
-  add("City",d.city);
-  add("Region",d.region);
-  add("Country",d.country_name);
-  add("ISP",d.org);
+  line("IP", d.ip);
+  line("City", d.city);
+  line("Region", d.region);
+  line("Country", d.country_name);
+  line("ISP", d.org);
 });
-
-/* Browser info */
-add("User Agent",navigator.userAgent);
-add("Platform",navigator.platform);
-add("Language",navigator.language);
-add("Languages",navigator.languages);
-add("Cookies Enabled",navigator.cookieEnabled);
-add("Do Not Track",navigator.doNotTrack);
-add("Online",navigator.onLine);
-
-/* Screen */
-add("Screen Resolution",screen.width+" x "+screen.height);
-add("Color Depth",screen.colorDepth);
-
-/* Hardware */
-add("CPU Cores",navigator.hardwareConcurrency);
-add("Device Memory (GB)",navigator.deviceMemory || "Unknown");
-
-/* Timezone */
-add("Timezone",Intl.DateTimeFormat().resolvedOptions().timeZone);
-
-/* Network */
-if(navigator.connection){
-  add("Network Type",navigator.connection.effectiveType);
-}
-
-/* Battery */
-if(navigator.getBattery){
-navigator.getBattery().then(b=>{
-  add("Battery Level",Math.round(b.level*100)+"%");
-  add("Charging",b.charging);
-});
-}
-
-/* GPS */
-if(navigator.geolocation){
-navigator.geolocation.getCurrentPosition(pos=>{
-  add("Latitude",pos.coords.latitude);
-  add("Longitude",pos.coords.longitude);
-},()=>{
-  add("GPS","Permission denied");
-});
-}
 
 </script>
 
