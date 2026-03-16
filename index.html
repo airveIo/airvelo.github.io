@@ -1,94 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Download the Slurp Launcher for Windows.">
+<meta name="theme-color" content="#0a0c12">
+<meta name="color-scheme" content="dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<meta property="og:title" content="Slurp Launcher">
+<meta property="og:description" content="Download the Slurp Launcher.">
+<meta property="og:type" content="website">
+
 <title>Slurp</title>
+
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Tahoma, sans-serif;
+:root{
+--bg:#0a0c12;
+--card:#1b1f2a;
+--divider:#2a2f3d;
+--text-main:#ffffff;
+--text-muted:#b5b5b5;
+--text-info:#8f95a3;
+--button:#2563eb;
+--button-hover:#1e40af;
 }
 
-body {
-    background: #0a0c12;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+*,
+*::before,
+*::after{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Tahoma,sans-serif;
 }
 
-.container {
-    background: #1b1f2a;
-    padding: 40px 30px;
-    border-radius: 16px;
-    width: 380px;
-    text-align: center;
+html{
+line-height:1.4;
+-webkit-text-size-adjust:100%;
+text-rendering:optimizeLegibility;
 }
 
-h1 {
-    font-size: 24px;
-    margin-bottom: 16px;
-    color: #f0f0f0;
+body{
+background:var(--bg);
+color:var(--text-main);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+overflow-x:hidden;
 }
 
-p.description {
-    font-size: 15px;
-    color: #b0b0b0;
-    margin-bottom: 25px;
-    line-height: 1.5;
+main{
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-a {
-    text-decoration: none;
+.container{
+background:var(--card);
+padding:40px 32px;
+border-radius:16px;
+width:100%;
+max-width:380px;
+text-align:center;
+contain:layout style paint;
 }
 
-button {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    background: linear-gradient(90deg, #3b82f6, #2563eb);
-    color: white;
-    transition: all 0.3s ease;
+h1{
+font-size:24px;
+line-height:1.2;
+margin-bottom:14px;
 }
 
-button:hover {
-    background: linear-gradient(90deg, #2563eb, #1e40af);
+.description{
+font-size:15px;
+line-height:1.5;
+color:var(--text-muted);
+margin-bottom:26px;
 }
 
-.divider {
-    height: 1px;
-    background: #2a2f3d;
-    margin: 20px 0;
+.download-button{
+display:block;
+width:100%;
+padding:14px;
+font-size:16px;
+border-radius:10px;
+background:var(--button);
+color:#ffffff;
+text-decoration:none;
+cursor:pointer;
+user-select:none;
+touch-action:manipulation;
 }
 
-p.info {
-    font-size: 14px;
-    color: #888c95;
-    margin: 4px 0;
+.download-button:hover{
+background:var(--button-hover);
 }
+
+.download-button:focus-visible{
+outline:2px solid #3b82f6;
+outline-offset:2px;
+}
+
+.divider{
+height:1px;
+background:var(--divider);
+margin:22px 0;
+}
+
+.info{
+font-size:13px;
+line-height:1.4;
+color:var(--text-info);
+margin-top:6px;
+}
+
+@media (prefers-reduced-motion:reduce){
+*{
+animation:none !important;
+transition:none !important;
+}
+}
+
 </style>
+
 </head>
+
 <body>
 
-<div class="container">
-    <h1>Slurp Launcher</h1>
-    <p class="description">Get the latest version of our launcher for easy updates and smooth performance. Compatible with Windows systems.</p>
+<main>
 
-    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-        <button>Download</button>
-    </a>
+<section class="container">
 
-    <div class="divider"></div>
-    <p class="info">Version: 1.0.3</p>
-    <p class="info">File Size: 42 MB</p>
-</div>
+<h1>Slurp Launcher</h1>
+
+<p class="description">
+Get the latest version of our launcher for easy updates and smooth performance. Compatible with Windows systems.
+</p>
+
+<a
+class="download-button"
+href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+role="button"
+aria-label="Download Slurp Launcher"
+rel="noopener"
+>
+Download
+</a>
+
+<div class="divider"></div>
+
+<p class="info">Version: 1.0.3</p>
+<p class="info">File Size: 42 MB</p>
+
+</section>
+
+</main>
 
 </body>
 </html>
