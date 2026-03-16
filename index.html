@@ -1,114 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Info</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slurp</title>
 <style>
-body{
-  background:#0b0b0b;
-  color:#00ff9c;
-  font-family:monospace;
-  padding:30px;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Tahoma, sans-serif;
 }
 
-h1{
-  font-size:42px;
-  margin-bottom:20px;
+body {
+    background: #0a0c12;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
-#terminal{
-  background:#111;
-  padding:20px;
-  border-radius:8px;
+.container {
+    background: #1b1f2a;
+    padding: 40px 30px;
+    border-radius: 16px;
+    width: 380px;
+    text-align: center;
 }
 
-.line{
-  color:#fff;
-  margin:4px 0;
+h1 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    color: #f0f0f0;
 }
 
-.label{
-  color:#00ff9c;
+p.description {
+    font-size: 15px;
+    color: #b0b0b0;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #2563eb, #1e40af);
+}
+
+.divider {
+    height: 1px;
+    background: #2a2f3d;
+    margin: 20px 0;
+}
+
+p.info {
+    font-size: 14px;
+    color: #888c95;
+    margin: 4px 0;
 }
 </style>
 </head>
-
 <body>
 
-<h1>Hello friend 👋</h1>
+<div class="container">
+    <h1>Slurp Launcher</h1>
+    <p class="description">Get the latest version of our launcher for easy updates and smooth performance. Compatible with Windows systems.</p>
 
-<div id="terminal"></div>
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+        <button>Download</button>
+    </a>
 
-<script>
-
-const term = document.getElementById("terminal");
-
-function line(label,value){
-  const div=document.createElement("div");
-  div.className="line";
-  div.innerHTML="<span class='label'>"+label+":</span> "+value;
-  term.appendChild(div);
-}
-
-/* Basic browser info */
-line("User Agent", navigator.userAgent);
-line("Platform", navigator.platform);
-line("Language", navigator.language);
-line("Languages", navigator.languages.join(", "));
-line("Cookies Enabled", navigator.cookieEnabled);
-line("Online", navigator.onLine);
-line("Do Not Track", navigator.doNotTrack);
-
-/* Screen info */
-line("Screen Resolution", screen.width+" x "+screen.height);
-line("Available Screen", screen.availWidth+" x "+screen.availHeight);
-line("Color Depth", screen.colorDepth);
-
-/* Hardware info */
-line("CPU Cores", navigator.hardwareConcurrency || "Unknown");
-line("Device Memory (GB)", navigator.deviceMemory || "Unknown");
-line("Max Touch Points", navigator.maxTouchPoints);
-
-/* Time */
-line("Timezone", Intl.DateTimeFormat().resolvedOptions().timeZone);
-
-/* Network */
-if(navigator.connection){
-line("Network Type", navigator.connection.effectiveType);
-line("Downlink", navigator.connection.downlink+" Mbps");
-}
-
-/* Battery */
-if(navigator.getBattery){
-navigator.getBattery().then(b=>{
-  line("Battery Level", Math.round(b.level*100)+"%");
-  line("Charging", b.charging);
-});
-}
-
-/* Location (permission required) */
-if(navigator.geolocation){
-navigator.geolocation.getCurrentPosition(pos=>{
-  line("Latitude", pos.coords.latitude);
-  line("Longitude", pos.coords.longitude);
-},()=>{
-  line("Location","Permission denied");
-});
-}
-
-/* IP + location */
-fetch("https://ipapi.co/json/")
-.then(r=>r.json())
-.then(d=>{
-  line("IP", d.ip);
-  line("City", d.city);
-  line("Region", d.region);
-  line("Country", d.country_name);
-  line("ISP", d.org);
-});
-
-</script>
+    <div class="divider"></div>
+    <p class="info">Version: 1.0.3</p>
+    <p class="info">File Size: 42 MB</p>
+</div>
 
 </body>
 </html>
