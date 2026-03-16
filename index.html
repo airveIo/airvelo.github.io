@@ -6,125 +6,124 @@
 <meta name="theme-color" content="#181a20">
 <title>Slurp</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --bg:#181a20;
-  --bg-raised:#1e2028;
-  --surface:#22252e;
-  --surface2:#292c38;
-  --surface-hover:#2e3244;
-  --border:rgba(255,255,255,0.06);
-  --accent:#60a5fa;
-  --accent-hover:#4f96f5;
-  --on-accent:#ffffff;
-  --text:#f0f1f4;
-  --muted:#7a8494;
-  --subtle:#8b95a8;
+*,*::before,*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
-html,body{
-  height:100%;
-  overflow:hidden;
+:root {
+  --bg: #181a20;
+  --surface: #22252e;
+  --accent: #60a5fa;
+  --accent-hover: #4f96f5;
+  --on-accent: #ffffff;
+  --text: #f0f1f4;
+  --muted: #7a8494;
+  --border: rgba(255,255,255,0.06);
 }
-
-body{
-  font-family:Tahoma,Geneva,sans-serif;
-  font-size:0.875rem;
-  line-height:1.5;
-  background:var(--bg);
-  color:var(--text);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:16px;
-  -webkit-font-smoothing:antialiased;
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 12px;
+  line-height: 1.5;
+  overflow: hidden;
 }
-
-.card{
-  background:var(--surface);
-  border-radius:16px;
-  padding:40px 44px 44px;
-  width:100%;
-  max-width:400px;
-  margin:0 20px;
-  animation:slideUp .18s ease both;
-  text-align:center;
+.card {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  animation: slideUp 0.2s ease both;
+  position: relative;
+  overflow: hidden;
+  font-weight: 400;
 }
-
-@keyframes slideUp{
-  from{opacity:0;transform:translateY(12px)}
-  to{opacity:1;transform:translateY(0)}
+@keyframes slideUp {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
 }
-
-.brand{
-  font-size:0.9375rem;
-  font-weight:700;
-  color:var(--text);
-  letter-spacing:0.025em;
-  margin-bottom:6px;
+.brand {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 0.025em;
 }
-
-.tagline{
-  font-size:0.8125rem;
-  color:var(--muted);
-  margin-bottom:28px;
+.description {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  line-height: 1.4;
+  font-weight: 400;
 }
-
-.description{
-  font-size:0.875rem;
-  color:var(--muted);
-  margin-bottom:28px;
+.btn {
+  width: 100%;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 0;
+  cursor: pointer;
+  transition: background-color 0.18s, transform 0.15s;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
 }
-
-.btn{
-  width:100%;
-  background:var(--accent);
-  color:var(--on-accent);
-  font-family:Tahoma,Geneva,sans-serif;
-  font-size:0.875rem;
-  letter-spacing:0.025em;
-  border:none;
-  border-radius:999px;
-  padding:12px 24px;
-  cursor:pointer;
-  transition:background-color .18s, transform .15s;
-  text-decoration:none;
-  display:inline-block;
+.btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
 }
-
-.btn:hover{
-  background:var(--accent-hover);
-  transform:translateY(-1px);
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 24px 0;
 }
-
-.divider{
-  height:1px;
-  background:var(--border);
-  margin:24px 0;
+.info {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+  font-weight: 400;
 }
-
-.info{
-  font-size:0.8125rem;
-  color:var(--muted);
-  margin-top:6px;
+@media (max-width: 480px) {
+  .card {
+    padding: 28px 20px;
+  }
+  .brand {
+    font-size: 17px;
+  }
+  .description {
+    font-size: 13px;
+  }
+  .btn {
+    font-size: 13px;
+    padding: 10px 0;
+  }
+  .info {
+    font-size: 11px;
+  }
 }
 </style>
 </head>
 <body>
-
 <div class="card">
   <div class="brand">Slurp Launcher</div>
   <p class="description">Get the latest version of our launcher for easy updates and smooth performance. Compatible with Windows systems.</p>
-  
   <a href="https://slurpclient.com/download" class="btn">Download</a>
-  
   <div class="divider"></div>
-  
-  <p class="info">Version: 1.0.3</p>
-  <p class="info">File Size: 42 MB</p>
+  <p class="info">Version: 0</p>
+  <p class="info">File Size: 0 MB</p>
 </div>
-
 </body>
 </html>
