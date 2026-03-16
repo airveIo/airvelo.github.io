@@ -1,165 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Download the Slurp Launcher for Windows.">
-<meta name="theme-color" content="#0a0c12">
-<meta name="color-scheme" content="dark">
-<meta name="referrer" content="strict-origin-when-cross-origin">
-
-<meta property="og:title" content="Slurp Launcher">
-<meta property="og:description" content="Download the Slurp Launcher.">
-<meta property="og:type" content="website">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#181a20">
 <title>Slurp</title>
-
 <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
 :root{
---bg:#0a0c12;
---card:#1b1f2a;
---divider:#2a2f3d;
---text-main:#ffffff;
---text-muted:#b5b5b5;
---text-info:#8f95a3;
---button:#2563eb;
---button-hover:#1e40af;
+  --bg:#181a20;
+  --bg-raised:#1e2028;
+  --surface:#22252e;
+  --surface2:#292c38;
+  --surface-hover:#2e3244;
+  --border:rgba(255,255,255,0.06);
+  --accent:#60a5fa;
+  --accent-hover:#4f96f5;
+  --on-accent:#ffffff;
+  --text:#f0f1f4;
+  --muted:#7a8494;
+  --subtle:#8b95a8;
 }
 
-*,
-*::before,
-*::after{
-box-sizing:border-box;
-margin:0;
-padding:0;
-font-family:Tahoma,sans-serif;
-}
-
-html{
-line-height:1.4;
--webkit-text-size-adjust:100%;
-text-rendering:optimizeLegibility;
+html,body{
+  height:100%;
+  overflow:hidden;
 }
 
 body{
-background:var(--bg);
-color:var(--text-main);
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
-overflow-x:hidden;
+  font-family:Tahoma,Geneva,sans-serif;
+  font-size:0.875rem;
+  line-height:1.5;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  -webkit-font-smoothing:antialiased;
 }
 
-main{
-width:100%;
-display:flex;
-align-items:center;
-justify-content:center;
+.card{
+  background:var(--surface);
+  border-radius:16px;
+  padding:40px 44px 44px;
+  width:100%;
+  max-width:400px;
+  margin:0 20px;
+  animation:slideUp .18s ease both;
+  text-align:center;
 }
 
-.container{
-background:var(--card);
-padding:40px 32px;
-border-radius:16px;
-width:100%;
-max-width:380px;
-text-align:center;
-contain:layout style paint;
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
 }
 
-h1{
-font-size:24px;
-line-height:1.2;
-margin-bottom:14px;
+.brand{
+  font-size:0.9375rem;
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:0.025em;
+  margin-bottom:6px;
+}
+
+.tagline{
+  font-size:0.8125rem;
+  color:var(--muted);
+  margin-bottom:28px;
 }
 
 .description{
-font-size:15px;
-line-height:1.5;
-color:var(--text-muted);
-margin-bottom:26px;
+  font-size:0.875rem;
+  color:var(--muted);
+  margin-bottom:28px;
 }
 
-.download-button{
-display:block;
-width:100%;
-padding:14px;
-font-size:16px;
-border-radius:10px;
-background:var(--button);
-color:#ffffff;
-text-decoration:none;
-cursor:pointer;
-user-select:none;
-touch-action:manipulation;
+.btn{
+  width:100%;
+  background:var(--accent);
+  color:var(--on-accent);
+  font-family:Tahoma,Geneva,sans-serif;
+  font-size:0.875rem;
+  letter-spacing:0.025em;
+  border:none;
+  border-radius:999px;
+  padding:12px 24px;
+  cursor:pointer;
+  transition:background-color .18s, transform .15s;
+  text-decoration:none;
+  display:inline-block;
 }
 
-.download-button:hover{
-background:var(--button-hover);
-}
-
-.download-button:focus-visible{
-outline:2px solid #3b82f6;
-outline-offset:2px;
+.btn:hover{
+  background:var(--accent-hover);
+  transform:translateY(-1px);
 }
 
 .divider{
-height:1px;
-background:var(--divider);
-margin:22px 0;
+  height:1px;
+  background:var(--border);
+  margin:24px 0;
 }
 
 .info{
-font-size:13px;
-line-height:1.4;
-color:var(--text-info);
-margin-top:6px;
+  font-size:0.8125rem;
+  color:var(--muted);
+  margin-top:6px;
 }
-
-@media (prefers-reduced-motion:reduce){
-*{
-animation:none !important;
-transition:none !important;
-}
-}
-
 </style>
-
 </head>
-
 <body>
 
-<main>
-
-<section class="container">
-
-<h1>Slurp Launcher</h1>
-
-<p class="description">
-Get the latest version of our launcher for easy updates and smooth performance. Compatible with Windows systems.
-</p>
-
-<a
-class="download-button"
-href="https://slurpclient.com/soon"
-role="button"
-aria-label="Download Slurp Launcher"
-rel="noopener"
->
-Download
-</a>
-
-<div class="divider"></div>
-
-<p class="info">Version: 0</p>
-<p class="info">File Size: 0 MB</p>
-
-</section>
-
-</main>
+<div class="card">
+  <div class="brand">Slurp Launcher</div>
+  <p class="description">Get the latest version of our launcher for easy updates and smooth performance. Compatible with Windows systems.</p>
+  
+  <a href="https://slurpclient.com/soon" class="btn">Download</a>
+  
+  <div class="divider"></div>
+  
+  <p class="info">Version: 1.0.3</p>
+  <p class="info">File Size: 42 MB</p>
+</div>
 
 </body>
 </html>
