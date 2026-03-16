@@ -43,14 +43,9 @@ html, body {
   width: 100%;
   max-width: 400px;
   text-align: center;
-  animation: slideUp 0.2s ease both;
   position: relative;
   overflow: hidden;
   font-weight: 400;
-}
-@keyframes slideUp {
-  from {opacity: 0; transform: translateY(10px);}
-  to {opacity: 1; transform: translateY(0);}
 }
 .brand {
   font-size: 18px;
@@ -85,17 +80,6 @@ html, body {
   background: var(--accent-hover);
   transform: translateY(-1px);
 }
-.divider {
-  height: 1px;
-  background: var(--border);
-  margin: 24px 0;
-}
-.info {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 4px;
-  font-weight: 400;
-}
 @media (max-width: 480px) {
   .card {
     padding: 28px 20px;
@@ -110,9 +94,6 @@ html, body {
     font-size: 13px;
     padding: 10px 0;
   }
-  .info {
-    font-size: 11px;
-  }
 }
 </style>
 </head>
@@ -121,9 +102,6 @@ html, body {
   <div class="brand">Slurp Launcher</div>
   <p class="description">Get the latest version of our launcher for easy updates and smooth performance. Compatible with Windows systems.</p>
   <a href="https://slurpclient.com/download" class="btn">Download</a>
-  <div class="divider"></div>
-  <p class="info">Version: 0</p>
-  <p class="info">File Size: 0 MB</p>
 </div>
 </body>
 </html>
